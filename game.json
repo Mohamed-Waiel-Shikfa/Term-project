@@ -1,0 +1,137 @@
+{
+    "global":{
+        "width":1305,
+        "height":720
+    },
+    "gameState":{
+        "scene":"scene1"
+    },
+    "scene1":{
+        "unplayable":{
+            "static":{
+                "bg":{
+                    "url":["images/salem adventure/assets/Home made/background garaje door/"],
+                    "images":[["background garaje door v2.png"]],
+                    "toDraw":[0,0],
+                    "x":0,
+                    "y":0,
+                    "width":1305,
+                    "height":720
+                },
+                "floor":{
+                    "url":["images/salem adventure/assets/Home made/floor/"],
+                    "images":[["floor v2.png"]],
+                    "toDraw":[0,0],
+                    "x":0,
+                    "y":700,
+                    "width":1305,
+                    "height":20
+                },
+                "table1":{
+                    "url":["images/salem adventure/assets/Home made/tables/"],
+                    "images":[["table 1.png"]],
+                    "toDraw":[0,0],
+                    "x":500,
+                    "y":540,
+                    "width":270,
+                    "height":160
+                },
+                "table2":{
+                    "url":["images/salem adventure/assets/Home made/tables/"],
+                    "images":[["table 2.png"]],
+                    "toDraw":[0,0],
+                    "x":0,
+                    "y":540,
+                    "width":270,
+                    "height":160
+                },
+                "skateboard":{
+                    "url":["images/salem adventure/assets/Home made/skateboard/"],
+                    "images":[["skateboard.png"]],
+                    "toDraw":[0,0],
+                    "x":920,
+                    "y":640,
+                    "width":240,
+                    "height":60
+                },
+                "salem":{
+                    "url":["images/salem adventure/salem/"],
+                    "images":[["Salem under the car-1.png"]],
+                    "toDraw":[0,0],
+                    "x":950,
+                    "y":555,
+                    "width":240,
+                    "height":126
+                },
+                "jack1":{
+                    "url":["images/salem adventure/assets/Home made/jack/"],
+                    "images":[["jack the reaper.png"]],
+                    "toDraw":[0,0],
+                    "x":950,
+                    "y":555,
+                    "width":100,
+                    "height":145
+                },
+                "jack2":{
+                    "url":["images/salem adventure/assets/Home made/jack/"],
+                    "images":[["jack the reaper.png"]],
+                    "toDraw":[0,0],
+                    "x":1175,
+                    "y":555,
+                    "width":100,
+                    "height":145
+                },
+                "car":{
+                    "url":["images/salem adventure/assets/Home made/time traveling car/"],
+                    "images":[["Time travelling car 1-1.png"]],
+                    "toDraw":[0,0],
+                    "x":950,
+                    "y":345,
+                    "width":320,
+                    "height":320
+                }
+            },
+            "rotating":{
+                "lamp1":{
+                    "url":["images/salem adventure/assets/Home made/lamp/"],
+                    "images":[["lamp 1.png"]],
+                    "toDraw":[0,0],
+                    "x":260,
+                    "y":-20,
+                    "width":140,
+                    "height":200
+                },
+                "lamp2":{
+                    "url":["images/salem adventure/assets/Home made/lamp/"],
+                    "images":[["lamp 1.png"]],
+                    "toDraw":[0,0],
+                    "x":700,
+                    "y":-20,
+                    "width":140,
+                    "height":200
+                }
+            },
+            "bonus":{
+                "shader":{
+                    "url":["images/salem adventure/experiments/noise shader/"],
+                    "images":[["0.png","1.png","2.png","3.png","4.png"]],
+                    "toDraw":[0,0],
+                    "x":0,
+                    "y":0,
+                    "width":1305,
+                    "height":720,
+                    "opacity":10
+                }
+            }
+        },
+        "player":{
+            "url":["images/salem adventure/player/"],
+            "images":[["player.png"]],
+            "toDraw":[0,0],
+            "x":650,
+            "y":360,
+            "width":100,
+            "height":100
+        }
+    }
+}
