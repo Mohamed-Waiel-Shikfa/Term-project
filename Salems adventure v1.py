@@ -126,6 +126,7 @@ class player(unplayableSpriteClass):
     def allowedMovementRight(self):
         if 0 <= self.y <= 190 and self.x+10 > 230 and self.x < 430:
             return False
+        
         # if 500<=self.y<=770 and self.x+10>440:
         #     return False
         # if 950<=self.y<=1270 and self.x+10>300:
