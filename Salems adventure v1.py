@@ -21,6 +21,12 @@ class unplayableSpriteClass():
         self.id = unplayableSpriteClass.id
         self.name, self.urls, self.images, self.todraw, self.x, self.y, self.width, self.height, self.color = args
         self.angle, self.opacity = angle, opacity
+        # uncomment below for rectangle
+        # self.view = Rect(self.x, self.y,
+        #          self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity)
+        # uncomment below for images
+        self.view = Image(self.urls[self.todraw[0]] + self.images[self.todraw[0]][self.todraw[1]], self.x,
+                          self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
 
     # used to debugg, get info for player and make the class feel more complete
     def __repr__(self):
@@ -37,15 +43,16 @@ class unplayableSpriteClass():
         self.todraw[1] = (self.todraw[1]+1) % len(self.images[self.todraw[0]])
 
     # draw the sprite with the argument loaded from the json and updated with the function stepSelf
-    def drawSelf(self, app):
+    def drawSelf(self):
         # trying rectangle to prove cmu graphics is slow with images
-        drawRect(self.x, self.y,
-                 self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity)
-
-        # drawImage(self.urls[self.todraw[0]]+self.images[self.todraw[0]][self.todraw[1]], self.x,
-        #           self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
-
-        # print("drawed", self)
+        self.view.left = self.x
+        self.view.top = self.y
+        self.view.right = self.x+self.width
+        self.view.bottom = self.y+self.height
+        self.view.rotateAngle = self.angle
+        self.view.opacity = self.opacity
+        # comment fill for image or transparency won't be visible
+        # self.view.fill = self.color
 
 
 # class for all rotating sprite as rotating in pixel software is really hard
@@ -89,55 +96,58 @@ class player(unplayableSpriteClass):
     # initiate the same argument as the parent class by loading data from json file
     def __init__(self, *args, angle=0, opacity=100, collision=True):
         super().__init__(*args[:-1], angle=angle, opacity=opacity)
-        self.movingSpeed=5
-        self.activeCollision=collision
-        self.notAllowed=[]
+        self.movingSpeed = 5
+        self.activeCollision = collision
+        self.notAllowed = []
         for i in args[-1]:
-            data=repr(i)
-            data=data.split(";")
-            self.notAllowed.append((int(data[5]),int(data[6]),int(data[5])+int(data[7]),int(data[6])+int(data[8])))
+            data = repr(i)
+            data = data.split(";")
+            self.notAllowed.append((int(data[5]), int(data[6]), int(
+                data[5])+int(data[7]), int(data[6])+int(data[8])))
         for i in self.notAllowed:
             print(i)
             print(len(i))
+    # proximity detection to then allow for interactions
 
     def stepSelf(self):
         self.todraw[1] = (self.todraw[1]+1) % len(self.images[self.todraw[0]])
-        if not (self.allowedMovement(0,-self.movingSpeed) and self.allowedMovement(0,self.movingSpeed) and self.allowedMovement(-self.movingSpeed,0) and self.allowedMovement(self.movingSpeed,0)):
-            self.color='purple'
+        if not (self.allowedMovement(0, -self.movingSpeed) and self.allowedMovement(0, self.movingSpeed) and self.allowedMovement(-self.movingSpeed, 0) and self.allowedMovement(self.movingSpeed, 0)):
+            self.color = 'purple'
         else:
-            self.color='blue'
+            self.color = 'blue'
 
     # respond to keyHold
     def selfKeyHold(self, events):
-        if ("up" in events or "w" in events) and (not self.activeCollision or self.allowedMovement(0,-self.movingSpeed)):
+        if ("up" in events or "w" in events) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)):
             self.y -= self.movingSpeed
-        if ("down" in events or "s" in events) and (not self.activeCollision or self.allowedMovement(0,self.movingSpeed)):
+        if ("down" in events or "s" in events) and (not self.activeCollision or self.allowedMovement(0, self.movingSpeed)):
             self.y += self.movingSpeed
-        if ("right" in events or "d" in events)and (not self.activeCollision or self.allowedMovement(self.movingSpeed,0)):
+        if ("right" in events or "d" in events) and (not self.activeCollision or self.allowedMovement(self.movingSpeed, 0)):
             self.x += self.movingSpeed
-        if ("left" in events or "a" in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed,0)):
+        if ("left" in events or "a" in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)):
             self.x -= self.movingSpeed
 
-    def allowedMovement(self,offsetx,offsety):
+    def allowedMovement(self, offsetx, offsety):
         for i in self.notAllowed:
-            if self.isPlayerColliding(self.x+offsetx, self.y+offsety, self.x+self.width+offsetx, self.y+self.height+offsety,*i):
+            if self.isPlayerColliding(self.x+offsetx, self.y+offsety, self.x+self.width+offsetx, self.y+self.height+offsety, *i):
                 return False
         return True
-    
+
     def isPlayerColliding(self, left1, top1, right1, bottom1,
-                      left2, top2, right2, bottom2):
-        if left1<=0 or right1>=1305 or top1<=0 or bottom1>=720:
+                          left2, top2, right2, bottom2):
+        if left1 <= 0 or right1 >= 1305 or top1 <= 0 or bottom1 >= 720:
             return True
         if bottom1 >= top2 and bottom2 >= top1 and\
-        right1 >= left2 and right2 >= left1:
+                right1 >= left2 and right2 >= left1:
             return True
         else:
             return False
 
+# user defined in cs2 mode, runs the first time onStep runs to mimic onAppStart of cs3 mode
 
-def onAppStart(app):
+
+def onAppStart():
     # runs at the start of the scene
-    # app.debuggingTicks = 0
     app.stepsPerSeconds = 30
     app.unplayableSprites = []
     path1 = game["scene1"]["unplayable"]
@@ -157,6 +167,10 @@ def onAppStart(app):
     #     app.unplayableSprites.append(unplayableSpriteClass(
     #         key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"],opacity=value["opacity"]))
     # print to confirm initiation
+    app.debuggingTicks = 0
+    app.debuggingTicksView = Label(
+        str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # if everything runned properly this print all the loaded data of the scene
     for iSprite in app.unplayableSprites:
         print(iSprite)
         print(repr(iSprite))
@@ -164,31 +178,37 @@ def onAppStart(app):
     print(repr(app.player))
 
 
-def onStep(app):
-    # increase debugging ticks by 1
-    # app.debuggingTicks += 1
+def onStep():
+    global firstRun
     # disallow resizing
     if app.width != 1305 or app.height != 720:
         app.width = 1305
         app.height = 720
+    # onAppStart
+    if firstRun:
+        onAppStart()
+        firstRun = False
     # calls the onStep of every object
     for iSprite in app.unplayableSprites:
         iSprite.stepSelf()
     app.player.stepSelf()
+    redrawAllCs2()
 
 
-def redrawAll(app):
+def redrawAllCs2():
     # calls the draw of every object
     for iSprite in app.unplayableSprites:
-        iSprite.drawSelf(app)
-    app.player.drawSelf(app)
+        iSprite.drawSelf()
+    app.player.drawSelf()
+    # increase debugging ticks by 1 and reflects that in the app window
+    app.debuggingTicks += 1
     # draw the number of frame since the beginining of the game
-    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    app.debuggingTicksView.value = app.debuggingTicks
     # shader feature to develop after mvp
     # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
 
 
-def onKeyHold(app, events):
+def onKeyHold(events):
     # calls keyHold of the player
     app.player.selfKeyHold(events)
 
@@ -197,5 +217,7 @@ def onKeyHold(app, events):
 with open('./game.json', 'r') as file:
     game = json.load(file)
 
+firstRun = True
+
 # run app
-runApp(game["global"]["width"], game["global"]["height"])
+cmu_graphics.run()
