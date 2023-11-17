@@ -9,16 +9,6 @@
     "scene1":{
         "unplayable":{
             "static":{
-                "bg":{
-                    "url":["./Final Images/background garaje door/"],
-                    "images":[["background garaje door v2.png"]],
-                    "toDraw":[0,0],
-                    "x":0,
-                    "y":0,
-                    "width":1305,
-                    "height":720,
-                    "color":"grey"
-                },
                 "floor":{
                     "url":["./Final Images/floor/"],
                     "images":[["floor v2.png"]],

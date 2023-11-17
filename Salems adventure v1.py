@@ -39,11 +39,11 @@ class unplayableSpriteClass():
     # draw the sprite with the argument loaded from the json and updated with the function stepSelf
     def drawSelf(self, app):
         # trying rectangle to prove cmu graphics is slow with images
-        drawRect(self.x, self.y,
-                 self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity)
+        # drawRect(self.x, self.y,
+        #          self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity)
 
-        # drawImage(self.urls[self.todraw[0]]+self.images[self.todraw[0]][self.todraw[1]], self.x,
-        #           self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
+        drawImage(self.urls[self.todraw[0]]+self.images[self.todraw[0]][self.todraw[1]], self.x,
+                  self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
 
         # print("drawed", self)
 
@@ -137,7 +137,7 @@ class player(unplayableSpriteClass):
 
 def onAppStart(app):
     # runs at the start of the scene
-    # app.debuggingTicks = 0
+    app.debuggingTicks = 0
     app.stepsPerSeconds = 30
     app.unplayableSprites = []
     path1 = game["scene1"]["unplayable"]
@@ -166,7 +166,7 @@ def onAppStart(app):
 
 def onStep(app):
     # increase debugging ticks by 1
-    # app.debuggingTicks += 1
+    app.debuggingTicks += 1
     # disallow resizing
     if app.width != 1305 or app.height != 720:
         app.width = 1305
@@ -183,7 +183,7 @@ def redrawAll(app):
         iSprite.drawSelf(app)
     app.player.drawSelf(app)
     # draw the number of frame since the beginining of the game
-    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
     # shader feature to develop after mvp
     # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
 
