@@ -124,13 +124,14 @@
             },
             "bonus":{
                 "shader":{
-                    "url":["./images/experiments/noise shader/"],
-                    "images":[["0.png","1.png","2.png","3.png","4.png"]],
+                    "url":["./images/experiments/noise shader v7/"],
+                    "images":[["0.png","1.png","2.png","3.png"]],
                     "toDraw":[0,0],
                     "x":0,
                     "y":0,
                     "width":1305,
                     "height":720,
+                    "color":"chocolate",
                     "opacity":10
                 }
             }

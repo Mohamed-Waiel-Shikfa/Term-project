@@ -10,8 +10,6 @@ import json
 from random import randint
 
 # class for all unplayable sprite
-
-
 class unplayableSpriteClass():
     # initiate the argument of the sprite by loading data from json file
     id = 0
@@ -22,11 +20,21 @@ class unplayableSpriteClass():
         self.name, self.urls, self.images, self.todraw, self.x, self.y, self.width, self.height, self.color = args
         self.angle, self.opacity = angle, opacity
         # uncomment below for rectangle
-        # self.view = Rect(self.x, self.y,
-        #          self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity)
+        # self.view=[]
+        # for i,url in enumerate(self.urls):
+        #     temp=[]
+        #     for image in self.images[i]:
+        #         temp.append(Rect(self.x, self.y,
+        #          self.width, self.height, rotateAngle=self.angle, fill=self.color, opacity=self.opacity,visible=False))
+        #     self.view.append(temp)
         # uncomment below for images
-        self.view = Image(self.urls[self.todraw[0]] + self.images[self.todraw[0]][self.todraw[1]], self.x,
-                          self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
+        self.view=[]
+        for i,url in enumerate(self.urls):
+            temp=[]
+            for image in self.images[i]:
+                temp.append(Image(url + image, self.x,
+                          self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity,visible=False))
+            self.view.append(temp)
 
     # used to debugg, get info for player and make the class feel more complete
     def __repr__(self):
@@ -45,14 +53,19 @@ class unplayableSpriteClass():
     # draw the sprite with the argument loaded from the json and updated with the function stepSelf
     def drawSelf(self):
         # trying rectangle to prove cmu graphics is slow with images
-        self.view.left = self.x
-        self.view.top = self.y
-        self.view.right = self.x+self.width
-        self.view.bottom = self.y+self.height
-        self.view.rotateAngle = self.angle
-        self.view.opacity = self.opacity
+        for i in range(len(self.urls)):
+            for j in range(len(self.images[i])):
+                self.view[i][j].visible=False
+        crntView=self.view[self.todraw[0]][self.todraw[1]]
+        crntView.left = self.x
+        crntView.top = self.y
+        crntView.right = self.x+self.width
+        crntView.bottom = self.y+self.height
+        crntView.rotateAngle = self.angle
+        crntView.opacity = self.opacity
+        crntView.visible=True
         # comment fill for image or transparency won't be visible
-        # self.view.fill = self.color
+        # crntView.fill = self.color
 
 
 # class for all rotating sprite as rotating in pixel software is really hard
@@ -96,7 +109,7 @@ class player(unplayableSpriteClass):
     # initiate the same argument as the parent class by loading data from json file
     def __init__(self, *args, angle=0, opacity=100, collision=True):
         super().__init__(*args[:-1], angle=angle, opacity=opacity)
-        self.movingSpeed = 5
+        self.movingSpeed = 7
         self.activeCollision = collision
         self.notAllowed = []
         for i in args[-1]:
@@ -104,9 +117,6 @@ class player(unplayableSpriteClass):
             data = data.split(";")
             self.notAllowed.append((int(data[5]), int(data[6]), int(
                 data[5])+int(data[7]), int(data[6])+int(data[8])))
-        for i in self.notAllowed:
-            print(i)
-            print(len(i))
     # proximity detection to then allow for interactions
 
     def stepSelf(self):
@@ -144,8 +154,6 @@ class player(unplayableSpriteClass):
             return False
 
 # user defined in cs2 mode, runs the first time onStep runs to mimic onAppStart of cs3 mode
-
-
 def onAppStart():
     # runs at the start of the scene
     app.stepsPerSeconds = 30
@@ -163,13 +171,11 @@ def onAppStart():
     app.player = player(
         "player", path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"], app.unplayableSprites[1:])
     # shader feature to develop after mvp
-    # for key, value in path1["bonus"].items():
-    #     app.unplayableSprites.append(unplayableSpriteClass(
-    #         key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"],opacity=value["opacity"]))
-    # print to confirm initiation
+    for key, value in path1["bonus"].items():
+        app.unplayableSprites.append(unplayableSpriteClass(
+            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"],value["color"],opacity=value["opacity"]))
     app.debuggingTicks = 0
-    app.debuggingTicksView = Label(
-        str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # print to confirm initiation
     # if everything runned properly this print all the loaded data of the scene
     for iSprite in app.unplayableSprites:
         print(iSprite)
@@ -196,6 +202,7 @@ def onStep():
 
 
 def redrawAllCs2():
+    app.group.clear()
     # calls the draw of every object
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
@@ -203,7 +210,7 @@ def redrawAllCs2():
     # increase debugging ticks by 1 and reflects that in the app window
     app.debuggingTicks += 1
     # draw the number of frame since the beginining of the game
-    app.debuggingTicksView.value = app.debuggingTicks
+    Label(str(app.debuggingTicks), 650, 360, fill='red', size=24)
     # shader feature to develop after mvp
     # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
 
