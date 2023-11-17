@@ -1,4 +1,5 @@
-from cmu_graphics import *
+import cmu_graphics as _
 
-def redrawAll(app):
-    dr
+sampleimage=_.Image
+
+_.run()

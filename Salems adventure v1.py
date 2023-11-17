@@ -89,54 +89,50 @@ class player(unplayableSpriteClass):
     # initiate the same argument as the parent class by loading data from json file
     def __init__(self, *args, angle=0, opacity=100, collision=True):
         super().__init__(*args[:-1], angle=angle, opacity=opacity)
+        self.movingSpeed=5
+        self.activeCollision=collision
         self.notAllowed=[]
         for i in args[-1]:
             data=repr(i)
             data=data.split(";")
             self.notAllowed.append((int(data[5]),int(data[6]),int(data[5])+int(data[7]),int(data[6])+int(data[8])))
-        print(self.notAllowed)
+        for i in self.notAllowed:
+            print(i)
+            print(len(i))
+
+    def stepSelf(self):
+        self.todraw[1] = (self.todraw[1]+1) % len(self.images[self.todraw[0]])
+        if not (self.allowedMovement(0,-self.movingSpeed) and self.allowedMovement(0,self.movingSpeed) and self.allowedMovement(-self.movingSpeed,0) and self.allowedMovement(self.movingSpeed,0)):
+            self.color='purple'
+        else:
+            self.color='blue'
 
     # respond to keyHold
     def selfKeyHold(self, events):
-        if ("up" in events or "w" in events) and self.allowedMovementUp():
-            self.y -= 10
-        if ("down" in events or "s" in events) and self.allowedMovementDown():
-            self.y += 10
-        if ("right" in events or "d" in events) and self.allowedMovementRight():
-            self.x += 10
-        if ("left" in events or "a" in events) and self.allowedMovementLeft():
-            self.x -= 10
+        if ("up" in events or "w" in events) and (not self.activeCollision or self.allowedMovement(0,-self.movingSpeed)):
+            self.y -= self.movingSpeed
+        if ("down" in events or "s" in events) and (not self.activeCollision or self.allowedMovement(0,self.movingSpeed)):
+            self.y += self.movingSpeed
+        if ("right" in events or "d" in events)and (not self.activeCollision or self.allowedMovement(self.movingSpeed,0)):
+            self.x += self.movingSpeed
+        if ("left" in events or "a" in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed,0)):
+            self.x -= self.movingSpeed
 
-    def allowedMovementUp(self):
-        if 230 <= self.x <= 430 and self.y-10 < 190:
-            return False
-        if 670 <= self.x <= 870 and self.y-10 < 190:
-            return False
+    def allowedMovement(self,offsetx,offsety):
+        for i in self.notAllowed:
+            if self.isPlayerColliding(self.x+offsetx, self.y+offsety, self.x+self.width+offsetx, self.y+self.height+offsety,*i):
+                return False
         return True
-
-    def allowedMovementDown(self):
-        if 0 <= self.x <= 270 and self.y+10 > 40:
+    
+    def isPlayerColliding(self, left1, top1, right1, bottom1,
+                      left2, top2, right2, bottom2):
+        if left1<=0 or right1>=1305 or top1<=0 or bottom1>=720:
+            return True
+        if bottom1 >= top2 and bottom2 >= top1 and\
+        right1 >= left2 and right2 >= left1:
+            return True
+        else:
             return False
-        if 500 <= self.x <= 770 and self.y+10 > 440:
-            return False
-        if 950 <= self.x <= 1270 and self.y+10 > 300:
-            return False
-        return True
-
-    def allowedMovementRight(self):
-        if 0 <= self.y <= 190 and self.x+10 > 230 and self.x < 430:
-            return False
-        
-        # if 500<=self.y<=770 and self.x+10>440:
-        #     return False
-        # if 950<=self.y<=1270 and self.x+10>300:
-        #     return False
-        # if 950<=self.y<=1270 and self.x+10>300:
-        #     return False
-        return True
-
-    def allowedMovementLeft(self):
-        return True
 
 
 def onAppStart(app):
@@ -155,7 +151,7 @@ def onAppStart(app):
     # saves the player object in app.player
     path2 = game["scene1"]["player"]
     app.player = player(
-        "player", path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"], app.unplayableSprites)
+        "player", path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"], app.unplayableSprites[1:])
     # shader feature to develop after mvp
     # for key, value in path1["bonus"].items():
     #     app.unplayableSprites.append(unplayableSpriteClass(
@@ -178,6 +174,7 @@ def onStep(app):
     # calls the onStep of every object
     for iSprite in app.unplayableSprites:
         iSprite.stepSelf()
+    app.player.stepSelf()
 
 
 def redrawAll(app):

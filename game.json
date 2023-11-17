@@ -141,7 +141,7 @@
             "toDraw":[0,0],
             "x":650,
             "y":360,
-            "width":100,
+            "width":200,
             "height":100,
             "color":"blue"
         }
