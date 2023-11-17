@@ -73,8 +73,8 @@ class rotatingSpriteClass(unplayableSpriteClass):
     # initiate the same argument as the parent class plus some more by loading data from json file
     def __init__(self, *args, angle=0, opacity=100):
         super().__init__(*args, angle=angle, opacity=opacity)
-        self.animationDuration = randint(5, 10)
-        self.animationPause = randint(15, 60)
+        self.animationDuration = randint(5, 20)
+        self.animationPause = randint(60, 300)
         self.inAnimation = False
         self.ticks = 0
         self.rotateToAngle = randint(-15, 15)
@@ -91,8 +91,8 @@ class rotatingSpriteClass(unplayableSpriteClass):
             if self.ticks % (self.animationDuration+1) == 0:
                 self.angle = 0
                 self.ticks = 0
-                self.animationDuration = randint(5, 10)
-                self.animationPause = randint(15, 60)
+                self.animationDuration = randint(5, 20)
+                self.animationPause = randint(60, 300)
                 self.inAnimation = False
                 self.rotateToAngle = randint(7, 15)
                 if randint(0, 1) == 1:
