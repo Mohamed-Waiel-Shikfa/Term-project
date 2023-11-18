@@ -9,6 +9,10 @@ from cmu_graphics import *
 import json
 from random import randint
 
+#################################################
+# classes
+#################################################
+
 # class for all unplayable sprite
 class unplayableSpriteClass():
     # initiate the argument of the sprite by loading data from json file
@@ -157,23 +161,39 @@ class dialogue(unplayableSpriteClass):
     def __init__(self, *args, angle=0, opacity=100):
         self.shadow=Rect(0,0,1305,720,opacity=70)
         super().__init__(*args, angle=angle, opacity=opacity)
-        self.inDialogue=True
+        self.text=[]
+        lineY = 445
+        for i in range(7):
+            # Create a label for each line, and move lineY down so the next
+            # line is drawn lower
+            self.text.append(Label("", 0, lineY, size=25,font="monospace", bold=True))
+            lineY += 35
 
-    def drawSelf(self):
-        if self.inDialogue:
-            super().drawSelf()
-            self.shadow.visible=True
-    
+    def drawSelf(self,text):
+        super().drawSelf()
+        self.shadow.visible=True
+        if self.todraw[0]==1:
+            for i in range(7):
+                self.text[i].left=60
+                self.text[i].visible=True
+                self.text[i].value=text[i+1][0]
+
     def stepSelf(self):
         super().stepSelf()
         if self.todraw[1]==0:
             self.todraw[0]=1
             app.stepsPerSecond=30
         else:
-            app.stepsPerSecond=10
+            app.stepsPerSecond=15
+
+#################################################
+# helper function
+#################################################
 
 def loadScene1():
+    app.sceneTicks=0
     app.unplayableSprites = []
+    app.text=scene1["texts"]
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     for key, value in scene1["static"].items():
         app.unplayableSprites.append(unplayableSpriteClass(
@@ -182,20 +202,47 @@ def loadScene1():
         app.unplayableSprites.append(rotatingSpriteClass(
             key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
 
+def scene1Step():
+    if app.sceneState==1:
+        app.sceneTicks+=1
+        drawScene1()
+        if app.sceneTicks==60:
+            app.sceneState=2     
+    elif app.sceneState==2:
+        drawScene1()
+        app.dialogueBox.stepSelf()
+        app.dialogueBox.drawSelf(app.text["1"])
+    elif app.sceneState==3:
+        # calls the onStep of every object
+        for iSprite in app.unplayableSprites:
+            iSprite.stepSelf()
+        app.player.stepSelf()
+        drawScene1()
+    # app.shader.stepSelf()
+def scene1OnKeyHold(events):
+    # calls keyHold of the player
+    # app.player.selfKeyHold(events)
+    if app.sceneState==2:
+        if "enter" in events:
+            app.sceneState=3
+    if app.sceneState==3:
+        app.player.selfKeyHold(events)
+def drawScene1():
+    # calls the draw of every object
+    for iSprite in app.unplayableSprites:
+        iSprite.drawSelf()
+    app.player.drawSelf()
+    # app.shader.drawSelf()
+    # increase debugging ticks by 1 and reflects that in the app window
+    app.debuggingTicks += 1
+    # draw the number of frame since the beginining of the game
+    Label(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # shader feature to develop after mvp
+    # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
 
-# Taken and modified from the code of a cmu_graphics sample 
-# A helper function for drawing text centered on the screen
-def drawText(linesList):
-    lineHeight = 35
-    # lineY starts out at the center (200) minus half the height of our
-    # whole block of text
-    lineY = 200 - ((len(linesList) * lineHeight) // 2)
-    for line in linesList:
-        # Create a label for each line, and move lineY down so the next
-        # line is drawn lower
-        Label(line, 200, lineY, align='center', size=25)
-        lineY += lineHeight
-
+#################################################
+# MVC CS2 mode functionS
+#################################################
 
 # user defined in cs2 mode, runs the first time onStep runs to mimic onAppStart of cs3 mode
 def onAppStart():
@@ -204,6 +251,7 @@ def onAppStart():
     app.unplayableSprites = []
     app.debuggingTicks = 0
     app.crntScene=1
+    app.sceneState=1
     loadScene1()
     # saves the player object in app.player
     path = game["player"]
@@ -228,6 +276,7 @@ def onAppStart():
 
 def onStep():
     global firstRun
+    app.group.clear()
     # disallow resizing
     if app.width != 1305 or app.height != 720:
         app.width = 1305
@@ -236,37 +285,12 @@ def onStep():
     if firstRun:
         onAppStart()
         firstRun = False
-    if app.dialogueBox.inDialogue:
-        app.dialogueBox.stepSelf()
-    else:
-        # calls the onStep of every object
-        for iSprite in app.unplayableSprites:
-            iSprite.stepSelf()
-        app.player.stepSelf()
-    app.shader.stepSelf()
-    redrawAllCs2()
-
-
-def redrawAllCs2():
-    app.group.clear()
-    # calls the draw of every object
-    for iSprite in app.unplayableSprites:
-        iSprite.drawSelf()
-    app.player.drawSelf()
-    app.dialogueBox.drawSelf()
-    # app.shader.drawSelf()
-    # increase debugging ticks by 1 and reflects that in the app window
-    app.debuggingTicks += 1
-    # draw the number of frame since the beginining of the game
-    Label(str(app.debuggingTicks), 650, 360, fill='red', size=24)
-    # shader feature to develop after mvp
-    # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
-
+    if app.crntScene==1:
+        scene1Step()
 
 def onKeyHold(events):
-    if not app.dialogueBox.inDialogue:
-        # calls keyHold of the player
-        app.player.selfKeyHold(events)
+    if app.crntScene==1:
+        scene1OnKeyHold(events)
 
 
 # load the json dictionnary in the game variable

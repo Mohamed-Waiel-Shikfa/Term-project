@@ -112,5 +112,8 @@
             "height":200,
             "color":"yellow"
         }
+    },
+    "texts":{
+        "1":["salem",["Samer, get me the ranch!"],["a"],["a"],["a"],["a"],["a"],["a"]]
     }
 }
