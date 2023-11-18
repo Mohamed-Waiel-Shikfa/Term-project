@@ -1,0 +1,40 @@
+{
+    "global":{
+        "width":1305,
+        "height":720
+    },
+    "gameState":{
+        "scene":"scene1"
+    },
+    "shader":{
+        "url":["./images/experiments/noise shader v7/"],
+        "images":[["0.png","1.png","2.png","3.png"]],
+        "toDraw":[0,0],
+        "x":0,
+        "y":0,
+        "width":1305,
+        "height":720,
+        "color":"chocolate",
+        "opacity":10
+    },
+    "player":{
+        "url":["./Final Images/player/"],
+        "images":[["player.png"]],
+        "toDraw":[0,0],
+        "x":650,
+        "y":360,
+        "width":200,
+        "height":100,
+        "color":"blue"
+    },
+    "dialogue":{
+        "url":["./Final Images/player/"],
+        "images":[["player.png"]],
+        "toDraw":[0,0],
+        "x":20,
+        "y":400,
+        "width":1265,
+        "height":300,
+        "color":"red"
+    }
+}

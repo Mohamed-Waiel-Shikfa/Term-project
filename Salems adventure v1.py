@@ -153,28 +153,57 @@ class player(unplayableSpriteClass):
         else:
             return False
 
+class dialogue(unplayableSpriteClass):
+    def __init__(self, *args, angle=0, opacity=100):
+        self.shadow=Rect(0,0,1305,720,opacity=70)
+        super().__init__(*args, angle=angle, opacity=opacity)
+    def drawSelf(self):
+        super().drawSelf()
+        self.shadow.visible=True
+
+def loadScene1():
+    app.unplayableSprites = []
+    # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
+    for key, value in scene1["static"].items():
+        app.unplayableSprites.append(unplayableSpriteClass(
+            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
+    for key, value in scene1["rotating"].items():
+        app.unplayableSprites.append(rotatingSpriteClass(
+            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
+
+
+# Taken and modified from the code of a cmu_graphics sample 
+# A helper function for drawing text centered on the screen
+def drawText(linesList):
+    lineHeight = 35
+    # lineY starts out at the center (200) minus half the height of our
+    # whole block of text
+    lineY = 200 - ((len(linesList) * lineHeight) // 2)
+    for line in linesList:
+        # Create a label for each line, and move lineY down so the next
+        # line is drawn lower
+        Label(line, 200, lineY, align='center', size=25)
+        lineY += lineHeight
+
+
 # user defined in cs2 mode, runs the first time onStep runs to mimic onAppStart of cs3 mode
 def onAppStart():
     # runs at the start of the scene
     app.stepsPerSeconds = 30
     app.unplayableSprites = []
-    path1 = game["scene1"]["unplayable"]
-    # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
-    for key, value in path1["static"].items():
-        app.unplayableSprites.append(unplayableSpriteClass(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
-    for key, value in path1["rotating"].items():
-        app.unplayableSprites.append(rotatingSpriteClass(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
-    # saves the player object in app.player
-    path2 = game["scene1"]["player"]
-    app.player = player(
-        "player", path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"], app.unplayableSprites[1:])
-    # shader feature to develop after mvp
-    for key, value in path1["bonus"].items():
-        app.unplayableSprites.append(unplayableSpriteClass(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"],value["color"],opacity=value["opacity"]))
     app.debuggingTicks = 0
+    app.crntScene=1
+    app.inDialogue=True
+    loadScene1()
+    # saves the player object in app.player
+    path = game["player"]
+    app.player = player(
+        "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
+    path2 = game["dialogue"]
+    app.dialogueBox=dialogue("dialogue",path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"])
+    # shader feature to develop after mvp
+    path3 = game["shader"]
+    app.unplayableSprites.append(unplayableSpriteClass("shader", path3["url"], path3["images"], path3["toDraw"], path3["x"], path3["y"], path3["width"], path3["height"],path3["color"],opacity=path3["opacity"]))
     # print to confirm initiation
     # if everything runned properly this print all the loaded data of the scene
     for iSprite in app.unplayableSprites:
@@ -182,7 +211,8 @@ def onAppStart():
         print(repr(iSprite))
     print(app.player)
     print(repr(app.player))
-
+    print(app.dialogueBox)
+    print(repr(app.dialogueBox))
 
 def onStep():
     global firstRun
@@ -198,6 +228,7 @@ def onStep():
     for iSprite in app.unplayableSprites:
         iSprite.stepSelf()
     app.player.stepSelf()
+    app.dialogueBox.stepSelf()
     redrawAllCs2()
 
 
@@ -207,6 +238,7 @@ def redrawAllCs2():
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
     app.player.drawSelf()
+    app.dialogueBox.drawSelf()
     # increase debugging ticks by 1 and reflects that in the app window
     app.debuggingTicks += 1
     # draw the number of frame since the beginining of the game
@@ -221,8 +253,12 @@ def onKeyHold(events):
 
 
 # load the json dictionnary in the game variable
-with open('./game.json', 'r') as file:
+with open('./gameGlobal.json', 'r') as file:
     game = json.load(file)
+
+# load the json dictionnary in the game variable
+with open('./scene1.json', 'r') as file:
+    scene1 = json.load(file)
 
 firstRun = True
 
