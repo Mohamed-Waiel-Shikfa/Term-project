@@ -157,9 +157,20 @@ class dialogue(unplayableSpriteClass):
     def __init__(self, *args, angle=0, opacity=100):
         self.shadow=Rect(0,0,1305,720,opacity=70)
         super().__init__(*args, angle=angle, opacity=opacity)
+        self.inDialogue=True
+
     def drawSelf(self):
-        super().drawSelf()
-        self.shadow.visible=True
+        if self.inDialogue:
+            super().drawSelf()
+            self.shadow.visible=True
+    
+    def stepSelf(self):
+        super().stepSelf()
+        if self.todraw[1]==0:
+            self.todraw[0]=1
+            app.stepsPerSecond=30
+        else:
+            app.stepsPerSecond=10
 
 def loadScene1():
     app.unplayableSprites = []
@@ -193,7 +204,6 @@ def onAppStart():
     app.unplayableSprites = []
     app.debuggingTicks = 0
     app.crntScene=1
-    app.inDialogue=True
     loadScene1()
     # saves the player object in app.player
     path = game["player"]
@@ -203,7 +213,7 @@ def onAppStart():
     app.dialogueBox=dialogue("dialogue",path2["url"], path2["images"], path2["toDraw"], path2["x"], path2["y"], path2["width"], path2["height"], path2["color"])
     # shader feature to develop after mvp
     path3 = game["shader"]
-    app.unplayableSprites.append(unplayableSpriteClass("shader", path3["url"], path3["images"], path3["toDraw"], path3["x"], path3["y"], path3["width"], path3["height"],path3["color"],opacity=path3["opacity"]))
+    app.shader = unplayableSpriteClass("shader", path3["url"], path3["images"], path3["toDraw"], path3["x"], path3["y"], path3["width"], path3["height"],path3["color"],opacity=path3["opacity"])
     # print to confirm initiation
     # if everything runned properly this print all the loaded data of the scene
     for iSprite in app.unplayableSprites:
@@ -213,6 +223,8 @@ def onAppStart():
     print(repr(app.player))
     print(app.dialogueBox)
     print(repr(app.dialogueBox))
+    print(app.shader)
+    print(repr(app.shader))
 
 def onStep():
     global firstRun
@@ -224,11 +236,14 @@ def onStep():
     if firstRun:
         onAppStart()
         firstRun = False
-    # calls the onStep of every object
-    for iSprite in app.unplayableSprites:
-        iSprite.stepSelf()
-    app.player.stepSelf()
-    app.dialogueBox.stepSelf()
+    if app.dialogueBox.inDialogue:
+        app.dialogueBox.stepSelf()
+    else:
+        # calls the onStep of every object
+        for iSprite in app.unplayableSprites:
+            iSprite.stepSelf()
+        app.player.stepSelf()
+    app.shader.stepSelf()
     redrawAllCs2()
 
 
@@ -239,6 +254,7 @@ def redrawAllCs2():
         iSprite.drawSelf()
     app.player.drawSelf()
     app.dialogueBox.drawSelf()
+    # app.shader.drawSelf()
     # increase debugging ticks by 1 and reflects that in the app window
     app.debuggingTicks += 1
     # draw the number of frame since the beginining of the game
@@ -248,8 +264,9 @@ def redrawAllCs2():
 
 
 def onKeyHold(events):
-    # calls keyHold of the player
-    app.player.selfKeyHold(events)
+    if not app.dialogueBox.inDialogue:
+        # calls keyHold of the player
+        app.player.selfKeyHold(events)
 
 
 # load the json dictionnary in the game variable
