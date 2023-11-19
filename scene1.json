@@ -20,26 +20,6 @@
             "height":20,
             "color":"white"
         },
-        "table1":{
-            "url":["./Final Images/tables/"],
-            "images":[["table 1.png"]],
-            "toDraw":[0,0],
-            "x":500,
-            "y":540,
-            "width":270,
-            "height":160,
-            "color":"brown"
-        },
-        "table2":{
-            "url":["./Final Images/tables/"],
-            "images":[["table 2.png"]],
-            "toDraw":[0,0],
-            "x":0,
-            "y":540,
-            "width":270,
-            "height":160,
-            "color":"brown"
-        },
         "skateboard":{
             "url":["./Final Images/skateboard/"],
             "images":[["skateboard.png"]],
@@ -91,6 +71,36 @@
             "color":"red"
         }
     },
+    "table1":{
+        "url":["./Final Images/tables/"],
+        "images":[["table 1.png", "table 1 top.png"]],
+        "toDraw":[0,0],
+        "x":500,
+        "y":540,
+        "width":270,
+        "height":160,
+        "color":"brown"
+    },
+    "table2":{
+        "url":["./Final Images/tables/"],
+        "images":[["table 2.png", "table 2 top.png"]],
+        "toDraw":[0,0],
+        "x":0,
+        "y":540,
+        "width":270,
+        "height":160,
+        "color":"brown"
+    },
+    "wallmap":{
+        "url":["./Final Images/wall map/"],
+        "images":[["wall map.png","wall map top.png"]],
+        "toDraw":[0,0],
+        "x":0,
+        "y":150,
+        "width":20,
+        "height":320,
+        "color":"brown"
+    },
     "rotating":{
         "lamp1":{
             "url":["./Final Images/lamp/"],
@@ -114,6 +124,6 @@
         }
     },
     "texts":{
-        "1":["salem",["Samer, get me the ranch!"],["a"],["a"],["a"],["a"],["a"],["a"]]
+        "1":["salem",[""],[""],[""],["SAMER, get me the wrench!"],[""],[""],[""]]
     }
 }

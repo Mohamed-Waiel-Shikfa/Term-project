@@ -19,12 +19,12 @@
     },
     "player":{
         "url":["./Final Images/player/"],
-        "images":[["player.png"]],
+        "images":[["robot 1.png", "robot examine.png"]],
         "toDraw":[0,0],
         "x":650,
         "y":360,
-        "width":200,
-        "height":100,
+        "width":150,
+        "height":75,
         "color":"blue"
     },
     "dialogue":{
