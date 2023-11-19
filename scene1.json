@@ -59,7 +59,9 @@
             "width":100,
             "height":145,
             "color":"green"
-        },
+        }
+    },
+    "interactable":{
         "car":{
             "url":["./Final Images/time traveling car/"],
             "images":[["Time travelling car 1-1.png"]],
@@ -69,37 +71,37 @@
             "width":320,
             "height":320,
             "color":"red"
+        },
+        "table1":{
+            "url":["./Final Images/tables/"],
+            "images":[["table 1.png", "table 1 top.png"]],
+            "toDraw":[0,0],
+            "x":500,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "table2":{
+            "url":["./Final Images/tables/"],
+            "images":[["table 2.png", "table 2 top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "wallmap":{
+            "url":["./Final Images/wall map/"],
+            "images":[["wall map.png","wall map top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":150,
+            "width":20,
+            "height":320,
+            "color":"brown"
         }
-    },
-    "table1":{
-        "url":["./Final Images/tables/"],
-        "images":[["table 1.png", "table 1 top.png"]],
-        "toDraw":[0,0],
-        "x":500,
-        "y":540,
-        "width":270,
-        "height":160,
-        "color":"brown"
-    },
-    "table2":{
-        "url":["./Final Images/tables/"],
-        "images":[["table 2.png", "table 2 top.png"]],
-        "toDraw":[0,0],
-        "x":0,
-        "y":540,
-        "width":270,
-        "height":160,
-        "color":"brown"
-    },
-    "wallmap":{
-        "url":["./Final Images/wall map/"],
-        "images":[["wall map.png","wall map top.png"]],
-        "toDraw":[0,0],
-        "x":0,
-        "y":150,
-        "width":20,
-        "height":320,
-        "color":"brown"
     },
     "rotating":{
         "lamp1":{
@@ -124,6 +126,15 @@
         }
     },
     "texts":{
-        "1":["salem",[""],[""],[""],["SAMER, get me the wrench!"],[""],[""],[""]]
+        "1":["salem",["","","SAMER, get me the wrench!","","","",""]],
+        "2":["salem",["","Aaaah, FINALLY!!!","","Thank you very much!","","","",""]],
+        "3":["salem",["","","Let me just fix this real quick...","","","",""]],
+        "4":["salem",["","","Annnnnnnnnnd...","","","",""]],
+        "5":["salem",["","","Done!","","","",""]],
+        "6":["salem",["","","I have finally managed to get my time-space travelling machine working!","","","",""]],
+        "7":["salem",["","","Now, if you forgot I am ashamed of me only being able to speak english,","and not arabic.","","",""]],
+        "8":["salem",["","","So the plan right now is to go to the past using the time-space machine,","I just finished fixing, to stop britain from invading qatar.","","",""]],
+        "9":["salem",["","","Although, the trip is going to take some time, but I have planned ahead ","and installed tetris in my time-space machine entertainement system!","","",""]],
+        "10":["salem",["","","Alright what are we waiting for now, THE ADVENTURE AWAITS US!!","","","",""]]
     }
 }
