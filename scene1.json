@@ -1,140 +1,14 @@
 {
-    "static":{
-        "bg":{
-            "url":["./Final Images/background garaje door/"],
-            "images":[["background garaje door v2.png"]],
+    "loading":{
+        "loading":{
+            "url":["./Final Images/scene 1 loading/loading gif inverted slow/"],
+            "images":[["00.png", "01.png", "02.png", "03.png", "04.png", "05.png", "06.png", "07.png", "08.png", "09.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png", "16.png", "17.png", "18.png", "19.png", "20.png", "21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png"]],
             "toDraw":[0,0],
-            "x":0,
-            "y":0,
-            "width":1305,
-            "height":720,
+            "x":358.5,
+            "y":66,
+            "width":588,
+            "height":588,
             "color":"grey"
-        },
-        "floor":{
-            "url":["./Final Images/floor/"],
-            "images":[["floor v2.png"]],
-            "toDraw":[0,0],
-            "x":0,
-            "y":700,
-            "width":1305,
-            "height":20,
-            "color":"white"
-        },
-        "skateboard":{
-            "url":["./Final Images/skateboard/"],
-            "images":[["skateboard.png"]],
-            "toDraw":[0,0],
-            "x":920,
-            "y":640,
-            "width":240,
-            "height":60,
-            "color":"darkGrey"
-        },
-        "salem":{
-            "url":["./Final Images/salem/"],
-            "images":[["Salem under the car-1.png"]],
-            "toDraw":[0,0],
-            "x":950,
-            "y":555,
-            "width":240,
-            "height":126,
-            "color":"salmon"
-        },
-        "jack1":{
-            "url":["./Final Images/jack/"],
-            "images":[["jack the reaper.png"]],
-            "toDraw":[0,0],
-            "x":950,
-            "y":555,
-            "width":100,
-            "height":145,
-            "color":"green"
-        },
-        "jack2":{
-            "url":["./Final Images/jack/"],
-            "images":[["jack the reaper.png"]],
-            "toDraw":[0,0],
-            "x":1170,
-            "y":555,
-            "width":100,
-            "height":145,
-            "color":"green"
-        },
-        "car":{
-            "url":["./Final Images/time traveling car/"],
-            "images":[["Time travelling car 1-1.png"]],
-            "toDraw":[0,0],
-            "x":950,
-            "y":345,
-            "width":320,
-            "height":320,
-            "color":"red"
         }
-    },
-    "interactable":{
-        "table1":{
-            "url":["./Final Images/tables/"],
-            "images":[["table 1.png", "table 1 top.png"]],
-            "toDraw":[0,0],
-            "x":500,
-            "y":540,
-            "width":270,
-            "height":160,
-            "color":"brown"
-        },
-        "table2":{
-            "url":["./Final Images/tables/"],
-            "images":[["table 2.png", "table 2 top.png"]],
-            "toDraw":[0,0],
-            "x":0,
-            "y":540,
-            "width":270,
-            "height":160,
-            "color":"brown"
-        },
-        "wallmap":{
-            "url":["./Final Images/wall map/"],
-            "images":[["wall map.png","wall map top.png"]],
-            "toDraw":[0,0],
-            "x":0,
-            "y":150,
-            "width":20,
-            "height":320,
-            "color":"brown"
-        }
-    },
-    "rotating":{
-        "lamp1":{
-            "url":["./Final Images/lamp/"],
-            "images":[["lamp 1.png"]],
-            "toDraw":[0,0],
-            "x":260,
-            "y":-20,
-            "width":140,
-            "height":200,
-            "color":"yellow"
-        },
-        "lamp2":{
-            "url":["./Final Images/lamp/"],
-            "images":[["lamp 1.png"]],
-            "toDraw":[0,0],
-            "x":700,
-            "y":-20,
-            "width":140,
-            "height":200,
-            "color":"yellow"
-        }
-    },
-    "texts":{
-        "1":["salem",["","","SAMER, get me the wrench!","","","",""]],
-        "2":["salem",["","Aaaah, FINALLY!!!","","Thank you very much!","","","",""]],
-        "3":["salem",["","","Let me just fix this real quick...","","","",""]],
-        "4":["salem",["","","Annnnnnnnnnd...","","","",""]],
-        "5":["salem",["","","Done!","","","",""]],
-        "6":["salem",["","","I have finally managed to get my time-space travelling machine working!","","","",""]],
-        "7":["salem",["","","Now, if you forgot I am ashamed of me only being able to speak english,","and not arabic.","","",""]],
-        "8":["salem",["","","So the plan right now is to go to the past using the time-space machine,","I just finished fixing, to stop britain from invading qatar.","","",""]],
-        "9":["salem",["","","Although, the trip is going to take some time, but I have planned ahead ","and installed tetris in my time-space machine entertainement system!","","",""]],
-        "10":["salem",["","","Alright what are we waiting for now, THE ADVENTURE AWAITS US!!","","","",""]]
     }
 }

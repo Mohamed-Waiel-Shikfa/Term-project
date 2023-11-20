@@ -11,10 +11,8 @@ from random import randint
 from cmu_graphics.shape_logic import loadImageFromStringReference
 
 #################################################
-# classes
+# global classes
 #################################################
-
-
 # class for all unplayable sprite
 class unplayableSpriteClass():
     # initiate the argument of the sprite by loading data from json file
@@ -40,9 +38,9 @@ class unplayableSpriteClass():
     def __str__(self):
         return f'{self.id};{self.name}'
 
-    # updates the data of the sprite, aka nothing for static sprite
+    # updates the data of the sprite, aka goes to the next frame of the sprite
     def stepSelf(self):
-        pass
+        self.todraw[1] = (self.todraw[1]+1) % len(self.images[self.todraw[0]])
 
     # draw the sprite with the argument loaded from the json and updated with the function stepSelf
     def drawSelf(self):
@@ -85,29 +83,6 @@ class rotatingSpriteClass(unplayableSpriteClass):
                 self.angle += self.deltaRotation
             else:
                 self.angle += self.deltaRotation
-
-
-# class for the things player can interact with
-class interactable(unplayableSpriteClass):
-    # initiate the same argument as the parent class
-    def __init__(self, *args, angle=0, opacity=100):
-        super().__init__(*args, angle=angle, opacity=opacity)
-
-    # updates the self view arguments of the object depending on the game state
-    def stepSelf(self, sceneState=0):
-        if sceneState == 4 and self.name == "table1" or sceneState == 5 and self.name == "table2" or sceneState == 6 and self.name == "wallmap":
-            self.todraw[1] = 1
-            self.x = 0
-            self.y = 0
-            self.width = 1305
-            self.height = 720
-        else:
-            path = scene1["interactable"][self.name]
-            self.x = path["x"]
-            self.y = path["y"]
-            self.width = path["width"]
-            self.height = path["height"]
-            self.todraw[1] = 0
 
 
 # player logic
@@ -202,60 +177,238 @@ class dialogue(unplayableSpriteClass):
         # draws its image
         super().drawSelf()
         if self.todraw[0] == 1:
-            if text[0]=='samer':
-                self.todraw[1]=2
+            if text[0] == 'samer':
+                self.todraw[1] = 2
             # draws text if it has finish animation
             textYPos = 445
-            for i in range(7):
+            for i in range(6):
                 # max line len == 79 characters
                 drawLabel(text[1][i], 55, textYPos, size=25,
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
+            drawLabel("SPACE or ENTER to continue ...", 950, textYPos-10, size=15,
+                      font="monospace", bold=True, align="left-top")
 
     # updates todraw for animation
     def stepSelf(self):
-        self.todraw[1] = (self.todraw[1]+1) % len(self.images[self.todraw[0]])
+        super().stepSelf()
         if self.todraw[1] == 0:
             self.todraw[0] = 1
+
+
+# button general logic
+class button(unplayableSpriteClass):
+    def __init__(self, *args, angle=0, opacity=100):
+        super().__init__(*args, angle=angle, opacity=opacity)
+
+    def selfMousePress(self, app, x, y):
+        if self.x < x < self.x+self.width and self.y < y < self.y+self.height:
+            self.answer(app)
+
+    def answer(self, app):
+        pass
+
+
+#################################################
+# scene 0 classes
+#################################################
+# buttons for scene0
+class buttonScene0(button):
+    def __init__(self, *args, angle=0, opacity=100):
+        super().__init__(*args, angle=angle, opacity=opacity)
+
+    def answer(self, app):
+        if self.name == "1":
+            app.gameState = 1
+            cleanAppVariables(app)
+        else:
+            response = app.getTextInput(
+                "Input saved game name (if game name doesn't exist, game will crash and you will have to rerun it).")
+            print(response)
+            app.gameState = int(response)
+            cleanAppVariables(app)
+
+
+#################################################
+# scene 2 classes
+#################################################
+# class for the things player can interact with in scene2
+class scene2Interactable(unplayableSpriteClass):
+    # initiate the same argument as the parent class
+    def __init__(self, *args, angle=0, opacity=100):
+        super().__init__(*args, angle=angle, opacity=opacity)
+
+    # updates the self view arguments of the object depending on the game state
+    def stepSelf(self, sceneState=0):
+        if sceneState == 4 and self.name == "table1" or sceneState == 5 and self.name == "table2" or sceneState == 6 and self.name == "wallmap":
+            self.todraw[1] = 1
+            self.x = 0
+            self.y = 0
+            self.width = 1305
+            self.height = 720
+        else:
+            path = scene2["interactable"][self.name]
+            self.x = path["x"]
+            self.y = path["y"]
+            self.width = path["width"]
+            self.height = path["height"]
+            self.todraw[1] = 0
+
+
 #################################################
 # helper function
 #################################################
+def appendToUnplayable(app, scene, key, toClass=unplayableSpriteClass):
+    for key, value in scene[key].items():
+        app.unplayableSprites.append(toClass(
+            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
+
+
+def appendToButton(app, scene, key, toClass=button):
+    for key, value in scene[key].items():
+        app.buttons.append(toClass(
+            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
+
+
+def cleanAppVariables(app):
+    app.unplayableSprites = []
+    app.buttons = []
+    app.sceneState = 0
+    app.sceneTicks = 0
+    app.Task = []
+    app.text = []
+    app.player = None
+    app.debuggingTicks = 0
+
 
 #################################################
 # Scene function
 #################################################
 
 #################################################
+# Scene x
+#################################################
+# def loadScenex(app):
+#     cleanAppVariables(app)
+#     appendToUnplayable(app, scene,key,toClass)
+
+
+# def scenexStep(app):
+#     # calls the onStep of every object
+#     for iSprite in app.unplayableSprites:
+#         iSprite.stepSelf()
+#     if app.sceneState == 0:
+#     elif app.sceneState == 2:
+#     else:
+
+
+# def scenexOnKeyHold(app, events):
+#     # calls keyHold of the player
+#     # app.player.selfKeyHold(events)
+#     if app.sceneState == 3:
+#         app.player.selfKeyHold(events)
+
+
+# def scenexOnKeyPress(app, event):
+#     if app.sceneState == 3:
+#     elif app.sceneState in [4, 5, 6]:
+#     elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
+#     else:
+
+# def scenexDraw(app):
+#     # calls the draw of every object
+#     if app.sceneState in [1, 2, 3]:
+#         for iSprite in app.unplayableSprites:
+#             iSprite.drawSelf()
+#         app.player.drawSelf()
+#     elif app.sceneState == 4:
+#     if app.sceneState == 2:
+#     if app.sceneState > 6:
+#         app.dialogueBox.drawSelf(app.text[str(app.sceneState-5)])
+
+#################################################
+# Scene 0
+#################################################
+def loadScene0(app):
+    cleanAppVariables(app)
+    # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
+    appendToUnplayable(app, scene0, "bg")
+    appendToButton(app, scene0, "buttons", buttonScene0)
+
+
+def scene0Step(app):
+    # calls the onStep of every object
+    for iSprite in app.unplayableSprites:
+        iSprite.stepSelf()
+    for ibutton in app.buttons:
+        ibutton.stepSelf()
+
+
+def scene0MousePress(app, x, y):
+    for ibutton in app.buttons:
+        ibutton.selfMousePress(app, x, y)
+
+
+def scene0Draw(app):
+    for iSprite in app.unplayableSprites:
+        iSprite.drawSelf()
+    for iSprite in app.buttons:
+        iSprite.drawSelf()
+
+#################################################
 # Scene 1
 #################################################
-
-
 def loadScene1(app):
-    app.Task = [False]*3
-    app.sceneTicks = 0
-    app.unplayableSprites = []
-    app.text = scene1["texts"]
-    print(app.text)
-    # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
-    for key, value in scene1["static"].items():
-        app.unplayableSprites.append(unplayableSpriteClass(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
-    for key, value in scene1["interactable"].items():
-        app.unplayableSprites.append(interactable(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
-    for key, value in scene1["rotating"].items():
-        app.unplayableSprites.append(rotatingSpriteClass(
-            key, value["url"], value["images"], value["toDraw"], value["x"], value["y"], value["width"], value["height"], value["color"]))
+    appendToUnplayable(app, scene1, "loading", unplayableSpriteClass)
 
 
 def scene1Step(app):
-    # increase debugging ticks by 1 and reflects that in the app window
-    app.debuggingTicks += 1
+    if app.sceneState == 0:
+        loadScene1(app)
+        app.sceneState += 1
     if app.sceneState == 1:
         app.sceneTicks += 1
+        for iSprite in app.unplayableSprites:
+            iSprite.stepSelf()
         if app.sceneTicks == 60:
+            app.gameState = 2
+            cleanAppVariables(app)
+
+
+def scene1Draw(app):
+    drawRect(0, 0, 1305, 720)
+    for iSprite in app.unplayableSprites:
+        iSprite.drawSelf()
+
+
+#################################################
+# Scene 2
+#################################################
+def loadScene2(app):
+    app.Task = [False]*3
+    app.text = scene2["texts"]
+    print(app.text)
+    # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
+    appendToUnplayable(app, scene2, "static")
+    appendToUnplayable(app, scene2, "interactable", toClass=scene2Interactable)
+    appendToUnplayable(app, scene2, "rotating", toClass=rotatingSpriteClass)
+    # saves the player object in app.player
+    path = scene2["player"]
+    app.player = player(
+        "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
+    for iSprite in app.unplayableSprites:
+        print(iSprite)
+        print(repr(iSprite))
+
+
+def scene2Step(app):
+    if app.sceneState == 0:
+        loadScene2(app)
+        app.sceneState += 1
+    if app.sceneState == 1:
+        app.sceneTicks += 1
+        if app.sceneTicks == 30:
             app.sceneState = 2
-            app.sceneTicks = 0
     elif app.sceneState == 2:
         app.dialogueBox.stepSelf()
     elif app.sceneState == 3:
@@ -276,29 +429,29 @@ def scene1Step(app):
             app.Task[2] = True
     else:
         app.dialogueBox.stepSelf()
-    # app.shader.stepSelf()
 
 
-def scene1OnKeyHold(app, events):
+def scene2OnKeyHold(app, events):
     # calls keyHold of the player
     # app.player.selfKeyHold(events)
     if app.sceneState == 3:
         app.player.selfKeyHold(events)
 
 
-def scene1OnKeyPress(app, event):
+def scene2OnKeyPress(app, event):
     if app.sceneState == 3:
         app.player.selfKeyPress(event, app)
     elif app.sceneState in [4, 5, 6]:
         app.sceneState = 3
     elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
-        print(app.sceneState)
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    else:
-        app.crntScene=1
+    elif app.sceneState > 6:
+        app.gameState = 1
+        cleanAppVariables(app)
 
-def scene1Draw(app):
+
+def scene2Draw(app):
     # calls the draw of every object
     if app.sceneState in [1, 2, 3]:
         for iSprite in app.unplayableSprites:
@@ -317,31 +470,16 @@ def scene1Draw(app):
             iSprite.drawSelf()
         app.player.drawSelf()
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-5)])
-    # app.shader.drawSelf()
-    # draw the number of frame since the beginining of the game
-    drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
-    # shader feature to develop after mvp
-    # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
+
 
 #################################################
-# MVC CS2 mode functionS
+# MVC CS3 mode functionS
 #################################################
-
-# user defined in cs2 mode, runs the first time onStep runs to mimic onAppStart of cs3 mode
-
-
 def onAppStart(app):
-    # runs at the start of the scene
+    # runs at the start of the game
     app.stepsPerSeconds = 30
-    app.unplayableSprites = []
-    app.debuggingTicks = 0
-    app.crntScene = 2
-    app.sceneState = 1
-    loadScene1(app)
-    # saves the player object in app.player
-    path = game["player"]
-    app.player = player(
-        "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
+    app.gameState = 0
+    loadScene0(app)
     # saves the dialogue object in app.dialogueBox
     path = game["dialogue"]
     app.dialogueBox = dialogue("dialogue", path["url"], path["images"], path["toDraw"],
@@ -352,11 +490,6 @@ def onAppStart(app):
                                        path["x"], path["y"], path["width"], path["height"], path["color"], opacity=path["opacity"])
     # print to confirm initiation
     # if everything runned properly this print all the loaded data of the scene
-    for iSprite in app.unplayableSprites:
-        print(iSprite)
-        print(repr(iSprite))
-    print(app.player)
-    print(repr(app.player))
     print(app.dialogueBox)
     print(repr(app.dialogueBox))
     print(app.shader)
@@ -364,35 +497,65 @@ def onAppStart(app):
 
 
 def onStep(app):
+    # increase debugging ticks by 1 and reflects that in the app window
+    app.debuggingTicks += 1
     # disallow resizing
     if app.width != 1305 or app.height != 720:
         app.width = 1305
         app.height = 720
-    if app.crntScene == 2:
+    if app.gameState == 0:
+        scene0Step(app)
+    elif app.gameState == 1:
         scene1Step(app)
+    elif app.gameState == 2:
+        scene2Step(app)
+    # app.shader.stepSelf()
 
 
 def onKeyHold(app, events):
-    if app.crntScene == 2:
-        scene1OnKeyHold(app, events)
+    if app.gameState == 2:
+        scene2OnKeyHold(app, events)
 
 
 def onKeyPress(app, event):
-    if app.crntScene == 2:
-        scene1OnKeyPress(app, event)
+    if app.gameState == 2:
+        scene2OnKeyPress(app, event)
+
+
+def onMousePress(app, x, y):
+    if app.gameState == 0:
+        scene0MousePress(app, x, y)
 
 
 def redrawAll(app):
-    if app.crntScene == 2:
+    if app.gameState == 0:
+        scene0Draw(app)
+    elif app.gameState == 1:
         scene1Draw(app)
+    elif app.gameState == 2:
+        scene2Draw(app)
+    # app.shader.drawSelf()
+    # draw the number of frame since the beginining of the game
+    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # shader feature to develop after mvp
+    # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
 
 
 # load the json dictionnary in the game variable
 with open('./gameGlobal.json', 'r') as file:
     game = json.load(file)
 
-# load the json dictionnary in the game variable
+# load the json dictionnary for scene0
+with open('./scene0.json', 'r') as file:
+    scene0 = json.load(file)
+
+# load the json dictionnary for scene1
 with open('./scene1.json', 'r') as file:
     scene1 = json.load(file)
+
+# load the json dictionnary for scene2
+with open('./scene2.json', 'r') as file:
+    scene2 = json.load(file)
+
 # run app
-runApp()
+runApp(game["global"]["width"], game["global"]["height"])

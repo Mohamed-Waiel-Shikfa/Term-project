@@ -4,7 +4,7 @@
         "height":720
     },
     "gameState":{
-        "scene":"scene1"
+        "scene":"scene0"
     },
     "shader":{
         "url":["./images/experiments/noise shader v8/"],
@@ -16,16 +16,6 @@
         "height":720,
         "color":"chocolate",
         "opacity":10
-    },
-    "player":{
-        "url":["./Final Images/player/"],
-        "images":[["robot 1.png", "robot examine.png"]],
-        "toDraw":[0,0],
-        "x":650,
-        "y":360,
-        "width":200,
-        "height":100,
-        "color":"blue"
     },
     "dialogue":{
         "url":["./Final Images/dialogue box/dialogue box animation v3/","./Final Images/dialogue box/dialogue box animation with salem/"],

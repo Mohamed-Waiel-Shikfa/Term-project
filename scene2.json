@@ -1,0 +1,150 @@
+{
+    "static":{
+        "bg":{
+            "url":["./Final Images/scene 2 background garaje door/"],
+            "images":[["background garaje door v2.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":0,
+            "width":1305,
+            "height":720,
+            "color":"grey"
+        },
+        "floor":{
+            "url":["./Final Images/scene 2 floor/"],
+            "images":[["floor v2.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":700,
+            "width":1305,
+            "height":20,
+            "color":"white"
+        },
+        "skateboard":{
+            "url":["./Final Images/to delete skateboard/"],
+            "images":[["skateboard.png"]],
+            "toDraw":[0,0],
+            "x":920,
+            "y":640,
+            "width":240,
+            "height":60,
+            "color":"darkGrey"
+        },
+        "salem":{
+            "url":["./Final Images/scene 2 salem/"],
+            "images":[["Salem under the car-1.png"]],
+            "toDraw":[0,0],
+            "x":950,
+            "y":555,
+            "width":240,
+            "height":126,
+            "color":"salmon"
+        },
+        "jack1":{
+            "url":["./Final Images/scene 2 jack/"],
+            "images":[["jack the reaper.png"]],
+            "toDraw":[0,0],
+            "x":950,
+            "y":555,
+            "width":100,
+            "height":145,
+            "color":"green"
+        },
+        "jack2":{
+            "url":["./Final Images/scene 2 jack/"],
+            "images":[["jack the reaper.png"]],
+            "toDraw":[0,0],
+            "x":1170,
+            "y":555,
+            "width":100,
+            "height":145,
+            "color":"green"
+        },
+        "car":{
+            "url":["./Final Images/scene 2 time traveling car/"],
+            "images":[["Time travelling car 1-1.png"]],
+            "toDraw":[0,0],
+            "x":950,
+            "y":345,
+            "width":320,
+            "height":320,
+            "color":"red"
+        }
+    },
+    "interactable":{
+        "table1":{
+            "url":["./Final Images/scene 2 tables/"],
+            "images":[["table 1.png", "table 1 top.png"]],
+            "toDraw":[0,0],
+            "x":500,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "table2":{
+            "url":["./Final Images/scene 2 tables/"],
+            "images":[["table 2.png", "table 2 top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "wallmap":{
+            "url":["./Final Images/scene 2 wall map/"],
+            "images":[["wall map.png","wall map top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":150,
+            "width":20,
+            "height":320,
+            "color":"brown"
+        }
+    },
+    "rotating":{
+        "lamp1":{
+            "url":["./Final Images/scene 2 lamp/"],
+            "images":[["lamp 1.png"]],
+            "toDraw":[0,0],
+            "x":260,
+            "y":-20,
+            "width":140,
+            "height":200,
+            "color":"yellow"
+        },
+        "lamp2":{
+            "url":["./Final Images/scene 2 lamp/"],
+            "images":[["lamp 1.png"]],
+            "toDraw":[0,0],
+            "x":700,
+            "y":-20,
+            "width":140,
+            "height":200,
+            "color":"yellow"
+        }
+    },
+    "player":{
+        "url":["./Final Images/scene 2 player/"],
+        "images":[["robot 1.png", "robot examine.png"]],
+        "toDraw":[0,0],
+        "x":650,
+        "y":360,
+        "width":160,
+        "height":80,
+        "color":"blue"
+    },
+    "texts":{
+        "1":["salem",["","","SAMER, get me the wrench!","","",""]],
+        "2":["salem",["","Aaaah, FINALLY!!!","","Thank you very much!","","",""]],
+        "3":["salem",["","","Let me just fix this real quick...","","",""]],
+        "4":["salem",["","","Annnnnnnnnnd...","","",""]],
+        "5":["salem",["","","Done!","","",""]],
+        "6":["salem",["","","I have finally managed to get my time-space travelling machine working!","","",""]],
+        "7":["salem",["","","Now, if you forgot I am ashamed of me only being able to speak english,","and not arabic.","",""]],
+        "8":["salem",["","","So the plan right now is to go to the past using the time-space machine,","I just finished fixing, to stop britain from invading qatar.","",""]],
+        "9":["salem",["","","Although, the trip is going to take some time, but I have planned ahead ","and installed tetris in my time-space machine entertainement system!","",""]],
+        "10":["salem",["","","Alright what are we waiting for now, THE ADVENTURE AWAITS US!!","","",""]]
+    }
+}
