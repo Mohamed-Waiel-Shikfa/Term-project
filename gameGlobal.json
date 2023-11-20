@@ -23,8 +23,8 @@
         "toDraw":[0,0],
         "x":650,
         "y":360,
-        "width":150,
-        "height":75,
+        "width":200,
+        "height":100,
         "color":"blue"
     },
     "dialogue":{

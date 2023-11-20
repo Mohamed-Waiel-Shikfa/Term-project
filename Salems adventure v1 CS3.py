@@ -291,11 +291,12 @@ def scene1OnKeyPress(app, event):
         app.player.selfKeyPress(event, app)
     elif app.sceneState in [4, 5, 6]:
         app.sceneState = 3
-    if app.sceneState == 2 or app.sceneState > 6:
+    elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
         print(app.sceneState)
         if "enter" == event or "space" == event:
             app.sceneState += 1
-
+    else:
+        app.crntScene=1
 
 def scene1Draw(app):
     # calls the draw of every object
@@ -334,7 +335,7 @@ def onAppStart(app):
     app.stepsPerSeconds = 30
     app.unplayableSprites = []
     app.debuggingTicks = 0
-    app.crntScene = 1
+    app.crntScene = 2
     app.sceneState = 1
     loadScene1(app)
     # saves the player object in app.player
@@ -367,22 +368,22 @@ def onStep(app):
     if app.width != 1305 or app.height != 720:
         app.width = 1305
         app.height = 720
-    if app.crntScene == 1:
+    if app.crntScene == 2:
         scene1Step(app)
 
 
 def onKeyHold(app, events):
-    if app.crntScene == 1:
+    if app.crntScene == 2:
         scene1OnKeyHold(app, events)
 
 
 def onKeyPress(app, event):
-    if app.crntScene == 1:
+    if app.crntScene == 2:
         scene1OnKeyPress(app, event)
 
 
 def redrawAll(app):
-    if app.crntScene == 1:
+    if app.crntScene == 2:
         scene1Draw(app)
 
 
