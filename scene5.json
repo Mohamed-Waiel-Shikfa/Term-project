@@ -1,0 +1,110 @@
+{
+    "static":{
+        "bg":{
+            "url":["./Final Images/scene 2 background garaje door/"],
+            "images":[["background garaje door v2.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":0,
+            "width":1305,
+            "height":720,
+            "color":"grey"
+        },
+        "floor":{
+            "url":["./Final Images/scene 2 floor/"],
+            "images":[["floor v2.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":700,
+            "width":1305,
+            "height":20,
+            "color":"white"
+        },
+        "car":{
+            "url":["./Final Images/scene 2 time traveling car/"],
+            "images":[["Time travelling car 1-1.png"]],
+            "toDraw":[0,0],
+            "x":950,
+            "y":450,
+            "width":320,
+            "height":320,
+            "color":"red"
+        }
+    },
+    "interactable":{
+        "table1":{
+            "url":["./Final Images/scene 2 tables/"],
+            "images":[["table 1.png", "table 1 top.png"]],
+            "toDraw":[0,0],
+            "x":500,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "table2":{
+            "url":["./Final Images/scene 2 tables/"],
+            "images":[["table 2.png", "table 2 top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":540,
+            "width":270,
+            "height":160,
+            "color":"brown"
+        },
+        "wallmap":{
+            "url":["./Final Images/scene 2 wall map/"],
+            "images":[["wall map.png","wall map top.png"]],
+            "toDraw":[0,0],
+            "x":0,
+            "y":150,
+            "width":20,
+            "height":320,
+            "color":"brown"
+        }
+    },
+    "rotating":{
+        "lamp1":{
+            "url":["./Final Images/scene 2 lamp/"],
+            "images":[["lamp 1.png"]],
+            "toDraw":[0,0],
+            "x":260,
+            "y":-20,
+            "width":140,
+            "height":200,
+            "color":"yellow"
+        },
+        "lamp2":{
+            "url":["./Final Images/scene 2 lamp/"],
+            "images":[["lamp 1.png"]],
+            "toDraw":[0,0],
+            "x":700,
+            "y":-20,
+            "width":140,
+            "height":200,
+            "color":"yellow"
+        }
+    },
+    "player":{
+        "url":["./Final Images/scene 2 player/"],
+        "images":[["robot 1.png", "robot examine.png"]],
+        "toDraw":[0,0],
+        "x":650,
+        "y":360,
+        "width":160,
+        "height":80,
+        "color":"blue"
+    },
+    "texts":{
+        "1":["salem",["","","ARABIC","","",""]],
+        "2":["samer",["","","","(Translation) I CAN FINALLY SPEAK ARABIC!!!!!","YOOOOOOHOOOOOOO","",""]],
+        "3":["salem",["","","ARABIC","","",""]],
+        "4":["samer",["","","(Translation) The mission went so well, OH MY GOD!!!","","",""]],
+        "5":["salem",["","","ARABIC","","",""]],
+        "6":["samer",["","","(Translation) OH I am so happy!!!","","",""]],
+        "7":["salem",["","","ARABIC","","",""]],
+        "8":["samer",["","","(Translation) Well I guess our adventure ends here.","(but who knows maybe we will have to go for another one)","",""]],
+        "9":["salem",["","","ARABIC","","",""]],
+        "10":["samer",["","","(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.","","",""]]
+    }
+}
