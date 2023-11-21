@@ -190,16 +190,19 @@ class buttonScene0(button):
         else:
             response = app.getTextInput(
                 "Input saved game name (if game name doesn't exist, game will crash and you will have to rerun it).")
-            if response in "./saved games":
-                with open("./saved games/" + response, "r") as file:
+            if os.path.isfile("./saved games/" + response + ".txt"):
+                with open("./saved games/" + response + ".txt", "r") as file:
                     app.gameState = int(file.read())
+                if app.gameState == 1:
+                    app.previousScene = 1
+                else:
+                    app.previousScene = app.gameState-1
+                cleanAppVariables(app)
             else:
                 print("File Not Found")
-            if app.gameState == 1:
-                app.previousScene = 1
-            else:
-                app.previousScene = app.gameState-1
-            cleanAppVariables(app)
+            
+            
+
 #################################################
 # Scene 0 function
 #################################################
@@ -716,7 +719,7 @@ def onKeyPress(app, event):
         app.previousScene = 1
         cleanAppVariables(app)
         loadScene0(app)
-    if event == "k":
+    if event == "k" and app.gameState!=0:
         response = app.getTextInput("What would you like to name this save")
         with open("./saved games/" + response + ".txt", "w") as file:
             file.write(str(app.gameState))
