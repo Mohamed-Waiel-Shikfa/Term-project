@@ -10,6 +10,8 @@ from random import randint
 from cmu_graphics.shape_logic import loadImageFromStringReference
 import os
 import copy
+import joystick
+import sys
 
 
 #################################################
@@ -105,13 +107,13 @@ class player(unplayableSpriteClass):
     
     # respond to keyHold -> movement
     def selfKeyHold(self, events):
-        if ("up" in events or "w" in events) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)[1]):
+        if ("up" in events or "w" in events or events==(1,-1)) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)[1]):
             self.y -= self.movingSpeed
-        if ("down" in events or "s" in events) and (not self.activeCollision or self.allowedMovement(0, self.movingSpeed)[1]):
+        if ("down" in events or "s" in events or events==(1,1)) and (not self.activeCollision or self.allowedMovement(0, self.movingSpeed)[1]):
             self.y += self.movingSpeed
-        if ("right" in events or "d" in events) and (not self.activeCollision or self.allowedMovement(self.movingSpeed, 0)[1]):
+        if ("right" in events or "d" in events or events==(0,1)) and (not self.activeCollision or self.allowedMovement(self.movingSpeed, 0)[1]):
             self.x += self.movingSpeed
-        if ("left" in events or "a" in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)[1]):
+        if ("left" in events or "a" in events or events==(0,-1)) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)[1]):
             self.x -= self.movingSpeed
 
 
@@ -177,6 +179,7 @@ class button(unplayableSpriteClass):
     def selfMousePress(self, app, x, y):
         if self.x*self.scale +self.offsetx< x < (self.x+self.width)*self.scale+self.offsetx and self.y*self.scale + self.offsety< y < (self.y+self.height)*self.scale+self.offsety:
             self.answer(app)
+    
 
     def answer(self, app):
         pass
@@ -187,6 +190,13 @@ class button(unplayableSpriteClass):
 #################################################
 # buttons for scene0
 class buttonScene0(button):
+    def selfOnJoyPress(self, app, button):
+        if self.name == "1" and button == "9":
+            self.answer(app)
+        if self.name == "2" and button == "8":
+            self.answer(app)
+
+    
     def answer(self, app):
         if self.name == "1":
             nextScene(app)
@@ -226,12 +236,18 @@ def scene0MousePress(app, x, y):
         ibutton.selfMousePress(app, x, y)
 
 
+def scene0OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        for ibutton in app.buttons:
+            ibutton.selfOnJoyPress(app, button)
+
+
 def scene0Draw(app):
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
     for iSprite in app.buttons:
         iSprite.drawSelf()
-    drawLabel("Press k at any time to save.", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
+    drawLabel("Press k at any time to save. (not supported on arcade machine)", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
 
 
 #################################################
@@ -287,7 +303,7 @@ class scene2Interactable(unplayableSpriteClass):
 class playerScene2(player):
     # respond to keyPress -> collision and object examination
     def selfKeyPress(self, event, app):
-        if event == "e":
+        if event == "e" or event=="1":
             if self.allowedMovement(0, -self.movingSpeed)[0] in ["table1", "table2", "wallmap"]:
                 self.changeSceneState((0, -self.movingSpeed), app)
             elif self.allowedMovement(0, self.movingSpeed)[0] in ["table1", "table2", "wallmap"]:
@@ -386,6 +402,26 @@ def scene2OnKeyPress(app, event):
     elif app.sceneState > 6:
         nextScene(app)
         cleanAppVariables(app)
+
+
+def scene2OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if app.sceneState == 3:
+            app.player.selfKeyPress(button, app)
+        elif app.sceneState in [4, 5, 6]:
+            app.sceneState = 3
+        elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
+            if "2" == button:
+                app.sceneState += 1
+        elif app.sceneState > 6:
+            nextScene(app)
+            cleanAppVariables(app)
+
+
+def scene2OnDigitalJoyAxis(app, results, joystick):
+    if joystick==0:
+        if app.sceneState == 3:
+            app.player.selfKeyHold(results)
 
 
 def scene2Draw(app):
@@ -531,6 +567,13 @@ def scene3OnKeyPress(app, event):
     if event == "c" and  30-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
+
+
+def scene3OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if button == "2" and  30-app.sceneTicks//30<=0:
+            nextScene(app)
+            cleanAppVariables(app)
 
 
 def scene3Step(app):
@@ -703,6 +746,22 @@ def scene4OnKeyPress(app, event):
         cleanAppVariables(app)
 
 
+def scene4OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if 7 > app.sceneState > 1 or 10 > app.sceneState > 7:
+            if "2" == button:
+                app.sceneState += 1
+        if app.sceneState == 10:
+            nextScene(app)
+            cleanAppVariables(app)
+
+
+def scene4OnDigitalJoyAxis(app, results, joystick):
+    if joystick==0:
+        if app.sceneState == 7:
+            app.player.selfKeyHold(results)
+
+
 def scene4Draw(app):
     # calls the draw of every object
     if app.sceneState > 0:
@@ -759,6 +818,16 @@ def scene5OnKeyPress(app, event):
         cleanAppVariables(app)
 
 
+def scene5OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if app.sceneState > 0 and app.sceneState < 10:
+            if "2" == button:
+                app.sceneState += 1
+        elif app.sceneState == 10:
+            nextScene(app)
+            cleanAppVariables(app)
+
+
 def scene5Draw(app):
     # calls the draw of every object
     if 11 > app.sceneState > 1:
@@ -792,6 +861,13 @@ def scene100OnKeyPress(app, event):
     if event == "r":
         app.gameState =app.storyFlow[app.crntGameIndex]
         cleanAppVariables(app)
+
+
+def scene100OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if button == "2":
+            app.gameState =app.storyFlow[app.crntGameIndex]
+            cleanAppVariables(app)
 
 
 def scene100Draw(app):
@@ -1177,6 +1253,31 @@ def redrawAll(app):
     # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
     # shader feature to develop after mvp
     # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
+
+
+def onJoyPress(app, button, joystick):
+    if app.gameState == 0:
+        scene0OnJoyPress(app, button, joystick)
+    elif app.gameState == 2:
+        scene2OnJoyPress(app, button, joystick)
+    elif app.gameState == 3:
+        scene3OnJoyPress(app, button, joystick)
+    elif app.gameState == 4:
+        scene4OnJoyPress(app, button, joystick)
+    elif app.gameState == 5:
+        scene5OnJoyPress(app, button, joystick)
+    elif app.gameState == 100:
+        scene100OnJoyPress(app, button, joystick)
+     # Make sure we can exit by pressing the "P1" button
+    if button == '5':
+        sys.exit(0)
+
+
+def onDigitalJoyAxis(app, results, joystick):
+    if app.gameState == 2:
+        scene2OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 4:
+        scene4OnDigitalJoyAxis(app, results, joystick)
 
 
 # load the json dictionnary in the game variable
