@@ -3,9 +3,7 @@
     "width": 1305,
     "height": 720
   },
-  "gameState": {
-    "scene": "scene0"
-  },
+  "gameState": [0,1,2,1,3,1,4,1,3,1,5,1,6],
   "shader": {
     "url": ["./images/experiments/noise shader v8/"],
     "images": [
