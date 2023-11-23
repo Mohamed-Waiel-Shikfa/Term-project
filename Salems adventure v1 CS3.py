@@ -568,8 +568,8 @@ def scene3Draw(app):
         if app.offsety>0:
             drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
         drawTetris(app)
-        if 3-app.sceneTicks//30>=0:
-            drawLabel(f"00:0{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        if 30-app.sceneTicks//30>=0:
+            drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
         else:
             drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
 
