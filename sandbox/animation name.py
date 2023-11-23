@@ -1,4 +1,4 @@
 a=[]
-for i in range(60):
+for i in range(51):
     a.append(""+str(i)+".png")
 print(a)
