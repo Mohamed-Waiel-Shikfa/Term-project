@@ -59,7 +59,7 @@ class rotatingSpriteClass(unplayableSpriteClass):
         self.animationPause = randint(60, 150)
         self.inAnimation = False
         self.ticks = 0
-        self.rotateToAngle = randint(-15, 15)
+        self.rotateToAngle = randint(-30, 30)
         self.deltaRotation = 2*self.rotateToAngle/self.animationDuration
 
     # rotate the sprite randomly by acting on the sprite argument self.angle
@@ -76,7 +76,7 @@ class rotatingSpriteClass(unplayableSpriteClass):
                 self.animationDuration = randint(5, 20)
                 self.animationPause = randint(60, 150)
                 self.inAnimation = False
-                self.rotateToAngle = randint(7, 15)
+                self.rotateToAngle = randint(15, 30)
                 if randint(0, 1) == 1:
                     self.rotateToAngle = -self.rotateToAngle
                 self.deltaRotation = 2*self.rotateToAngle/self.animationDuration
@@ -102,16 +102,6 @@ class player(unplayableSpriteClass):
                 self.notAllowed.append((data[1], (int(data[5]), int(data[6]), int(
                     data[5])+int(data[7]), int(data[6])+int(data[8]))))    
     
-
-    def stepSelf(self, others):
-        super().stepSelf()
-        self.notAllowed = []
-        for i in others:
-            data = repr(i)
-            data = data.split(";")
-            self.notAllowed.append((data[1], (float(data[5])*self.scale+self.offsetx, float(data[6])*self.scale+self.offsety, float(
-                data[5])*self.scale+self.offsetx+float(data[7])*self.scale, float(data[6])*self.scale+self.offsety+float(data[8])*self.scale)))
-    
     
     # respond to keyHold -> movement
     def selfKeyHold(self, events):
@@ -124,16 +114,18 @@ class player(unplayableSpriteClass):
         if ("left" in events or "a" in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)[1]):
             self.x -= self.movingSpeed
 
+
     # returns if player can move and if not returns the colliding sprite
     def allowedMovement(self, offsetx, offsety):
         for i in self.notAllowed:
             if i[0] != "bg":
                 j = i[1]
-                if self.isPlayerColliding(self.x*self.scale+self.offsetx+offsetx, self.y*self.scale+self.offsety+offsety, self.x*self.scale+self.offsetx+offsetx+self.width*self.scale, self.y*self.scale+self.offsety+offsety+self.height*self.scale, *j):
+                if self.isPlayerColliding(self.x+offsetx, self.y+offsety, self.x+self.width+offsetx, self.y+self.height+offsety, *j):
                     return (i[0], False)
-        if self.x*self.scale+self.offsetx+offsetx <= self.offsetx or self.x*self.scale+self.offsetx+offsetx+self.width*self.scale >= 1305*self.scale or self.y*self.scale+self.offsety+offsety <= self.offsety or self.y*self.scale+self.offsety+offsety+self.height*self.scale >= 720*self.scale:
+        if self.notAllowed == [] and (self.x+offsetx <= 0 or self.x+offsetx+self.width >= 1305 or self.y+offsety <= 0 or self.y+self.height+offsety >= 720):
             return ("", False)
         return ("", True)
+
     # rectangle to rectangle collision
     def isPlayerColliding(self, left1, top1, right1, bottom1,
                           left2, top2, right2, bottom2):
@@ -144,6 +136,7 @@ class player(unplayableSpriteClass):
             return True
         else:
             return False
+
 
 
 # dialogue logic
@@ -264,6 +257,7 @@ def scene1Step(app):
         for iSprite in app.unplayableSprites:
             iSprite.stepSelf()
         if app.sceneTicks == 60:
+            app.previousScene=app.prevpreviousScene+1
             app.gameState = app.previousScene + 1
             cleanAppVariables(app)
             print(app.gameState)
@@ -324,8 +318,8 @@ class playerScene2(player):
         elif (self.allowedMovement(*arg)[0] == "car" or self.allowedMovement(*arg)[0] == "salem") and app.Task[2]:
             app.sceneState = 7
 
-    def stepSelf(self, others):
-        super().stepSelf(others)
+    def stepSelf(self):
+        super().stepSelf()
         if not (self.allowedMovement(0, -self.movingSpeed)[1] and self.allowedMovement(0, self.movingSpeed)[1] and self.allowedMovement(-self.movingSpeed, 0)[1] and self.allowedMovement(self.movingSpeed, 0)[1]):
             self.todraw[1] = 1
         else:
@@ -365,7 +359,7 @@ def scene2Step(app):
         # calls the onStep of every object
         for iSprite in app.unplayableSprites:
             iSprite.stepSelf()
-        app.player.stepSelf(app.unplayableSprites[1:])
+        app.player.stepSelf()
     elif app.sceneState == 4:
         app.unplayableSprites[7].stepSelf(sceneState=app.sceneState)
         app.Task[0] = True
@@ -541,9 +535,9 @@ def scene3OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if event == "c" and  30-app.sceneTicks//30<=0:
-        app.gameState = 1
-        app.previousScene = 3
+    if event == "c" and  3-app.sceneTicks//30<=0:
+        app.gameState=1
+        app.previousScene = app.prevpreviousScene + 1
         cleanAppVariables(app)
 
 
@@ -582,10 +576,10 @@ def scene3Draw(app):
         if app.offsety>0:
             drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
         drawTetris(app)
-        if 30-app.sceneTicks//30>=0:
-            drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        if 3-app.sceneTicks//30>=0:
+            drawLabel(f"0:{3-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
         else:
-            drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+            drawLabel(f"0:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
 
 
 def drawTetris(app):
@@ -610,6 +604,13 @@ def drawTetris(app):
 # scene 4 classes
 #################################################
 class playerScene4(player):
+    def stepSelf(self, ennemies):
+        self.notAllowed = []
+        for i in ennemies:
+            data = repr(i)
+            data = data.split(";")
+            self.notAllowed.append((data[1], (float(data[5]), float(data[6]), float(
+                data[5])+float(data[7]), float(data[6])+float(data[8]))))
     def removeEnnemie(self, i):
         if self.notAllowed[i][0] == "ennemie":
             j = self.notAllowed[i][1]
@@ -618,16 +619,16 @@ class playerScene4(player):
 class ennemie(unplayableSpriteClass):
     def __init__(self, *args, angle=0, opacity=100):
         super().__init__(*args, angle=angle, opacity=opacity)
-        self.speed = 1
+        self.speed = 0.5
 
     def stepSelf(self):
         super().stepSelf()
         if self.speed > 0:
-            self.speed = randint(1, 3)
+            self.speed = randint(5, 20)/10
         self.y += self.speed
         self.x += randint(-50, 50)/5
-        if self.x > 700:
-            self.x = 700
+        if self.x > 1290:
+            self.x = 1290
         if self.x < 0:
             self.x = 0
         if self.y > 720:
@@ -668,7 +669,6 @@ def scene4Step(app):
     elif 7 > app.sceneState > 1:
         app.dialogueBox.stepSelf()
     elif app.sceneState == 7:
-        print(app.unplayableSprites)
         app.dialogueBox.todraw = [0, 0]
         app.player.stepSelf(app.unplayableSprites)
         for i in range(len(app.unplayableSprites)):
@@ -678,7 +678,7 @@ def scene4Step(app):
         if len(app.unplayableSprites) < 7 and app.ennemie > 0:
             for i in range(randint(2, 15)):
                 appendToUnplayable(app, scene4, "ennemie", toClass=ennemie)
-                app.unplayableSprites[-1].x = randint(100, 1200)
+                app.unplayableSprites[-1].x = randint(50,1255)
         elif len(app.unplayableSprites) == 1 and app.ennemie <= 0:
             app.sceneState += 1
         # calls the onStep of every object
@@ -708,7 +708,7 @@ def scene4OnKeyPress(app, event):
             app.sceneState += 1
     if app.sceneState == 10:
         app.gameState = 1
-        app.previousScene = 4
+        app.previousScene = 2
         cleanAppVariables(app)
 
 
@@ -721,35 +721,38 @@ def scene4Draw(app):
     if 7 > app.sceneState > 1 or 10 > app.sceneState > 7:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-1)])
 
+#################################################
+# No scene 5 because resons, code doesn't work with scene 5
+#################################################
 
 #################################################
-# scene 5 classes
+# scene 6 classes
 #################################################
-# player for scene5
-class playerScene5(player):
+# player for scene6
+class playerScene6(player):
     pass
 #################################################
 # Scene 5 function
 #################################################
-def loadScene5(app):
-    app.text = scene5["texts"]
+def loadScene6(app):
+    app.text = scene6["texts"]
     print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
-    appendToUnplayable(app, scene5, "static")
-    appendToUnplayable(app, scene5, "interactable", toClass=scene2Interactable)
-    appendToUnplayable(app, scene5, "rotating", toClass=rotatingSpriteClass)
+    appendToUnplayable(app, scene6, "static")
+    appendToUnplayable(app, scene6, "interactable", toClass=scene2Interactable)
+    appendToUnplayable(app, scene6, "rotating", toClass=rotatingSpriteClass)
     # saves the player object in app.player
-    path = scene5["player"]
-    app.player = playerScene5(
+    path = scene6["player"]
+    app.player = playerScene6(
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
     for iSprite in app.unplayableSprites:
         print(iSprite)
         print(repr(iSprite))
 
 
-def scene5Step(app):
+def scene6Step(app):
     if app.sceneState == 0:
-        loadScene5(app)
+        loadScene6(app)
         app.sceneState += 1
     if app.sceneState == 1:
         app.sceneTicks += 1
@@ -759,17 +762,17 @@ def scene5Step(app):
         app.dialogueBox.stepSelf()
 
 
-def scene5OnKeyPress(app, event):
+def scene6OnKeyPress(app, event):
     if app.sceneState > 0 and app.sceneState < 10:
         if "enter" == event or "space" == event:
             app.sceneState += 1
     elif app.sceneState == 10:
         app.gameState = 1
-        app.previousScene = 5
+        app.previousScene = 6
         cleanAppVariables(app)
 
 
-def scene5Draw(app):
+def scene6Draw(app):
     # calls the draw of every object
     if 11 > app.sceneState > 0:
         for iSprite in app.unplayableSprites:
@@ -808,7 +811,7 @@ def scene100OnKeyPress(app, event):
 def scene100Draw(app):
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
-    drawLabel("Press r to try again.", 660, 450, size=25, fill="orange")
+    drawLabel("Press r to try again.", 660*app.scale+app.offsetx, 450*app.scale+app.offsety, size=37.5*app.scale*2/3, fill="orange")
 
 
 #################################################
@@ -861,6 +864,9 @@ def rescaleAll(app):
     app.dialogueBox.scale=app.scale 
     app.dialogueBox.offsetx=app.offsetx
     app.dialogueBox.offsety=app.offsety
+    app.endScreen.scale=app.scale 
+    app.endScreen.offsetx=app.offsetx
+    app.endScreen.offsety=app.offsety
 
 
 #################################################
@@ -1074,6 +1080,7 @@ def onAppStart(app):
     app.offsety=0
     app.gameState = 0
     app.previousScene = 1
+    app.prevpreviousScene = 2
     cleanAppVariables(app)
     loadScene0(app)
     # saves the dialogue object in app.dialogueBox
@@ -1100,8 +1107,6 @@ def onStep(app):
     app.debuggingTicks += 1
     # rescale everything based on window size
     rescaleAll(app)
-
-    
     #step scene
     if app.gameState == 0:
         scene0Step(app)
@@ -1113,8 +1118,8 @@ def onStep(app):
         scene3Step(app)
     elif app.gameState == 4:
         scene4Step(app)
-    elif app.gameState == 5:
-        scene5Step(app)
+    elif app.gameState == 6:
+        scene6Step(app)
     elif app.gameState == 100:
         scene100Step(app)
     # app.shader.stepSelf()
@@ -1134,8 +1139,8 @@ def onKeyPress(app, event):
         scene3OnKeyPress(app, event)
     elif app.gameState == 4:
         scene4OnKeyPress(app, event)
-    elif app.gameState == 5:
-        scene5OnKeyPress(app, event)
+    elif app.gameState == 6:
+        scene6OnKeyPress(app, event)
     elif app.gameState == 100:
         scene100OnKeyPress(app, event)
     elif event == "r":
@@ -1165,14 +1170,14 @@ def redrawAll(app):
         scene3Draw(app)
     elif app.gameState == 4:
         scene4Draw(app)
-    elif app.gameState == 5:
-        scene5Draw(app)
+    elif app.gameState == 6:
+        scene6Draw(app)
     elif app.gameState == 100:
         scene100Draw(app)
     else:
         app.endScreen.drawSelf()
-    drawLine(app.width/2,0, app.width/2, app.height, fill='green')
-    drawLine(0, app.height/2, app.width,app.height/2, fill='green')
+    # drawLine(app.width/2,0, app.width/2, app.height, fill='green')
+    # drawLine(0, app.height/2, app.width,app.height/2, fill='green')
 
     # app.shader.drawSelf()
     # draw the number of frame since the beginining of the game
@@ -1200,8 +1205,8 @@ with open('./scene3.json', 'r') as file:
 with open('./scene4.json', 'r') as file:
     scene4 = json.load(file)
 # load the json dictionnary for scene2
-with open('./scene5.json', 'r') as file:
-    scene5 = json.load(file)
+with open('./scene6.json', 'r') as file:
+    scene6 = json.load(file)
 # load the json dictionnary for scene2
 with open('./scene100.json', 'r') as file:
     scene100 = json.load(file)
