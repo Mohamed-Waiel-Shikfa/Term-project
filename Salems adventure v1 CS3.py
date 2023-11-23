@@ -25,6 +25,7 @@ class unplayableSpriteClass():
         self.id = unplayableSpriteClass.id
         self.name, self.urls, self.images, self.todraw, self.x, self.y, self.width, self.height, self.color = args
         self.angle, self.opacity = angle, opacity
+        self.scale, self. offsetx, self.offsety = 1, 0, 0
         # images
         self.view = []
         for i, url in enumerate(self.urls):
@@ -46,8 +47,7 @@ class unplayableSpriteClass():
 
     # draw the sprite with the argument loaded from the json and updated with the function stepSelf
     def drawSelf(self):
-        drawImage(self.view[self.todraw[0]][self.todraw[1]], self.x,
-                  self.y, width=self.width, height=self.height, rotateAngle=self.angle, opacity=self.opacity)
+        drawImage(self.view[self.todraw[0]][self.todraw[1]], self.x*self.scale+self.offsetx, self.y*self.scale+self.offsety, width=self.width*self.scale, height=self.height*self.scale, rotateAngle=self.angle, opacity=self.opacity)
 
 
 # class for all rotating sprite as rotating in pixel software is really hard
@@ -100,8 +100,19 @@ class player(unplayableSpriteClass):
                 data = repr(i)
                 data = data.split(";")
                 self.notAllowed.append((data[1], (int(data[5]), int(data[6]), int(
-                    data[5])+int(data[7]), int(data[6])+int(data[8]))))
+                    data[5])+int(data[7]), int(data[6])+int(data[8]))))    
+    
 
+    def stepSelf(self, others):
+        super().stepSelf()
+        self.notAllowed = []
+        for i in others:
+            data = repr(i)
+            data = data.split(";")
+            self.notAllowed.append((data[1], (float(data[5])*self.scale+self.offsetx, float(data[6])*self.scale+self.offsety, float(
+                data[5])*self.scale+self.offsetx+float(data[7])*self.scale, float(data[6])*self.scale+self.offsety+float(data[8])*self.scale)))
+    
+    
     # respond to keyHold -> movement
     def selfKeyHold(self, events):
         if ("up" in events or "w" in events) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)[1]):
@@ -118,12 +129,11 @@ class player(unplayableSpriteClass):
         for i in self.notAllowed:
             if i[0] != "bg":
                 j = i[1]
-                if self.isPlayerColliding(self.x+offsetx, self.y+offsety, self.x+self.width+offsetx, self.y+self.height+offsety, *j):
+                if self.isPlayerColliding(self.x*self.scale+self.offsetx+offsetx, self.y*self.scale+self.offsety+offsety, self.x*self.scale+self.offsetx+offsetx+self.width*self.scale, self.y*self.scale+self.offsety+offsety+self.height*self.scale, *j):
                     return (i[0], False)
-        if self.notAllowed == [] and (self.x+offsetx <= 0 or self.x+offsetx+self.width >= 1305 or self.y+offsety <= 0 or self.y+self.height+offsety >= 720):
+        if self.x*self.scale+self.offsetx+offsetx <= self.offsetx or self.x*self.scale+self.offsetx+offsetx+self.width*self.scale >= 1305*self.scale or self.y*self.scale+self.offsety+offsety <= self.offsety or self.y*self.scale+self.offsety+offsety+self.height*self.scale >= 720*self.scale:
             return ("", False)
         return ("", True)
-
     # rectangle to rectangle collision
     def isPlayerColliding(self, left1, top1, right1, bottom1,
                           left2, top2, right2, bottom2):
@@ -140,7 +150,7 @@ class player(unplayableSpriteClass):
 class dialogue(unplayableSpriteClass):
     def drawSelf(self, text):
         # draw a shadow over everything
-        drawRect(0, 0, 1305, 720, opacity=70)
+        drawRect(self.offsetx, self.offsety, 1305*self.scale, 720*self.scale, opacity=70)
         # draws its image
         if self.todraw[0] == 1 and text[0] == 'samer':
             if self.todraw[1] != 0:
@@ -156,10 +166,10 @@ class dialogue(unplayableSpriteClass):
             textYPos = 445
             for i in range(6):
                 # max line len == 79 characters
-                drawLabel(text[1][i], 55, textYPos, size=25,
+                drawLabel(text[1][i], 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
-            drawLabel("SPACE or ENTER to continue ...", 950, textYPos-10, size=15,
+            drawLabel("SPACE or ENTER to continue ...", 900*self.scale+self.offsetx, (textYPos-10)*self.scale+self.offsety, size=25*self.scale*2/3,
                       font="monospace", bold=True, align="left-top")
 
     # updates todraw for animation
@@ -172,7 +182,7 @@ class dialogue(unplayableSpriteClass):
 # button general logic
 class button(unplayableSpriteClass):
     def selfMousePress(self, app, x, y):
-        if self.x < x < self.x+self.width and self.y < y < self.y+self.height:
+        if self.x*self.scale +self.offsetx< x < (self.x+self.width)*self.scale+self.offsetx and self.y*self.scale + self.offsety< y < (self.y+self.height)*self.scale+self.offsety:
             self.answer(app)
 
     def answer(self, app):
@@ -232,7 +242,7 @@ def scene0Draw(app):
         iSprite.drawSelf()
     for iSprite in app.buttons:
         iSprite.drawSelf()
-    drawLabel("Press k at any time to save.", 660, 650, size=25, fill="blue")
+    drawLabel("Press k at any time to save.", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
 
 
 #################################################
@@ -314,8 +324,8 @@ class playerScene2(player):
         elif (self.allowedMovement(*arg)[0] == "car" or self.allowedMovement(*arg)[0] == "salem") and app.Task[2]:
             app.sceneState = 7
 
-    def stepSelf(self):
-        super().stepSelf()
+    def stepSelf(self, others):
+        super().stepSelf(others)
         if not (self.allowedMovement(0, -self.movingSpeed)[1] and self.allowedMovement(0, self.movingSpeed)[1] and self.allowedMovement(-self.movingSpeed, 0)[1] and self.allowedMovement(self.movingSpeed, 0)[1]):
             self.todraw[1] = 1
         else:
@@ -355,7 +365,7 @@ def scene2Step(app):
         # calls the onStep of every object
         for iSprite in app.unplayableSprites:
             iSprite.stepSelf()
-        app.player.stepSelf()
+        app.player.stepSelf(app.unplayableSprites[1:])
     elif app.sceneState == 4:
         app.unplayableSprites[7].stepSelf(sceneState=app.sceneState)
         app.Task[0] = True
@@ -418,14 +428,14 @@ def scene2Draw(app):
 #################################################
 # Scene 3 function
 #################################################
-def gameDimensions():
+def gameDimensions(app):
     # These values are set to the writeup defaults
     rows = 17
     cols = 10
-    cellSize = 10
-    margin = 13
-    offsetx=590
-    offsety=160
+    cellSize = 10*app.scale
+    margin = 12*app.scale
+    offsetx=590*app.scale+app.offsetx
+    offsety=161*app.scale+app.offsety
     return (rows, cols, cellSize, margin, offsetx, offsety)
 
 
@@ -478,7 +488,7 @@ def loadTetris(app):
     app.emptyColor = 'blue'
     app.color = 'orange'
     # dimension and board
-    app.rows, app.cols, app.cellSize, app.margin, app.offsetx, app.offsety = gameDimensions()
+    app.rows, app.cols, app.cellSize, app.margin, app.tetrisOffsetx, app.tetrisOffsety = gameDimensions(app)
     app.board = [[app.emptyColor for _ in range(app.cols)] for _ in
                  range(app.rows)]
     # game states variable
@@ -554,6 +564,7 @@ def scene3Step(app):
 
 def stepTetris(app):
     if app.sceneTicks%10==0:
+        app.rows, app.cols, app.cellSize, app.margin, app.tetrisOffsetx, app.tetrisOffsety = gameDimensions(app)
         if not app.isGameOver and not app.isPaused and not moveFallingPiece(app,
                                                                             1, 0):
             placeFallingPiece(app)
@@ -568,15 +579,17 @@ def scene3Draw(app):
     if app.sceneState!=0:
         for isprite in app.unplayableSprites:
             isprite.drawSelf()
+        if app.offsety>0:
+            drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
         drawTetris(app)
         if 30-app.sceneTicks//30>=0:
-            drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650, 100, fill='red', size=16)
+            drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
         else:
-            drawLabel(f"00:00 seconds left", 650, 100, fill='red', size=16)
+            drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
 
 
 def drawTetris(app):
-        drawRect(app.offsetx, app.offsety, 2*app.margin+app.cols*app.cellSize,2*app.margin+app.rows*app.cellSize, fill='orange')
+        drawRect(app.tetrisOffsetx, app.tetrisOffsety, 2*app.margin+app.cols*app.cellSize,2*app.margin+app.rows*app.cellSize, fill='orange')
         # draws the game window
 
         # draw the different element of the board, which are the board the
@@ -586,10 +599,10 @@ def drawTetris(app):
         drawScore(app)
         # if the player is dead draws a Game over message
         if app.isGameOver:
-            drawRect(app.margin + app.offsetx, app.margin + app.cellSize + app.offsety,
+            drawRect(app.margin + app.tetrisOffsetx, app.margin + app.cellSize + app.tetrisOffsety,
                     app.cols * app.cellSize, app.cellSize * 2)
-            drawLabel("Game Over!", app.cols // 2 * app.cellSize + app.margin + app.offsetx,
-                    2 * app.cellSize + app.margin + app.offsety, fill='yellow', align='center',
+            drawLabel("Game Over!", app.cols // 2 * app.cellSize + app.margin + app.tetrisOffsetx,
+                    2 * app.cellSize + app.margin + app.tetrisOffsety, fill='yellow', align='center',
                     size=app.cellSize, bold=True)
 
 
@@ -597,14 +610,6 @@ def drawTetris(app):
 # scene 4 classes
 #################################################
 class playerScene4(player):
-    def stepSelf(self, ennemies):
-        self.notAllowed = []
-        for i in ennemies:
-            data = repr(i)
-            data = data.split(";")
-            self.notAllowed.append((data[1], (float(data[5]), float(data[6]), float(
-                data[5])+float(data[7]), float(data[6])+float(data[8]))))
-
     def removeEnnemie(self, i):
         if self.notAllowed[i][0] == "ennemie":
             j = self.notAllowed[i][1]
@@ -801,7 +806,6 @@ def scene100OnKeyPress(app, event):
 
 
 def scene100Draw(app):
-    drawRect(0, 0, 1305, 720)
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
     drawLabel("Press r to try again.", 660, 450, size=25, fill="orange")
@@ -833,6 +837,32 @@ def cleanAppVariables(app):
     app.debuggingTicks = 0
     app.stepsPerSecond=30
 
+
+def rescaleAll(app):
+    app.scale=min(app.width/1305, app.height/720)
+    if app.scale == app.height/720:
+        app.offsetx=(app.width/1305-app.height/720)*app.width/2
+        app.offsety=0
+    else:
+        app.offsety=(app.height/720-app.width/1305)*app.height/2
+        app.offsetx=0
+    for isprite in app.unplayableSprites:
+        isprite.scale=app.scale
+        isprite.offsetx=app.offsetx
+        isprite.offsety=app.offsety
+    for isprite in app.buttons:
+        isprite.scale=app.scale 
+        isprite.offsetx=app.offsetx
+        isprite.offsety=app.offsety
+    if app.player:
+        app.player.scale=app.scale 
+        app.player.offsetx=app.offsetx
+        app.player.offsety=app.offsety
+    app.dialogueBox.scale=app.scale 
+    app.dialogueBox.offsetx=app.offsetx
+    app.dialogueBox.offsety=app.offsety
+
+
 #################################################
 # Tetris tutorial's functions in order
 #################################################
@@ -849,8 +879,8 @@ def drawCell(app, row, col, color=None):
     # draws cells which are squares on the game window
 
     # if it is a board cell, the position arguments are the final coordinates
-    finalcol = col * app.cellSize + app.margin + app.offsetx
-    finalrow = row * app.cellSize + app.margin + app.offsety
+    finalcol = col * app.cellSize + app.margin + app.tetrisOffsetx
+    finalrow = row * app.cellSize + app.margin + app.tetrisOffsety
     if color is None:
         color = app.board[row][col]
     # if it is not a board cell then we need to add the relative position of
@@ -1020,8 +1050,8 @@ def drawScore(app):
     # displays the score on the top of the game window
 
     drawLabel("Score: " + str(app.score),
-              app.cols // 2 * app.cellSize + app.margin + app.offsetx,
-              app.margin // 2 + app.offsety, fill='blue', align='center',
+              app.cols // 2 * app.cellSize + app.margin + app.tetrisOffsetx,
+              app.margin // 2 + app.tetrisOffsety, fill='blue', align='center',
               size=app.cellSize // 1.2, bold=True)
 
 
@@ -1038,6 +1068,10 @@ def hardDropFallingPiece(app):
 def onAppStart(app):
     # runs at the start of the game
     app.stepsPerSeconds = 30
+    app.background="black"
+    app.scale=1
+    app.offsetx=0
+    app.offsety=0
     app.gameState = 0
     app.previousScene = 1
     cleanAppVariables(app)
@@ -1064,10 +1098,11 @@ def onAppStart(app):
 def onStep(app):
     # increase debugging ticks by 1 and reflects that in the app window
     app.debuggingTicks += 1
-    # disallow resizing
-    if app.width != 1305 or app.height != 720:
-        app.width = 1305
-        app.height = 720
+    # rescale everything based on window size
+    rescaleAll(app)
+
+    
+    #step scene
     if app.gameState == 0:
         scene0Step(app)
     elif app.gameState == 1:
@@ -1136,7 +1171,8 @@ def redrawAll(app):
         scene100Draw(app)
     else:
         app.endScreen.drawSelf()
-
+    drawLine(app.width/2,0, app.width/2, app.height, fill='green')
+    drawLine(0, app.height/2, app.width,app.height/2, fill='green')
 
     # app.shader.drawSelf()
     # draw the number of frame since the beginining of the game
