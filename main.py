@@ -107,13 +107,13 @@ class player(unplayableSpriteClass):
     
     # respond to keyHold -> movement
     def selfKeyHold(self, events):
-        if ("up" in events or "w" in events or events==(1,-1)) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)[1]):
+        if ("up" in events or "w" in events or (1,-1) in events) and (not self.activeCollision or self.allowedMovement(0, -self.movingSpeed)[1]):
             self.y -= self.movingSpeed
-        if ("down" in events or "s" in events or events==(1,1)) and (not self.activeCollision or self.allowedMovement(0, self.movingSpeed)[1]):
+        if ("down" in events or "s" in events or (1,1) in events) and (not self.activeCollision or self.allowedMovement(0, self.movingSpeed)[1]):
             self.y += self.movingSpeed
-        if ("right" in events or "d" in events or events==(0,1)) and (not self.activeCollision or self.allowedMovement(self.movingSpeed, 0)[1]):
+        if ("right" in events or "d" in events or (0,1) in events) and (not self.activeCollision or self.allowedMovement(self.movingSpeed, 0)[1]):
             self.x += self.movingSpeed
-        if ("left" in events or "a" in events or events==(0,-1)) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)[1]):
+        if ("left" in events or "a" in events or (0,-1) in events) and (not self.activeCollision or self.allowedMovement(-self.movingSpeed, 0)[1]):
             self.x -= self.movingSpeed
 
 
@@ -1269,8 +1269,8 @@ def onJoyPress(app, button, joystick):
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
      # Make sure we can exit by pressing the "P1" button
-    if button == '5':
-        sys.exit(0)
+    # if button == '5':
+    #     sys.exit(0)
 
 
 def onDigitalJoyAxis(app, results, joystick):

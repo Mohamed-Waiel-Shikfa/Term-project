@@ -14,7 +14,7 @@ _joysticks = dict()
 
 
 def handlePygameEvent(event, callUserFn, app):
-    print(event)
+    # print(event)
     if event.type == pygame.JOYDEVICEADDED:
         joy = pygame.joystick.Joystick(event.device_index)
         _joysticks[joy.get_instance_id()] = joy
