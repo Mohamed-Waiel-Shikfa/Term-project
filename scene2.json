@@ -62,12 +62,12 @@
         },
         "car":{
             "url":["./Final Images/scene 2 time traveling car/"],
-            "images":[["Time travelling car 1-1.png"]],
+            "images":[["Time travelling car 1.png"]],
             "toDraw":[0,0],
-            "x":950,
-            "y":345,
-            "width":320,
-            "height":320,
+            "x":970,
+            "y":405,
+            "width":280,
+            "height":200,
             "color":"red"
         }
     },
