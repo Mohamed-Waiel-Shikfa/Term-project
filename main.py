@@ -12,7 +12,10 @@ import os
 import copy
 import joystick
 import sys
-
+# install: pip install --upgrade arabic-reshaper
+import arabic_reshaper
+# install: pip install python-bidi
+from bidi.algorithm import get_display
 
 #################################################
 # global classes
@@ -161,7 +164,7 @@ class dialogue(unplayableSpriteClass):
             textYPos = 440
             for i in range(6):
                 # max line len == 79 characters
-                drawLabel(text[1][i], 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
+                drawLabel(get_display(arabic_reshaper.reshape(text[1][i])), 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
             drawLabel("SPACE or ENTER to continue ...", 900*self.scale+self.offsetx, (textYPos-10)*self.scale+self.offsety, size=25*self.scale*2/3,
