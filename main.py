@@ -158,7 +158,7 @@ class dialogue(unplayableSpriteClass):
         super().drawSelf()
         if self.todraw[0] > 0:
             # draws text if it has finish animation
-            textYPos = 445
+            textYPos = 430
             for i in range(6):
                 # max line len == 79 characters
                 drawLabel(text[1][i], 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
@@ -190,14 +190,16 @@ class digitBox(unplayableSpriteClass):
     def __init__(self, *args, angle=0, opacity=100):
         super().__init__(*args, angle=angle, opacity=opacity)
         self.labelText=[""]*4
-    def drawSelf(self, question):
+    def drawSelf(self, question, question2, question3):
         super().drawSelf()
-        drawLabel(question, 655,230, size=32*self.scale*2/3)
+        drawLabel(question, 655*self.scale+self.scale,200*self.scale+self.offsety, size=32*self.scale*2/3)
+        drawLabel(question2, 655*self.scale+self.scale,230*self.scale+self.offsety, size=32*self.scale*2/3)
+        drawLabel(question3, 655*self.scale+self.scale,260*self.scale+self.offsety, size=32*self.scale*2/3)
         for i in range(4):
-            drawRect(375+150*i, 300, 110, 150, fill=None, border="black")
-            drawLabel(self.labelText[i], 430+150*i, 375, size = 256*self.scale*2/3)
-        drawLabel("On pc just type the number.", 655, 500, size=32*self.scale*2/3)
-        drawLabel("On arcade press b to increase current digit and a to validate it.", 655, 530, size=32*self.scale*2/3)
+            drawRect((375+150*i)*self.scale+self.offsetx, 300*self.scale+self.offsety, 110*self.scale, 150*self.scale, fill=None, border="black")
+            drawLabel(self.labelText[i], (430+150*i)*self.scale+self.offsetx, 375*self.scale+self.offsety, size = 256*self.scale*2/3)
+        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=32*self.scale*2/3)
+        drawLabel("On arcade press b to increase current digit and a to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=32*self.scale*2/3)
     def getCrntNumberLen(self):
         nblen=0
         for i in self.labelText:
@@ -239,7 +241,9 @@ class buttonScene0(button):
                 "Input saved game name (if game name doesn't exist, game will crash and you will have to rerun it).")
             if os.path.isfile("./saved games/" + response + ".txt"):
                 with open("./saved games/" + response + ".txt", "r") as file:
-                    app.crntGameIndex = int(file.read())-1
+                    data=file.read()
+                app.crntGameIndex = [int(data[0]), int(data[1])-1]
+                print(app.crntGameIndex)
                 nextScene(app)
                 cleanAppVariables(app)
             else:
@@ -415,6 +419,8 @@ def scene2Step(app):
             app.Task[2] = True
     else:
         app.dialogueBox.stepSelf()
+    if app.sceneState==15:
+        app.digitBox.stepSelf()
 
 
 def scene2OnKeyHold(app, events):
@@ -429,10 +435,23 @@ def scene2OnKeyPress(app, event):
         app.player.selfKeyPress(event, app)
     elif app.sceneState in [4, 5, 6]:
         app.sceneState = 3
-    elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
+    elif app.sceneState == 2 or 15>app.sceneState > 6 or 17>app.sceneState > 15:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState > 6:
+    if app.sceneState==15 and "enter" == event or "space" == event:
+        if app.digitBox.getCrntNumberLen()==4:
+            if app.digitBox.getNumber()>2061:
+                app.sceneState+=1
+                app.year = app.digitBox.getNumber()
+            for i in range(4):
+                app.digitBox.labelText[i]=""
+    elif app.sceneState==15 and event.isdigit():
+        if app.digitBox.getCrntNumberLen()!=4:
+            app.digitBox.newDigit(event)
+    if app.sceneState == 17:
+        if app.year>2500:
+            app.crntGameIndex[0]=1
+            app.crntGameIndex[1]=-1
         nextScene(app)
         cleanAppVariables(app)
 
@@ -471,7 +490,18 @@ def scene2Draw(app):
         app.unplayableSprites[9].drawSelf()
     if app.sceneState == 2:
         app.dialogueBox.drawSelf(app.text["1"])
-    if app.sceneState > 6:
+    if app.sceneState==15:
+        for iSprite in app.unplayableSprites:
+            iSprite.drawSelf()
+        app.player.drawSelf()
+        app.dialogueBox.drawSelf(app.text[str(app.sceneState-6)])
+        app.digitBox.drawSelf("To when do you think I should time travel?","Has to be a year in the futur", "(duh I just said that, pls read the dialogue).")
+    elif app.sceneState > 15:
+        for iSprite in app.unplayableSprites:
+            iSprite.drawSelf()
+        app.player.drawSelf()
+        app.dialogueBox.drawSelf(app.text[str(app.sceneState-6)])
+    elif app.sceneState > 6:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
         app.player.drawSelf()
@@ -597,7 +627,7 @@ def scene3OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if event == "c" and  30-app.sceneTicks//30<=0:
+    if event == "c" and  3-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -644,7 +674,7 @@ def scene3Draw(app):
         if app.offsety>0:
             drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
         drawTetris(app)
-        if 30-app.sceneTicks//30>=0:
+        if 3-app.sceneTicks//30>=0:
             drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
         else:
             drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
@@ -950,7 +980,7 @@ def loadScene7(app):
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene7, "static")
     path = scene7["player"]
-    app.player = playerScene8(
+    app.player = playerScene7(
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
 
 
@@ -988,7 +1018,7 @@ def scene7OnKeyPress(app, event):
     elif app.sceneState==7 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
-    if app.sceneState == 15:
+    if app.sceneState == 14:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -1033,8 +1063,6 @@ def scene7Draw(app):
 # scene 8 classes
 #################################################
 class playerScene8(player):
-    def getXPos(self):
-        return self.x
     def stepSelf(self):
         super().stepSelf()
         if not (self.allowedMovement(0, -self.movingSpeed)[1] and self.allowedMovement(0, self.movingSpeed)[1] and self.allowedMovement(-self.movingSpeed, 0)[1] and self.allowedMovement(self.movingSpeed, 0)[1]):
@@ -1069,7 +1097,7 @@ def scene8Step(app):
     if 6 > app.sceneState > 2 or 14 > app.sceneState > 6:
         app.dialogueBox.stepSelf()
     if app.sceneState == 6:
-        if app.player.getXPos()>1200:
+        if app.player.x>1200:
             app.sceneState+=1
         if app.player.stepSelf():
             app.gameState = 100
@@ -1087,7 +1115,7 @@ def scene8OnKeyPress(app, event):
     if 6 > app.sceneState > 2 or 14 > app.sceneState > 6:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 14:
+    if app.sceneState == 13:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -1124,6 +1152,8 @@ def scene8Draw(app):
 #################################################
 # scene 9 classes
 #################################################
+class playerScene9(player):
+    pass
 #################################################
 # Scene 9 function
 #################################################
@@ -1132,6 +1162,9 @@ def loadScene9(app):
     print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene9, "static")
+    path = scene9["player"]
+    app.player = playerScene9(
+        "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
 
 
 def scene9Step(app):
@@ -1171,15 +1204,12 @@ def scene9OnJoyPress(app, button, joystick):
 
 
 def scene9Draw(app):
-    if app.sceneState==1:
-        for iSprite in app.unplayableSprites[:-1]:
-            iSprite.drawSelf()
-    if app.sceneState==2:
+    if app.sceneState>=1:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
+    if app.sceneState>=2:
+        app.player.drawSelf()
     if 11 > app.sceneState > 2:
-        for iSprite in app.unplayableSprites:
-            iSprite.drawSelf()
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
 
 
@@ -1209,15 +1239,15 @@ def scene10Step(app):
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
-    if app.sceneState >= 3:
+    elif app.sceneState >= 3:
         app.dialogueBox.stepSelf()
 
 
 def scene10OnKeyPress(app, event):
-    if app.sceneState > 2 and app.sceneState < 10:
+    if app.sceneState >= 3 and app.sceneState < 9:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 10:
+    if app.sceneState == 9:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -1236,12 +1266,10 @@ def scene10Draw(app):
     if app.sceneState==1:
         for iSprite in app.unplayableSprites[:-1]:
             iSprite.drawSelf()
-    if app.sceneState==2:
+    if app.sceneState>=2:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
-    if 11 > app.sceneState > 2:
-        for iSprite in app.unplayableSprites:
-            iSprite.drawSelf()
+    if 9 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
 
 
@@ -1260,18 +1288,13 @@ def loadScene11(app):
 
 def scene11Step(app):
     if app.sceneState == 0:
-        loadScene11(app)
+        loadScene5(app)
         app.sceneState += 1
     if app.sceneState == 1:
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 2
-            app.sceneTicks=0
-    if app.sceneState == 2:
-        app.sceneTicks += 1
-        if app.sceneTicks == 30:
-            app.sceneState = 3
-    if app.sceneState >= 3:
+    elif app.sceneState >= 2:
         app.dialogueBox.stepSelf()
 
 
@@ -1329,7 +1352,13 @@ def scene100Step(app):
 
 def scene100OnKeyPress(app, event):
     if event == "r":
-        app.gameState =app.storyFlow[app.crntGameIndex]
+        if app.crntGameIndex[0]==1:
+            app.crntGameIndex[0]=0
+            app.crntGameIndex[1]=2
+        elif app.crntGameIndex[0]==2:
+            app.crntGameIndex[0]=0
+            app.crntGameIndex[1]=11
+        app.gameState = app.storyFlow[app.crntGameIndex[0]][app.crntGameIndex[1]]
         cleanAppVariables(app)
 
 
@@ -1406,8 +1435,8 @@ def rescaleAll(app):
 
 
 def nextScene(app):
-    app.crntGameIndex +=1
-    app.gameState=app.storyFlow[app.crntGameIndex]
+    app.crntGameIndex[1] +=1
+    app.gameState=app.storyFlow[app.crntGameIndex[0]][app.crntGameIndex[1]]
 
 
 #################################################
@@ -1619,10 +1648,11 @@ def onAppStart(app):
     app.scale=1
     app.offsetx=0
     app.offsety=0
+    app.year = 2061
     app.gameState = 0
-    app.crntGameIndex = 0
+    app.crntGameIndex = [0, 0]
     app.storyFlow=game["gameState"]
-    app.gameState = app.storyFlow[app.crntGameIndex]
+    app.gameState = 0
     # saves the dialogue object in app.dialogueBox
     path = game["dialogue"]
     app.dialogueBox = dialogue("dialogue", path["url"], path["images"], path["toDraw"],
@@ -1641,7 +1671,7 @@ def onAppStart(app):
     # print to confirm initiation
     # if everything runned properly this print all the loaded data of the scene
     cleanAppVariables(app)
-    # loadScene6(app)
+    loadScene0(app)
     print(app.dialogueBox)
     print(repr(app.dialogueBox))
     print(app.shader)
@@ -1725,7 +1755,7 @@ def onKeyPress(app, event):
     if event == "k" and app.gameState!=0:
         response = app.getTextInput("What would you like to name this save")
         with open("./saved games/" + response + ".txt", "w") as file:
-            file.write(str(app.crntGameIndex))
+            file.write(str(app.crntGameIndex[0])+str(app.crntGameIndex[1]))
 
 
 def onMousePress(app, x, y):

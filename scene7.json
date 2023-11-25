@@ -1,8 +1,8 @@
 {
   "static": {
     "bg": {
-      "url": ["./Final Images/scene 2 background garaje door/"],
-      "images": [["background garaje door v2.png"]],
+      "url": ["./Final Images/scene 7 background/"],
+      "images": [["lab 1.png"]],
       "toDraw": [0, 0],
       "x": 0,
       "y": 0,
@@ -27,7 +27,7 @@
       "x": 800,
       "y": 0,
       "width": 40,
-      "height": 720,
+      "height": 700,
       "color": "red"
     }
   },

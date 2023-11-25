@@ -267,8 +267,8 @@
     "toDraw": [0, 0],
     "x": 50,
     "y": 360,
-    "width": 40,
-    "height": 40,
+    "width": 30,
+    "height": 30,
     "color": "blue"
   },
   "texts": {
