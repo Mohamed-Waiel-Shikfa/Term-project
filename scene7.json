@@ -42,56 +42,43 @@
     "color": "blue"
   },
   "texts": {
-    "1": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "1": ["samer", ["", "...", "Oh, Where am I?", "", "", ""]],
     "2": [
       "samer",
       [
         "",
-        "",
-        "",
-        "(Translation) I CAN FINALLY SPEAK ARABIC!!!!!",
-        "YOOOOOOHOOOOOOO",
-        "",
+        "I am going to check with my sensors.",
+        "...",
+        "Beep Boop Beep",
+        "Scanning Surroundings ...",
         ""
       ]
     ],
-    "3": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "3": [
+      "samer",
+      [
+        "Oh, apperently this area has anti-teleportation technologie.",
+        "But my sensor also still pick up the time space machine signal.",
+        "this indicates that the time space machine has better teleportation technologie",
+        "than I do, which will make my escape easier.",
+        "Well then, I am going to have to go through anyways",
+        ""
+      ]
+    ],
     "4": [
       "samer",
       [
         "",
-        "",
-        "(Translation) The mission went so well, OH MY GOD!!!",
-        "",
-        "",
-        ""
-      ]
-    ],
-    "5": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "6": ["samer", ["", "", "(Translation) OH I am so happy!!!", "", "", ""]],
-    "7": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "8": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Well I guess our adventure ends here.",
-        "(but who knows maybe we will have to go for another one)",
+        "First,I need to go past this door.",
+        "It looks like it has a password that we can deduce ",
+        "from a riddle written on top of it.",
         "",
         ""
       ]
     ],
-    "9": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "10": [
+    "5": [
       "samer",
-      [
-        "",
-        "",
-        "(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.",
-        "",
-        "",
-        ""
-      ]
+      ["", "Yey, I unloked it", "Ok, on to the next room.", "", "", ""]
     ]
   }
 }

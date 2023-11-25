@@ -158,7 +158,7 @@ class dialogue(unplayableSpriteClass):
         super().drawSelf()
         if self.todraw[0] > 0:
             # draws text if it has finish animation
-            textYPos = 430
+            textYPos = 440
             for i in range(6):
                 # max line len == 79 characters
                 drawLabel(text[1][i], 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
@@ -238,11 +238,13 @@ class buttonScene0(button):
             cleanAppVariables(app)
         else:
             response = app.getTextInput(
-                "Input saved game name (if game name doesn't exist, game will crash and you will have to rerun it).")
+                "Input saved game name (if game name doesn't exist,nothing will happen).")
             if os.path.isfile("./saved games/" + response + ".txt"):
                 with open("./saved games/" + response + ".txt", "r") as file:
                     data=file.read()
-                app.crntGameIndex = [int(data[0]), int(data[1])-1]
+                app.crntGameIndex = data.split(";")
+                app.crntGameIndex[0]=int(app.crntGameIndex[0])
+                app.crntGameIndex[1]=int(app.crntGameIndex[1])-1
                 print(app.crntGameIndex)
                 nextScene(app)
                 cleanAppVariables(app)
@@ -495,7 +497,7 @@ def scene2Draw(app):
             iSprite.drawSelf()
         app.player.drawSelf()
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-6)])
-        app.digitBox.drawSelf("To when do you think I should time travel?","Has to be a year in the futur", "(duh I just said that, pls read the dialogue).")
+        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year in the futur", "(duh I just said that, pls read the dialogue).")
     elif app.sceneState > 15:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
@@ -873,10 +875,10 @@ def scene5Step(app):
 
 
 def scene5OnKeyPress(app, event):
-    if app.sceneState > 0 and app.sceneState < 10:
+    if app.sceneState > 0 and app.sceneState < 12:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 10:
+    if app.sceneState == 12:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -886,14 +888,14 @@ def scene5OnJoyPress(app, button, joystick):
         if app.sceneState > 0 and app.sceneState < 10:
             if "2" == button:
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 10:
             nextScene(app)
             cleanAppVariables(app)
 
 
 def scene5Draw(app):
     # calls the draw of every object
-    if 11 > app.sceneState > 1:
+    if 13 > app.sceneState > 1:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
         app.player.drawSelf()
@@ -934,7 +936,7 @@ def scene6OnKeyPress(app, event):
     if app.sceneState > 2 and app.sceneState < 10:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 10:
+    if app.sceneState == 10:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -999,26 +1001,26 @@ def scene7Step(app):
             app.sceneState = 3
     if app.sceneState >= 3:
         app.dialogueBox.stepSelf()
-    if app.sceneState == 6:
+    if app.sceneState == 7:
         if app.player.stepSelf():
-            app.sceneState=7
+            app.sceneState=8
 
 
 def scene7OnKeyPress(app, event):
-    if 6 > app.sceneState > 2 or 15 > app.sceneState > 7:
+    if 7 > app.sceneState > 2 or 15 > app.sceneState > 8:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    if app.sceneState==7 and "enter" == event or "space" == event:
+    if app.sceneState==8 and "enter" == event or "space" == event:
         if app.digitBox.getCrntNumberLen()==4:
-            if app.digitBox.getNumber()==1111:
+            if app.digitBox.getNumber()==1729:
                 app.sceneState+=1
             else:
                 for i in range(4):
                     app.digitBox.labelText[i]=""
-    elif app.sceneState==7 and event.isdigit():
+    elif app.sceneState==8 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
-    if app.sceneState == 14:
+    if app.sceneState == 10:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -1036,7 +1038,7 @@ def scene7OnJoyPress(app, button, joystick):
 def scene7OnKeyHold(app, events):
     # calls keyHold of the player
     # app.player.selfKeyHold(events)
-    if app.sceneState == 6:
+    if app.sceneState == 7:
         app.player.selfKeyHold(events)
 
 
@@ -1052,12 +1054,12 @@ def scene7Draw(app):
             iSprite.drawSelf()
     if app.sceneState>=2:
         app.player.drawSelf()
-    if app.sceneState==7:
-        app.digitBox.drawSelf("test")
-    if 6 > app.sceneState > 2:
+    if app.sceneState==8:
+        app.digitBox.drawSelf("What is the smallest number that can be written", "as the sum of two cubes in two different way", "")
+    if 7 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
-    if 14 > app.sceneState > 7:
-        app.dialogueBox.drawSelf(app.text[str(app.sceneState-4)])
+    if app.sceneState == 9:
+        app.dialogueBox.drawSelf(app.text["5"])
 
 #################################################
 # scene 8 classes
@@ -1094,9 +1096,9 @@ def scene8Step(app):
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
-    if 6 > app.sceneState > 2 or 14 > app.sceneState > 6:
+    if 5 > app.sceneState > 2 or 7 > app.sceneState > 5:
         app.dialogueBox.stepSelf()
-    if app.sceneState == 6:
+    if app.sceneState == 5:
         if app.player.x>1200:
             app.sceneState+=1
         if app.player.stepSelf():
@@ -1107,15 +1109,15 @@ def scene8Step(app):
 def scene8OnKeyHold(app, events):
     # calls keyHold of the player
     # app.player.selfKeyHold(events)
-    if app.sceneState == 6:
+    if app.sceneState == 5:
         app.player.selfKeyHold(events)
 
 
 def scene8OnKeyPress(app, event):
-    if 6 > app.sceneState > 2 or 14 > app.sceneState > 6:
+    if  5> app.sceneState > 2 or 7 > app.sceneState > 5:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    if app.sceneState == 13:
+    if app.sceneState == 7:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -1142,9 +1144,9 @@ def scene8Draw(app):
             iSprite.drawSelf()
     if app.sceneState>=2:
         app.player.drawSelf()
-    if 6 > app.sceneState > 2:
+    if 5 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
-    if 14 > app.sceneState > 6:
+    if 7 > app.sceneState > 5:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-3)])
 
 
@@ -1182,15 +1184,30 @@ def scene9Step(app):
             app.sceneState = 3
     if app.sceneState >= 3:
         app.dialogueBox.stepSelf()
+    if app.sceneState==5:
+        app.digitBox.stepSelf()
 
 
 def scene9OnKeyPress(app, event):
-    if app.sceneState > 2 and app.sceneState < 10:
+    if 5> app.sceneState > 2 or app.sceneState > 5:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 10:
+    if app.sceneState == 7:
+        if app.year<1850:
+            app.crntGameIndex[0]=2
+            app.crntGameIndex[1]=-1
         nextScene(app)
         cleanAppVariables(app)
+    if app.sceneState==5 and "enter" == event or "space" == event:
+        if app.digitBox.getCrntNumberLen()==4:
+            if app.digitBox.getNumber()<1950:
+                app.sceneState+=1
+                app.year = app.digitBox.getNumber()
+            for i in range(4):
+                app.digitBox.labelText[i]=""
+    elif app.sceneState==5 and event.isdigit():
+        if app.digitBox.getCrntNumberLen()!=4:
+            app.digitBox.newDigit(event)
 
 
 def scene9OnJoyPress(app, button, joystick):
@@ -1209,8 +1226,10 @@ def scene9Draw(app):
             iSprite.drawSelf()
     if app.sceneState>=2:
         app.player.drawSelf()
-    if 11 > app.sceneState > 2:
+    if 7 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
+    if app.sceneState==5:
+        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year before 1950", "(remeinder to read the dialogue please)")
 
 
 #################################################
@@ -1288,23 +1307,29 @@ def loadScene11(app):
 
 def scene11Step(app):
     if app.sceneState == 0:
-        loadScene5(app)
+        loadScene11(app)
         app.sceneState += 1
     if app.sceneState == 1:
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 2
-    elif app.sceneState >= 2:
+            app.sceneTicks=0
+    if app.sceneState == 2:
+        app.sceneTicks += 1
+        if app.sceneTicks == 30:
+            app.sceneState = 3
+    elif app.sceneState >= 3:
         app.dialogueBox.stepSelf()
 
 
 def scene11OnKeyPress(app, event):
-    if app.sceneState > 2 and app.sceneState < 10:
+    if app.sceneState >= 3 and app.sceneState < 9:
         if "enter" == event or "space" == event:
             app.sceneState += 1
-    elif app.sceneState == 10:
+    if app.sceneState == 9:
         nextScene(app)
         cleanAppVariables(app)
+
 
 
 def scene11OnJoyPress(app, button, joystick):
@@ -1321,14 +1346,11 @@ def scene11Draw(app):
     if app.sceneState==1:
         for iSprite in app.unplayableSprites[:-1]:
             iSprite.drawSelf()
-    if app.sceneState==2:
+    if app.sceneState>=2:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()
-    if 11 > app.sceneState > 2:
-        for iSprite in app.unplayableSprites:
-            iSprite.drawSelf()
+    if 9 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
-
 
 #################################################
 # Scene 100 classes
@@ -1748,14 +1770,14 @@ def onKeyPress(app, event):
     elif app.gameState == 100:
         scene100OnKeyPress(app, event)
     elif event == "r":
-        app.crntGameIndex = -1
+        app.crntGameIndex = [0,-1]
         nextScene(app)
         cleanAppVariables(app)
         loadScene0(app)
     if event == "k" and app.gameState!=0:
         response = app.getTextInput("What would you like to name this save")
         with open("./saved games/" + response + ".txt", "w") as file:
-            file.write(str(app.crntGameIndex[0])+str(app.crntGameIndex[1]))
+            file.write(str(app.crntGameIndex[0])+";"+str(app.crntGameIndex[1]))
 
 
 def onMousePress(app, x, y):
@@ -1834,7 +1856,7 @@ with open('./gameGlobal.json', 'r') as file:
     game = json.load(file)
 allData=[]
 for i in range(12):
-    with open(f'./scene{i}.json', 'r') as file:
+    with open(f'./scene{i}.json', 'r', encoding="utf8") as file:
         allData.append(json.load(file))
 scene0, scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9, scene10, scene11= allData 
 with open('./scene100.json', 'r') as file:

@@ -11,15 +11,15 @@
       "color": "grey"
     },
     "floor": {
-        "url": ["./Final Images/scene 2 floor/"],
-        "images": [["floor v2.png"]],
-        "toDraw": [0, 0],
-        "x": 0,
-        "y": 700,
-        "width": 1305,
-        "height": 20,
-        "color": "white"
-      },
+      "url": ["./Final Images/scene 2 floor/"],
+      "images": [["floor v2.png"]],
+      "toDraw": [0, 0],
+      "x": 0,
+      "y": 700,
+      "width": 1305,
+      "height": 20,
+      "color": "white"
+    },
     "pil1": {
       "url": ["./Final Images/scene 8 pillar/"],
       "images": [["pillar.png"]],
@@ -181,85 +181,85 @@
       "color": "grey"
     },
     "pil17": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 600,
-        "y": 100,
-        "width": 300,
-        "height": 20,
-        "color": "grey"
-      },
-      "pil18": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 970,
-        "y": 100,
-        "width": 20,
-        "height": 510,
-        "color": "grey"
-      },
-      "pil19": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 830,
-        "y": 350,
-        "width": 20,
-        "height": 280,
-        "color": "grey"
-      },
-      "pil20": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 600,
-        "y": 600,
-        "width": 20,
-        "height": 100,
-        "color": "grey"
-      },
-      "pil21": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 600,
-        "y": 300,
-        "width": 20,
-        "height": 200,
-        "color": "grey"
-      },
-      "pil22": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 600,
-        "y": 600,
-        "width": 100,
-        "height": 20,
-        "color": "grey"
-      },
-      "pil23": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 320,
-        "y": 600,
-        "width": 100,
-        "height": 20,
-        "color": "grey"
-      },
-      "pil24": {
-        "url": ["./Final Images/scene 8 pillar/"],
-        "images": [["pillar.png"]],
-        "toDraw": [0, 0],
-        "x": 150,
-        "y": 600,
-        "width": 100,
-        "height": 20,
-        "color": "grey"
-      }
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 600,
+      "y": 100,
+      "width": 300,
+      "height": 20,
+      "color": "grey"
+    },
+    "pil18": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 970,
+      "y": 100,
+      "width": 20,
+      "height": 510,
+      "color": "grey"
+    },
+    "pil19": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 830,
+      "y": 350,
+      "width": 20,
+      "height": 280,
+      "color": "grey"
+    },
+    "pil20": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 600,
+      "y": 600,
+      "width": 20,
+      "height": 100,
+      "color": "grey"
+    },
+    "pil21": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 600,
+      "y": 300,
+      "width": 20,
+      "height": 200,
+      "color": "grey"
+    },
+    "pil22": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 600,
+      "y": 600,
+      "width": 100,
+      "height": 20,
+      "color": "grey"
+    },
+    "pil23": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 320,
+      "y": 600,
+      "width": 100,
+      "height": 20,
+      "color": "grey"
+    },
+    "pil24": {
+      "url": ["./Final Images/scene 8 pillar/"],
+      "images": [["pillar.png"]],
+      "toDraw": [0, 0],
+      "x": 150,
+      "y": 600,
+      "width": 100,
+      "height": 20,
+      "color": "grey"
+    }
   },
   "player": {
     "url": ["./Final Images/scene 8 player/"],
@@ -272,56 +272,22 @@
     "color": "blue"
   },
   "texts": {
-    "1": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "1": ["samer", ["", "Oh No, =[", "What now a maze!!! =.=", "", "", ""]],
     "2": [
       "samer",
       [
         "",
         "",
         "",
-        "(Translation) I CAN FINALLY SPEAK ARABIC!!!!!",
-        "YOOOOOOHOOOOOOO",
-        "",
-        ""
-      ]
-    ],
-    "3": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "4": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) The mission went so well, OH MY GOD!!!",
+        "These walls look dangerous. I better avoid them.",
         "",
         "",
         ""
       ]
     ],
-    "5": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "6": ["samer", ["", "", "(Translation) OH I am so happy!!!", "", "", ""]],
-    "7": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "8": [
+    "3": [
       "samer",
-      [
-        "",
-        "",
-        "(Translation) Well I guess our adventure ends here.",
-        "(but who knows maybe we will have to go for another one)",
-        "",
-        ""
-      ]
-    ],
-    "9": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "10": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.",
-        "",
-        "",
-        ""
-      ]
+      ["", "Yey, I made it through.", "Ok, on to the next room.", "", "", ""]
     ]
   }
 }

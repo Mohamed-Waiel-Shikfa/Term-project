@@ -22,56 +22,27 @@
     }
   },
   "texts": {
-    "1": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "2": [
-      "samer",
-      [
-        "",
-        "",
-        "",
-        "(Translation) I CAN FINALLY SPEAK ARABIC!!!!!",
-        "YOOOOOOHOOOOOOO",
-        "",
-        ""
-      ]
-    ],
-    "3": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "1": ["salem", ["", "", "...", "", "", ""]],
+    "2": ["samer", ["", "", "", "...!!!!!", "", "", ""]],
+    "3": ["salem", ["", "", "It looks like we went to far back in time ", "and Qatar is a complete desert.", "", ""]],
     "4": [
       "samer",
+      ["", "", "My sensors confirme this statement.", "", "", ""]
+    ],
+    "5": [
+      "salem",
       [
         "",
         "",
-        "(Translation) The mission went so well, OH MY GOD!!!",
+        "Damn, and it looks like we have no more fuel.",
         "",
         "",
         ""
       ]
     ],
-    "5": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "6": ["samer", ["", "", "(Translation) OH I am so happy!!!", "", "", ""]],
-    "7": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "8": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Well I guess our adventure ends here.",
-        "(but who knows maybe we will have to go for another one)",
-        "",
-        ""
-      ]
-    ],
-    "9": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "10": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.",
-        "",
-        "",
-        ""
-      ]
+    "6": [
+      "salem",
+      ["", "", "Oh well, we are as good as dead...sob, SOB!!!", "", "", ""]
     ]
   }
 }

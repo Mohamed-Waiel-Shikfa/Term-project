@@ -32,56 +32,34 @@
     "color": "blue"
   },
   "texts": {
-    "1": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "1": ["samer", ["", "OOOOOOOOhh", "I have found it.", "", "", ""]],
     "2": [
       "samer",
       [
         "",
         "",
-        "",
-        "(Translation) I CAN FINALLY SPEAK ARABIC!!!!!",
-        "YOOOOOOHOOOOOOO",
+        "Alright time to go back! =P",
+        "But before that I am going to decide to what time in the past we should go to.",
+        "Quick before the police force arrive.",
         "",
         ""
       ]
     ],
-    "3": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "3": [
+      "samer",
+      [
+        "",
+        "",
+        "Alright time to go back! =P",
+        "But before that I am going to decide to what time in the past we should go to.",
+        "Quick before the police force arrive.",
+        "",
+        ""
+      ]
+    ],
     "4": [
       "samer",
-      [
-        "",
-        "",
-        "(Translation) The mission went so well, OH MY GOD!!!",
-        "",
-        "",
-        ""
-      ]
-    ],
-    "5": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "6": ["samer", ["", "", "(Translation) OH I am so happy!!!", "", "", ""]],
-    "7": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "8": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Well I guess our adventure ends here.",
-        "(but who knows maybe we will have to go for another one)",
-        "",
-        ""
-      ]
-    ],
-    "9": ["salem", ["", "", "ARABIC", "", "", ""]],
-    "10": [
-      "samer",
-      [
-        "",
-        "",
-        "(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.",
-        "",
-        "",
-        ""
-      ]
+      ["", "Alright.", "Time to escape and go to the past.", "", "", ""]
     ]
   }
 }
