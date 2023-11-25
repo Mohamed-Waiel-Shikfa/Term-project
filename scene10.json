@@ -1,0 +1,77 @@
+{
+  "static": {
+    "bg": {
+      "url": ["./Final Images/scene 2 background garaje door/"],
+      "images": [["background garaje door v2.png"]],
+      "toDraw": [0, 0],
+      "x": 0,
+      "y": 0,
+      "width": 1305,
+      "height": 720,
+      "color": "grey"
+    },
+    "car": {
+      "url": ["./Final Images/scene 6 car/"],
+      "images": [["Time travelling car 1.png"]],
+      "toDraw": [0, 0],
+      "x": 600,
+      "y": 450,
+      "width": 280,
+      "height": 200,
+      "color": "red"
+    }
+  },
+  "texts": {
+    "1": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "2": [
+      "samer",
+      [
+        "",
+        "",
+        "",
+        "(Translation) I CAN FINALLY SPEAK ARABIC!!!!!",
+        "YOOOOOOHOOOOOOO",
+        "",
+        ""
+      ]
+    ],
+    "3": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "4": [
+      "samer",
+      [
+        "",
+        "",
+        "(Translation) The mission went so well, OH MY GOD!!!",
+        "",
+        "",
+        ""
+      ]
+    ],
+    "5": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "6": ["samer", ["", "", "(Translation) OH I am so happy!!!", "", "", ""]],
+    "7": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "8": [
+      "samer",
+      [
+        "",
+        "",
+        "(Translation) Well I guess our adventure ends here.",
+        "(but who knows maybe we will have to go for another one)",
+        "",
+        ""
+      ]
+    ],
+    "9": ["salem", ["", "", "ARABIC", "", "", ""]],
+    "10": [
+      "samer",
+      [
+        "",
+        "",
+        "(Translation) Pay attention to yourself and SEE YOU SOOOOON. BYE.",
+        "",
+        "",
+        ""
+      ]
+    ]
+  }
+}

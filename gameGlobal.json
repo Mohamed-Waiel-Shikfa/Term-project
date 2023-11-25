@@ -3,7 +3,7 @@
     "width": 1305,
     "height": 720
   },
-  "gameState": [2],
+  "gameState": [7],
   "shader": {
     "url": ["./images/experiments/noise shader v8/"],
     "images": [
@@ -136,6 +136,17 @@
     "width": 1265,
     "height": 450,
     "color": "red"
+  },
+  "digitBox": {
+    "url": ["./Final Images/digitBox/"],
+    "images": [["digitBox.png"]],
+    "toDraw": [0, 0],
+    "x": 352.5,
+    "y": 160,
+    "width": 600,
+    "height": 400,
+    "color": "chocolate",
+    "opacity": 100
   },
   "endScreen": {
     "url": ["./Final Images/endScreen/"],
