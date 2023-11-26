@@ -2023,7 +2023,7 @@ def onJoyPress(app, button, joystick):
         scene12OnJoyPress(app, button, joystick)
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
-    elif app.gameState == 20 and button == "1":
+    elif app.gameState == 20 and button == "0":
         app.crntGameIndex = [0,-1]
         nextScene(app)
         cleanAppVariables(app)
