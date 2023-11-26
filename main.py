@@ -144,7 +144,6 @@ class player(unplayableSpriteClass):
             return False
 
 
-
 # dialogue logic
 class dialogue(unplayableSpriteClass):
     def drawSelf(self, text):
