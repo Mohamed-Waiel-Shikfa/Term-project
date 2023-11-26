@@ -467,7 +467,7 @@ def scene2OnJoyPress(app, button, joystick):
                     app.year = app.digitBox.getNumber()
                 for i in range(4):
                     app.digitBox.labelText[i]=""
-            else:
+            elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
@@ -1053,7 +1053,7 @@ def scene7OnJoyPress(app, button, joystick):
                     app.sceneState+=1
                 for i in range(4):
                     app.digitBox.labelText[i]=""
-            else:
+            elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
@@ -1255,7 +1255,7 @@ def scene9OnJoyPress(app, button, joystick):
                     app.year = app.digitBox.getNumber()
                 for i in range(4):
                     app.digitBox.labelText[i]=""
-            else:
+            elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==5 and button=="0":
             app.digitCounter+=1
@@ -1861,13 +1861,13 @@ def redrawAll(app):
         scene100Draw(app)
     else:
         app.endScreen.drawSelf()
-    drawLine(app.width/2,0, app.width/2, app.height, fill='green')
-    drawLine(0, app.height/2, app.width,app.height/2, fill='green')
+    # drawLine(app.width/2,0, app.width/2, app.height, fill='green')
+    # drawLine(0, app.height/2, app.width,app.height/2, fill='green')
 
     # shader feature to develop after mvp
     app.shader.drawSelf()
     # draw the number of frame since the beginining of the game
-    drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
 
 
 def onJoyPress(app, button, joystick):
