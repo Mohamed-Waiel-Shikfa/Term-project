@@ -17,6 +17,7 @@ import arabic_reshaper
 # install: pip install python-bidi
 from bidi.algorithm import get_display
 
+
 #################################################
 # global classes
 #################################################
@@ -222,8 +223,6 @@ class digitBox(unplayableSpriteClass):
 
 
 #################################################
-
-#################################################
 # scene 0 classes
 #################################################
 # buttons for scene0
@@ -246,13 +245,10 @@ class buttonScene0(button):
                 app.crntGameIndex = data.split(";")
                 app.crntGameIndex[0]=int(app.crntGameIndex[0])
                 app.crntGameIndex[1]=int(app.crntGameIndex[1])-1
-                print(app.crntGameIndex)
                 nextScene(app)
                 cleanAppVariables(app)
             else:
-                print("File Not Found")
-            
-            
+                print("File Not Found")       
 #################################################
 # Scene 0 function
 #################################################
@@ -380,7 +376,6 @@ class playerScene2(player):
 def loadScene2(app):
     app.Task = [False]*3
     app.text = scene2["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene2, "static")
     appendToUnplayable(app, scene2, "interactable", scene2Interactable)
@@ -389,9 +384,6 @@ def loadScene2(app):
     path = scene2["player"]
     app.player = playerScene2(
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
-    for iSprite in app.unplayableSprites:
-        print(iSprite)
-        print(repr(iSprite))
 
 
 def scene2Step(app):
@@ -778,7 +770,6 @@ class ennemie(unplayableSpriteClass):
 def loadScene4(app):
     app.ennemie = 60
     app.text = scene4["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene4, "static")
     for i in range(randint(2, 7)):
@@ -788,11 +779,6 @@ def loadScene4(app):
     path = scene4["player"]
     app.player = playerScene4(
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
-    for iSprite in app.unplayableSprites:
-        print(iSprite)
-        print(repr(iSprite))
-    print(app.player)
-    print(repr(app.player))
 
 
 def scene4Step(app):
@@ -885,7 +871,6 @@ class playerScene5(player):
 #################################################
 def loadScene5(app):
     app.text = scene5["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene5, "static")
     appendToUnplayable(app, scene5, "interactable", scene2Interactable)
@@ -894,9 +879,6 @@ def loadScene5(app):
     path = scene5["player"]
     app.player = playerScene5(
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
-    for iSprite in app.unplayableSprites:
-        print(iSprite)
-        print(repr(iSprite))
 
 
 def scene5Step(app):
@@ -947,7 +929,6 @@ def scene5Draw(app):
 #################################################
 def loadScene6(app):
     app.text = scene6["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene6, "static")
 
@@ -1015,7 +996,6 @@ class playerScene7(player):
 #################################################
 def loadScene7(app):
     app.text = scene7["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene7, "static")
     path = scene7["player"]
@@ -1110,6 +1090,7 @@ def scene7Draw(app):
     if app.sceneState == 9:
         app.dialogueBox.drawSelf(app.text["5"])
 
+
 #################################################
 # scene 8 classes
 #################################################
@@ -1124,7 +1105,6 @@ class playerScene8(player):
 #################################################
 def loadScene8(app):
     app.text = scene8["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene8, "static")
     path = scene8["player"]
@@ -1199,7 +1179,6 @@ def scene8Draw(app):
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-3)])
 
 
-
 #################################################
 # scene 9 classes
 #################################################
@@ -1210,7 +1189,6 @@ class playerScene9(player):
 #################################################
 def loadScene9(app):
     app.text = scene9["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene9, "static")
     path = scene9["player"]
@@ -1305,7 +1283,6 @@ def scene9Draw(app):
 #################################################
 def loadScene10(app):
     app.text = scene10["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene10, "static")
 
@@ -1365,7 +1342,6 @@ def scene10Draw(app):
 #################################################
 def loadScene11(app):
     app.text = scene11["texts"]
-    print(app.text)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene11, "static")
 
@@ -1766,10 +1742,6 @@ def onAppStart(app):
     # if everything runned properly this print all the loaded data of the scene
     cleanAppVariables(app)
     loadScene0(app)
-    print(app.dialogueBox)
-    print(repr(app.dialogueBox))
-    print(app.shader)
-    print(repr(app.shader))
 
 
 def onStep(app):
