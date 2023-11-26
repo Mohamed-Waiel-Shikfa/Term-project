@@ -193,6 +193,7 @@ class digitBox(unplayableSpriteClass):
     def __init__(self, *args, angle=0, opacity=100):
         super().__init__(*args, angle=angle, opacity=opacity)
         self.labelText=[""]*4
+        self.filled=0
     def drawSelf(self, question, question2, question3):
         super().drawSelf()
         drawLabel(question, 655*self.scale+self.scale,200*self.scale+self.offsety, size=32*self.scale*2/3)
@@ -214,11 +215,10 @@ class digitBox(unplayableSpriteClass):
         for i in range(4):
             nb+=int(self.labelText[i])*10**(3-i)
         return nb
-    def newDigit(self, digit):
-        i=0
-        while self.labelText[i]!="":
-            i+=1
-        self.labelText[i]=digit
+    def newDigit(self, digit, arcade=False):
+        self.labelText[self.filled]=digit
+        if not arcade:
+            self.filled+=1
 
 
 #################################################
@@ -230,8 +230,6 @@ class digitBox(unplayableSpriteClass):
 class buttonScene0(button):
     def selfOnJoyPress(self, app, button):
         if self.name == "1" and button == "9":
-            self.answer(app)
-        if self.name == "2" and button == "8":
             self.answer(app)
 
     
@@ -345,7 +343,7 @@ class scene2Interactable(unplayableSpriteClass):
 class playerScene2(player):
     # respond to keyPress -> collision and object examination
     def selfKeyPress(self, event, app):
-        if event == "e" or event=="1":
+        if event == "x" or event=="2":
             if self.allowedMovement(0, -self.movingSpeed)[0] in ["table1", "table2", "wallmap"]:
                 self.changeSceneState((0, -self.movingSpeed), app)
             elif self.allowedMovement(0, self.movingSpeed)[0] in ["table1", "table2", "wallmap"]:
@@ -454,7 +452,7 @@ def scene2OnKeyPress(app, event):
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
     if app.sceneState == 17:
-        if app.year>2500:
+        if app.year>2200:
             app.crntGameIndex[0]=1
             app.crntGameIndex[1]=-1
         nextScene(app)
@@ -467,10 +465,26 @@ def scene2OnJoyPress(app, button, joystick):
             app.player.selfKeyPress(button, app)
         elif app.sceneState in [4, 5, 6]:
             app.sceneState = 3
-        elif app.sceneState == 2 or (app.sceneState > 6 and app.sceneState < 15):
-            if "2" == button:
+        elif app.sceneState == 2 or 15>app.sceneState > 6 or 17>app.sceneState > 15:
+            if button=="1":
                 app.sceneState += 1
-        elif app.sceneState > 6:
+        if app.sceneState==15 and button=="1":
+            if app.digitBox.getCrntNumberLen()==4:
+                if app.digitBox.getNumber()>2061:
+                    app.sceneState+=1
+                    app.year = app.digitBox.getNumber()
+                for i in range(4):
+                    app.digitBox.labelText[i]=""
+            else:
+                app.digitBox.filled+=1
+        elif app.sceneState==15 and button=="0":
+            app.digitCounter+=1
+            if app.digitBox.getCrntNumberLen()!=4:
+                app.digitBox.newDigit(app.digitCounter%10, True)
+        if app.sceneState == 17:
+            if app.year>2200:
+                app.crntGameIndex[0]=1
+                app.crntGameIndex[1]=-1
             nextScene(app)
             cleanAppVariables(app)
 
@@ -632,16 +646,34 @@ def scene3OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if event == "c" and  3-app.sceneTicks//30<=0:
+    if event == "c" and  20-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
 
 
 def scene3OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if button == "2" and  30-app.sceneTicks//30<=0:
+        if not app.isGameOver:
+            if button == '2':
+                hardDropFallingPiece(app)
+            elif button == '3':
+                rotateFallingPiece(app)
+        # restarts game
+        elif button == '0':
+            loadTetris(app)
+        if button == "1" and  20-app.sceneTicks//30<=0:
             nextScene(app)
             cleanAppVariables(app)
+
+
+def scene3OnDigitalJoyAxis(app, results, joystick):
+    if joystick==0:
+        if (1,1) in results:
+            moveFallingPiece(app, 1, 0)
+        elif (0,1) in results:
+            moveFallingPiece(app, 0, 1)
+        elif (0,-1) in results:
+            moveFallingPiece(app, 0, -1)
 
 
 def scene3Step(app):
@@ -679,8 +711,10 @@ def scene3Draw(app):
         if app.offsety>0:
             drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
         drawTetris(app)
-        if 3-app.sceneTicks//30>=0:
-            drawLabel(f"00:{30-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        if 20-app.sceneTicks//30>=10:
+            drawLabel(f"00:{20-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        elif 20-app.sceneTicks//30>=0:
+            drawLabel(f"00:0{20-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
         else:
             drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
 
@@ -817,7 +851,7 @@ def scene4OnKeyPress(app, event):
 def scene4OnJoyPress(app, button, joystick):
     if joystick == 0:
         if 7 > app.sceneState > 1 or 10 > app.sceneState > 7:
-            if "2" == button:
+            if button=="1":
                 app.sceneState += 1
         if app.sceneState == 10:
             nextScene(app)
@@ -888,10 +922,10 @@ def scene5OnKeyPress(app, event):
 
 def scene5OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 0 and app.sceneState < 10:
-            if "2" == button:
+        if app.sceneState > 0 and app.sceneState < 12:
+            if button=="1":
                 app.sceneState += 1
-        if app.sceneState == 10:
+        if app.sceneState == 12:
             nextScene(app)
             cleanAppVariables(app)
 
@@ -947,9 +981,9 @@ def scene6OnKeyPress(app, event):
 def scene6OnJoyPress(app, button, joystick):
     if joystick == 0:
         if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+            if button == "1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 10:
             nextScene(app)
             cleanAppVariables(app)
 
@@ -1030,10 +1064,22 @@ def scene7OnKeyPress(app, event):
 
 def scene7OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+        if 7 > app.sceneState > 2 or 15 > app.sceneState > 8:
+            if button == "1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState==8 and button=="1":
+            if app.digitBox.getCrntNumberLen()==4:
+                if app.digitBox.getNumber()==1729:
+                    app.sceneState+=1
+                for i in range(4):
+                    app.digitBox.labelText[i]=""
+            else:
+                app.digitBox.filled+=1
+        elif app.sceneState==15 and button=="0":
+            app.digitCounter+=1
+            if app.digitBox.getCrntNumberLen()!=4:
+                app.digitBox.newDigit(app.digitCounter%10, True)
+        if app.sceneState == 10:
             nextScene(app)
             cleanAppVariables(app)
 
@@ -1045,7 +1091,7 @@ def scene7OnKeyHold(app, events):
         app.player.selfKeyHold(events)
 
 
-def scene7OnJoyPress(app, results, joystick):
+def scene7OnDigitalJoyAxis(app, results, joystick):
     if joystick==0:
         if app.sceneState == 7:
             app.player.selfKeyHold(results)
@@ -1127,17 +1173,17 @@ def scene8OnKeyPress(app, event):
 
 def scene8OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+        if  5> app.sceneState > 2 or 7 > app.sceneState > 5:
+            if button == "1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 7:
             nextScene(app)
             cleanAppVariables(app)
 
 
 def scene8OnDigitalJoyAxis(app, results, joystick):
     if joystick==0:
-        if app.sceneState == 7:
+        if app.sceneState == 5:
             app.player.selfKeyHold(results)
 
 
@@ -1215,12 +1261,28 @@ def scene9OnKeyPress(app, event):
 
 def scene9OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+        if 5> app.sceneState > 2 or app.sceneState > 5:
+            if button=="1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 7:
+            if app.year<1850:
+                app.crntGameIndex[0]=2
+                app.crntGameIndex[1]=-1
             nextScene(app)
             cleanAppVariables(app)
+        if app.sceneState==5 and button=="1":
+            if app.digitBox.getCrntNumberLen()==4:
+                if app.digitBox.getNumber()==1950:
+                    app.sceneState+=1
+                    app.year = app.digitBox.getNumber()
+                for i in range(4):
+                    app.digitBox.labelText[i]=""
+            else:
+                app.digitBox.filled+=1
+        elif app.sceneState==5 and button=="0":
+            app.digitCounter+=1
+            if app.digitBox.getCrntNumberLen()!=4:
+                app.digitBox.newDigit(app.digitCounter%10, True)
 
 
 def scene9Draw(app):
@@ -1276,10 +1338,10 @@ def scene10OnKeyPress(app, event):
 
 def scene10OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+        if app.sceneState >= 3 and app.sceneState < 9:
+            if button == "1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 9:
             nextScene(app)
             cleanAppVariables(app)
 
@@ -1334,13 +1396,12 @@ def scene11OnKeyPress(app, event):
         cleanAppVariables(app)
 
 
-
 def scene11OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if app.sceneState > 2 and app.sceneState < 10:
-            if "2" == button:
+        if app.sceneState >= 3 and app.sceneState < 9:
+            if button == "1":
                 app.sceneState += 1
-        elif app.sceneState == 10:
+        if app.sceneState == 9:
             nextScene(app)
             cleanAppVariables(app)
 
@@ -1354,6 +1415,7 @@ def scene11Draw(app):
             iSprite.drawSelf()
     if 9 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
+
 
 #################################################
 # Scene 100 classes
@@ -1389,8 +1451,14 @@ def scene100OnKeyPress(app, event):
 
 def scene100OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if button == "2":
-            app.gameState =app.storyFlow[app.crntGameIndex]
+        if button == "1":
+            if app.crntGameIndex[0]==1:
+                app.crntGameIndex[0]=0
+                app.crntGameIndex[1]=2
+            elif app.crntGameIndex[0]==2:
+                app.crntGameIndex[0]=0
+                app.crntGameIndex[1]=11
+            app.gameState = app.storyFlow[app.crntGameIndex[0]][app.crntGameIndex[1]]
             cleanAppVariables(app)
 
 
@@ -1426,6 +1494,7 @@ def cleanAppVariables(app):
     app.dialogueBox.todraw=[0,0]
     app.debuggingTicks = 0
     app.stepsPerSecond=30
+    app.digitCounter=0
 
 
 def rescaleAll(app):
@@ -1840,6 +1909,16 @@ def onJoyPress(app, button, joystick):
         scene5OnJoyPress(app, button, joystick)
     elif app.gameState == 6:
         scene6OnJoyPress(app, button, joystick)
+    elif app.gameState == 7:
+        scene7OnJoyPress(app, button, joystick)
+    elif app.gameState == 8:
+        scene8OnJoyPress(app, button, joystick)
+    elif app.gameState == 9:
+        scene9OnJoyPress(app, button, joystick)
+    elif app.gameState == 10:
+        scene10OnJoyPress(app, button, joystick)
+    elif app.gameState == 11:
+        scene11OnJoyPress(app, button, joystick)
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
      # Make sure we can exit by pressing the "P1" button
@@ -1850,8 +1929,14 @@ def onJoyPress(app, button, joystick):
 def onDigitalJoyAxis(app, results, joystick):
     if app.gameState == 2:
         scene2OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 3:
+        scene3OnDigitalJoyAxis(app, results, joystick)
     elif app.gameState == 4:
         scene4OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 7:
+        scene7OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 8:
+        scene8OnDigitalJoyAxis(app, results, joystick)
 
 
 # load the json dictionnary in the game variable
