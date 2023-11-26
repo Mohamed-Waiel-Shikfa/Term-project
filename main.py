@@ -1986,6 +1986,7 @@ def redrawAll(app):
     elif app.gameState == 100:
         scene100Draw(app)
     else:
+        # to do : modify end screen 
         app.endScreen.drawSelf()
     # drawLine(app.width/2,0, app.width/2, app.height, fill='green')
     # drawLine(0, app.height/2, app.width,app.height/2, fill='green')
