@@ -161,7 +161,7 @@ class dialogue(unplayableSpriteClass):
         super().drawSelf()
         if self.todraw[0] > 0:
             # draws text if it has finish animation
-            textYPos = 440
+            textYPos = 430
             for i in range(6):
                 # max line len == 79 characters
                 drawLabel(get_display(arabic_reshaper.reshape(text[1][i])), 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
@@ -202,8 +202,8 @@ class digitBox(unplayableSpriteClass):
         for i in range(4):
             drawRect((375+150*i)*self.scale+self.offsetx, 300*self.scale+self.offsety, 110*self.scale, 150*self.scale, fill=None, border="black")
             drawLabel(self.labelText[i], (430+150*i)*self.scale+self.offsetx, 375*self.scale+self.offsety, size = 256*self.scale*2/3)
-        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=32*self.scale*2/3, bold=True)
-        drawLabel("On arcade press B to increase current digit and A to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=32*self.scale*2/3, bold=True)
+        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
+        drawLabel("On arcade press B to increase current digit and A to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
     def getCrntNumberLen(self):
         nblen=0
         for i in self.labelText:
@@ -1940,7 +1940,7 @@ def onKeyPress(app, event):
         scene12OnKeyPress(app, event)
     elif app.gameState == 100:
         scene100OnKeyPress(app, event)
-    elif event == "r":
+    elif app.gameState == 20 and event == "r":
         app.crntGameIndex = [0,-1]
         nextScene(app)
         cleanAppVariables(app)
@@ -2023,7 +2023,7 @@ def onJoyPress(app, button, joystick):
         scene12OnJoyPress(app, button, joystick)
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
-    elif button == "1":
+    elif app.gameState == 20 and button == "1":
         app.crntGameIndex = [0,-1]
         nextScene(app)
         cleanAppVariables(app)
