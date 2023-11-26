@@ -1502,6 +1502,9 @@ def rescaleAll(app):
     app.endScreen.scale=app.scale 
     app.endScreen.offsetx=app.offsetx
     app.endScreen.offsety=app.offsety
+    app.shader.scale=app.scale 
+    app.shader.offsetx=app.offsetx
+    app.shader.offsety=app.offsety
 
 
 def nextScene(app):
@@ -1776,7 +1779,7 @@ def onStep(app):
         scene11Step(app)
     elif app.gameState == 100:
         scene100Step(app)
-    # app.shader.stepSelf()
+    app.shader.stepSelf()
 
 
 def onKeyHold(app, events):
@@ -1858,14 +1861,13 @@ def redrawAll(app):
         scene100Draw(app)
     else:
         app.endScreen.drawSelf()
-    # drawLine(app.width/2,0, app.width/2, app.height, fill='green')
-    # drawLine(0, app.height/2, app.width,app.height/2, fill='green')
+    drawLine(app.width/2,0, app.width/2, app.height, fill='green')
+    drawLine(0, app.height/2, app.width,app.height/2, fill='green')
 
-    # app.shader.drawSelf()
-    # draw the number of frame since the beginining of the game
-    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
     # shader feature to develop after mvp
-    # drawImage("image/salem adventure/assets/from internet/noise shader.gif",0,0,width=app.width,height=app.height,opacity=10)
+    app.shader.drawSelf()
+    # draw the number of frame since the beginining of the game
+    drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
 
 
 def onJoyPress(app, button, joystick):
