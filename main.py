@@ -1059,7 +1059,7 @@ def scene7OnJoyPress(app, button, joystick):
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
                 app.digitCounter=-1
-        elif app.sceneState==15 and button=="0":
+        elif app.sceneState==8 and button=="0":
             app.digitCounter+=1
             app.digitBox.newDigit(app.digitCounter%10, True)
         if app.sceneState == 10:
