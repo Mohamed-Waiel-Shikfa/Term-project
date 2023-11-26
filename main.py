@@ -202,8 +202,8 @@ class digitBox(unplayableSpriteClass):
         for i in range(4):
             drawRect((375+150*i)*self.scale+self.offsetx, 300*self.scale+self.offsety, 110*self.scale, 150*self.scale, fill=None, border="black")
             drawLabel(self.labelText[i], (430+150*i)*self.scale+self.offsetx, 375*self.scale+self.offsety, size = 256*self.scale*2/3)
-        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=32*self.scale*2/3)
-        drawLabel("On arcade press b to increase current digit and a to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=32*self.scale*2/3)
+        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=32*self.scale*2/3, bold=True)
+        drawLabel("On arcade press B to increase current digit and A to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=32*self.scale*2/3, bold=True)
     def getCrntNumberLen(self):
         nblen=0
         for i in self.labelText:
@@ -439,6 +439,7 @@ def scene2OnKeyPress(app, event):
                 app.year = app.digitBox.getNumber()
             for i in range(4):
                 app.digitBox.labelText[i]=""
+                app.digitBox.filled=0
     elif app.sceneState==15 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
@@ -1035,6 +1036,7 @@ def scene7OnKeyPress(app, event):
             else:
                 for i in range(4):
                     app.digitBox.labelText[i]=""
+                    app.digitBox.filled=0
     elif app.sceneState==8 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
@@ -1235,6 +1237,7 @@ def scene9OnKeyPress(app, event):
                 app.year = app.digitBox.getNumber()
             for i in range(4):
                 app.digitBox.labelText[i]=""
+                app.digitBox.filled=0
     elif app.sceneState==5 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
@@ -1399,6 +1402,118 @@ def scene11Draw(app):
 
 
 #################################################
+# scene 12 classes
+#################################################
+#################################################
+# Scene 12 function
+#################################################
+def loadScene12(app):
+    appendToUnplayable(app, scene12,"static")
+    loadTetris(app)
+
+
+def scene12OnKeyPress(app, event):
+    # handles key press events according to game state and game design
+    # specification
+    if not app.isGameOver:
+        if event == 'p':
+            app.isPaused = not app.isPaused
+        elif not app.isPaused:
+            if event == 'space':
+                hardDropFallingPiece(app)
+            elif event == 'up':
+                rotateFallingPiece(app)
+            elif event == 'down':
+                moveFallingPiece(app, 1, 0)
+            elif event == 'right':
+                moveFallingPiece(app, 0, 1)
+            elif event == 'left':
+                moveFallingPiece(app, 0, -1)
+            # bonus! :)
+            elif event == 'b':
+                app.runningBonus = not app.runningBonus
+                if app.runningBonus:
+                    print(
+                        'There are two features that are running in bonus '
+                        'mode.')
+                    print('These are: ')
+                    print(
+                        '1 - You can now pause (yes it was recommended to do '
+                        'that '
+                        'in the instructions but never required, so I count '
+                        'it as '
+                        'a feature :).')
+                    print(
+                        "2 - For more challenge, the pieces don't have a fixed "
+                        "color anymore, in other word the new falling piece "
+                        "will "
+                        "have a random color between the 7 defined for tetris "
+                        "pieces (see line 52 for code of this feature)")
+                    print('(also press b again to exit bonus mode.)')
+    # restarts game
+    elif event == 'r':
+        loadTetris(app)
+    if (event == "space" or event == "enter") and  20-app.sceneTicks//30<=0:
+        nextScene(app)
+        cleanAppVariables(app)
+
+
+def scene12OnJoyPress(app, button, joystick):
+    if joystick == 0:
+        if not app.isGameOver:
+            if button == '2':
+                hardDropFallingPiece(app)
+            elif button == '3':
+                rotateFallingPiece(app)
+        # restarts game
+        elif button == '0':
+            loadTetris(app)
+        if button == "1" and  20-app.sceneTicks//30<=0:
+            nextScene(app)
+            cleanAppVariables(app)
+
+
+def scene12OnDigitalJoyAxis(app, results, joystick):
+    if joystick==0:
+        if (1,1) in results:
+            moveFallingPiece(app, 1, 0)
+        elif (0,1) in results:
+            moveFallingPiece(app, 0, 1)
+        elif (0,-1) in results:
+            moveFallingPiece(app, 0, -1)
+
+
+def scene12Step(app):
+    # code executed at every frame
+
+    # if the game is running and the falling piece can't fall anymore calls
+    # placeFallingPiece to place it on the board the makes a new piece
+    if app.sceneState==0:
+        loadScene12(app)
+        app.sceneState=1
+    else:
+        app.sceneTicks+=1
+        for isprite in app.unplayableSprites:
+            isprite.stepSelf()
+        stepTetris(app)
+
+
+def scene12Draw(app):
+    if app.sceneState!=0:
+        for isprite in app.unplayableSprites:
+            isprite.drawSelf()
+        if app.offsety>0:
+            drawRect(0, 0, 1305*app.scale,app.offsety, fill="black")
+        drawTetris(app)
+        if 20-app.sceneTicks//30>=10:
+            drawLabel(f"00:{20-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        elif 20-app.sceneTicks//30>=0:
+            drawLabel(f"00:0{20-app.sceneTicks//30} seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+        else:
+            drawLabel(f"00:00 seconds left", 650*app.scale+app.offsetx, 100*app.scale+app.offsety, fill='red', size=24*app.scale*2/3)
+
+
+#################################################
 # Scene 100 classes
 #################################################
 #################################################
@@ -1446,7 +1561,7 @@ def scene100OnJoyPress(app, button, joystick):
 def scene100Draw(app):
     for iSprite in app.unplayableSprites:
         iSprite.drawSelf()
-    drawLabel("Press r to try again.", 660*app.scale+app.offsetx, 450*app.scale+app.offsety, size=37.5*app.scale*2/3, fill="orange")
+    drawLabel("Press R (on pc) or B (on arcade box) to try again.", 660*app.scale+app.offsetx, 450*app.scale+app.offsety, size=37.5*app.scale*2/3, fill="orange")
 
 
 #################################################
@@ -1782,6 +1897,8 @@ def onStep(app):
         scene10Step(app)
     elif app.gameState == 11:
         scene11Step(app)
+    elif app.gameState == 12:
+        scene12Step(app)
     elif app.gameState == 100:
         scene100Step(app)
     app.shader.stepSelf()
@@ -1819,6 +1936,8 @@ def onKeyPress(app, event):
         scene10OnKeyPress(app, event)
     elif app.gameState == 11:
         scene11OnKeyPress(app, event)
+    elif app.gameState == 12:
+        scene12OnKeyPress(app, event)
     elif app.gameState == 100:
         scene100OnKeyPress(app, event)
     elif event == "r":
@@ -1862,6 +1981,8 @@ def redrawAll(app):
         scene10Draw(app)
     elif app.gameState == 11:
         scene11Draw(app)
+    elif app.gameState == 12:
+        scene12Draw(app)
     elif app.gameState == 100:
         scene100Draw(app)
     else:
@@ -1898,6 +2019,8 @@ def onJoyPress(app, button, joystick):
         scene10OnJoyPress(app, button, joystick)
     elif app.gameState == 11:
         scene11OnJoyPress(app, button, joystick)
+    elif app.gameState == 12:
+        scene12OnJoyPress(app, button, joystick)
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
     elif button == "1":
@@ -1921,16 +2044,17 @@ def onDigitalJoyAxis(app, results, joystick):
         scene7OnDigitalJoyAxis(app, results, joystick)
     elif app.gameState == 8:
         scene8OnDigitalJoyAxis(app, results, joystick)
-
+    elif app.gameState == 12:
+        scene12OnDigitalJoyAxis(app, results, joystick)
 
 # load the json dictionnary in the game variable
 with open('./gameGlobal.json', 'r') as file:
     game = json.load(file)
 allData=[]
-for i in range(12):
+for i in range(13):
     with open(f'./scene{i}.json', 'r', encoding="utf8") as file:
         allData.append(json.load(file))
-scene0, scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9, scene10, scene11= allData 
+scene0, scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9, scene10, scene11, scene12= allData 
 with open('./scene100.json', 'r') as file:
     scene100 = json.load(file)
 
