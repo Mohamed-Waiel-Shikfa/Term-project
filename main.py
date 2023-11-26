@@ -468,14 +468,13 @@ def scene2OnJoyPress(app, button, joystick):
                 for i in range(4):
                     app.digitBox.labelText[i]=""
                     app.digitBox.filled=0
-                    app.digitCounter=0
+                    app.digitCounter=-1
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
-                app.digitCounter=0
+                app.digitCounter=-1
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
-            if app.digitBox.getCrntNumberLen()!=4:
-                app.digitBox.newDigit(app.digitCounter%10, True)
+            app.digitBox.newDigit(app.digitCounter%10, True)
         if app.sceneState == 17:
             if app.year>2200:
                 app.crntGameIndex[0]=1
@@ -1057,14 +1056,13 @@ def scene7OnJoyPress(app, button, joystick):
                 for i in range(4):
                     app.digitBox.labelText[i]=""
                     app.digitBox.filled=0
-                    app.digitCounter=0
+                    app.digitCounter=-1
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
-                app.digitCounter=0
+                app.digitCounter=-1
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
-            if app.digitBox.getCrntNumberLen()!=4:
-                app.digitBox.newDigit(app.digitCounter%10, True)
+            app.digitBox.newDigit(app.digitCounter%10, True)
         if app.sceneState == 10:
             nextScene(app)
             cleanAppVariables(app)
@@ -1262,14 +1260,13 @@ def scene9OnJoyPress(app, button, joystick):
                 for i in range(4):
                     app.digitBox.labelText[i]=""
                     app.digitBox.filled=0
-                    app.digitCounter=0
+                    app.digitCounter=-1
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
-                app.digitCounter=0
+                app.digitCounter=-1
         elif app.sceneState==5 and button=="0":
             app.digitCounter+=1
-            if app.digitBox.getCrntNumberLen()!=4:
-                app.digitBox.newDigit(app.digitCounter%10, True)
+            app.digitBox.newDigit(app.digitCounter%10, True)
 
 
 def scene9Draw(app):
@@ -1479,7 +1476,7 @@ def cleanAppVariables(app):
     app.dialogueBox.todraw=[0,0]
     app.debuggingTicks = 0
     app.stepsPerSecond=30
-    app.digitCounter=0
+    app.digitCounter=-1
 
 
 def rescaleAll(app):
