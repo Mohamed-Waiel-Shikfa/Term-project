@@ -471,6 +471,7 @@ def scene2OnJoyPress(app, button, joystick):
                     app.digitCounter=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
+                app.digitCounter=0
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
             if app.digitBox.getCrntNumberLen()!=4:
@@ -1059,6 +1060,7 @@ def scene7OnJoyPress(app, button, joystick):
                     app.digitCounter=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
+                app.digitCounter=0
         elif app.sceneState==15 and button=="0":
             app.digitCounter+=1
             if app.digitBox.getCrntNumberLen()!=4:
@@ -1263,6 +1265,7 @@ def scene9OnJoyPress(app, button, joystick):
                     app.digitCounter=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
+                app.digitCounter=0
         elif app.sceneState==5 and button=="0":
             app.digitCounter+=1
             if app.digitBox.getCrntNumberLen()!=4:
