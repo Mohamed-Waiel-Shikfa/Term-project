@@ -467,6 +467,7 @@ def scene2OnJoyPress(app, button, joystick):
                     app.year = app.digitBox.getNumber()
                 for i in range(4):
                     app.digitBox.labelText[i]=""
+                    app.digitBox.filled=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==15 and button=="0":
@@ -1053,6 +1054,7 @@ def scene7OnJoyPress(app, button, joystick):
                     app.sceneState+=1
                 for i in range(4):
                     app.digitBox.labelText[i]=""
+                    app.digitBox.filled=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==15 and button=="0":
@@ -1255,6 +1257,7 @@ def scene9OnJoyPress(app, button, joystick):
                     app.year = app.digitBox.getNumber()
                 for i in range(4):
                     app.digitBox.labelText[i]=""
+                    app.digitBox.filled=0
             elif app.digitBox.labelText[app.digitBox.filled]!="":
                 app.digitBox.filled+=1
         elif app.sceneState==5 and button=="0":
