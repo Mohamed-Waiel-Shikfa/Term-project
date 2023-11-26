@@ -167,7 +167,7 @@ class dialogue(unplayableSpriteClass):
                 drawLabel(get_display(arabic_reshaper.reshape(text[1][i])), 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
-            drawLabel("SPACE or ENTER to continue ...", 900*self.scale+self.offsetx, (textYPos-10)*self.scale+self.offsety, size=25*self.scale*2/3,
+            drawLabel("SPACE or ENTER to continue for PC, A to continue for Arcade ...", 600*self.scale+self.offsetx, (textYPos-10)*self.scale+self.offsety, size=25*self.scale*2/3,
                       font="monospace", bold=True, align="left-top")
 
     # updates todraw for animation
@@ -282,7 +282,7 @@ def scene0Draw(app):
         iSprite.drawSelf()
     for iSprite in app.buttons:
         iSprite.drawSelf()
-    drawLabel("Press k at any time to save. (not supported on arcade machine)", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
+    drawLabel("Press k at any time to save. (not supported on arcade machine). On arcade A is to continue and B is to restart", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
 
 
 #################################################
@@ -639,7 +639,7 @@ def scene3OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if event == "c" and  20-app.sceneTicks//30<=0:
+    if (event == "space" or event == "enter") and  20-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -685,7 +685,7 @@ def scene3Step(app):
 
 
 def stepTetris(app):
-    if app.sceneTicks%10==0:
+    if app.sceneTicks%30==0:
         app.rows, app.cols, app.cellSize, app.margin, app.tetrisOffsetx, app.tetrisOffsety = gameDimensions(app)
         if not app.isGameOver and not app.isPaused and not moveFallingPiece(app,
                                                                             1, 0):
@@ -1432,7 +1432,7 @@ def scene100OnKeyPress(app, event):
 
 def scene100OnJoyPress(app, button, joystick):
     if joystick == 0:
-        if button == "1":
+        if button == "0":
             if app.crntGameIndex[0]==1:
                 app.crntGameIndex[0]=0
                 app.crntGameIndex[1]=2
@@ -1900,6 +1900,11 @@ def onJoyPress(app, button, joystick):
         scene11OnJoyPress(app, button, joystick)
     elif app.gameState == 100:
         scene100OnJoyPress(app, button, joystick)
+    elif button == "1":
+        app.crntGameIndex = [0,-1]
+        nextScene(app)
+        cleanAppVariables(app)
+        loadScene0(app)
      # Make sure we can exit by pressing the "P1" button
     if button == '5':
         sys.exit(0)
