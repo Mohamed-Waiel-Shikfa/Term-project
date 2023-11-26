@@ -1253,7 +1253,7 @@ def scene9OnJoyPress(app, button, joystick):
             cleanAppVariables(app)
         if app.sceneState==5 and button=="1":
             if app.digitBox.getCrntNumberLen()==4:
-                if app.digitBox.getNumber()==1950:
+                if app.digitBox.getNumber()<1950:
                     app.sceneState+=1
                     app.year = app.digitBox.getNumber()
                 for i in range(4):
