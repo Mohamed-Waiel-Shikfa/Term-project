@@ -40,6 +40,7 @@ class unplayableSpriteClass():
                 temp.append(loadImageFromStringReference(url + image))
             self.view.append(temp)
 
+
     # used to debugg, get info for player and make the class feel more complete
     def __repr__(self):
         return f'{self};{self.urls};{self.images};{self.todraw};{self.x};{self.y};{self.width};{self.height};{self.angle};{self.opacity};{self.color}'
