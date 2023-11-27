@@ -385,7 +385,6 @@ def loadScene2(app):
         "player", path["url"], path["images"], path["toDraw"], path["x"], path["y"], path["width"], path["height"], path["color"], app.unplayableSprites[1:])
 
 
-
 def scene2Step(app):
     if app.sceneState == 0:
         loadScene2(app)
