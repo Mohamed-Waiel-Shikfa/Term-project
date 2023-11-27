@@ -39,6 +39,8 @@ class unplayableSpriteClass():
             for image in self.images[i]:
                 temp.append(loadImageFromStringReference(url + image))
             self.view.append(temp)
+        print(self.view[0][0])
+        print(type(self.view[0][0]))
 
 
     # used to debugg, get info for player and make the class feel more complete
@@ -197,14 +199,13 @@ class digitBox(unplayableSpriteClass):
         self.filled=0
     def drawSelf(self, question, question2, question3):
         super().drawSelf()
-        drawLabel(question, 655*self.scale+self.scale,200*self.scale+self.offsety, size=32*self.scale*2/3)
-        drawLabel(question2, 655*self.scale+self.scale,230*self.scale+self.offsety, size=32*self.scale*2/3)
-        drawLabel(question3, 655*self.scale+self.scale,260*self.scale+self.offsety, size=32*self.scale*2/3)
+        drawLabel(question, 650*self.scale+self.scale,200*self.scale+self.offsety, size=22*self.scale*2/3,font="monospace", bold=True, )
+        drawLabel(question2, 650*self.scale+self.scale,230*self.scale+self.offsety, size=22*self.scale*2/3,font="monospace", bold=True)
+        drawLabel(question3, 650*self.scale+self.scale,260*self.scale+self.offsety, size=22*self.scale*2/3,font="monospace", bold=True)
         for i in range(4):
-            drawRect((375+150*i)*self.scale+self.offsetx, 300*self.scale+self.offsety, 110*self.scale, 150*self.scale, fill=None, border="black")
             drawLabel(self.labelText[i], (430+150*i)*self.scale+self.offsetx, 375*self.scale+self.offsety, size = 256*self.scale*2/3)
-        drawLabel("On pc just type the number.", 655*self.scale+self.offsetx, 500*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
-        drawLabel("On arcade press B to increase current digit and A to validate it.", 655*self.scale+self.offsetx, 530*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
+        drawLabel("On pc just type the number.", 650*self.scale+self.offsetx, 480*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
+        drawLabel("On arcade press B to increase current digit and A to validate it.", 650*self.scale+self.offsetx, 510*self.scale+self.offsety, size=28*self.scale*2/3, bold=True)
     def getCrntNumberLen(self):
         nblen=0
         for i in self.labelText:
@@ -1112,7 +1113,7 @@ def scene7Draw(app):
     if app.sceneState>=2:
         app.player.drawSelf()
     if app.sceneState==8:
-        app.digitBox.drawSelf("What is the smallest number that can be written", "as the sum of two cubes in two different way", "")
+        app.digitBox.drawSelf("What is the smallest number that can be written as the sum of", "two cubes in two different way; in other term what is the number", "n=x**3+y**3=a**3+b**3, where a,b,x,y are positive integers")
     if 7 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
     if app.sceneState == 9:
