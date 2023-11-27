@@ -20,24 +20,51 @@
       "height": 20,
       "color": "white"
     },
-    "skateboard": {
-      "url": ["./Final Images/to delete skateboard/"],
-      "images": [["skateboard.png"]],
-      "toDraw": [0, 0],
-      "x": 920,
-      "y": 640,
-      "width": 240,
-      "height": 60,
-      "color": "darkGrey"
-    },
     "salem": {
-      "url": ["./Final Images/scene 2 salem/"],
-      "images": [["Salem under the car-1.png"]],
+      "url": [
+        "./Final Images/scene 2 salem/",
+        "./Final Images/scene 2 salem/salem under the car/"
+      ],
+      "images": [
+        ["00.png"],
+        [
+          "00.png",
+          "01.png",
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
+          "16.png",
+          "17.png",
+          "18.png",
+          "19.png",
+          "20.png",
+          "21.png",
+          "22.png",
+          "23.png",
+          "24.png",
+          "25.png",
+          "26.png",
+          "27.png",
+          "28.png",
+          "29.png"
+        ]
+      ],
       "toDraw": [0, 0],
       "x": 950,
-      "y": 555,
+      "y": 560,
       "width": 240,
-      "height": 126,
+      "height": 140,
       "color": "salmon"
     },
     "jack1": {
@@ -136,7 +163,7 @@
     "color": "blue"
   },
   "texts": {
-    "1": ["salem", ["", "", "SAMER, get me the wrench!", "", "", ""]],
+    "1": ["salem", ["", "", "SAMER, please get me the wrench!", "", "", ""]],
     "2": [
       "salem",
       ["", "Aaaah, FINALLY!!!", "", "Thank you very much!", "", "", ""]
@@ -149,7 +176,7 @@
       [
         "",
         "",
-        "I have finally managed to get my time-space travelling machine working!",
+        "I have finally managed to get my time-space travel machine working!",
         "",
         "",
         ""
@@ -158,11 +185,11 @@
     "7": [
       "salem",
       [
-        "Now, if you forgot, I am salem and I am Qatari.",
-        "It is the year 2061 and here we are in my workshop in qatar.",
-        "I made you. You are Samer, my Super AI robot assisstant",
+        "Now, if you forgot, I am Salem and I am Qatari.",
+        "It is the year 2061 and here we are in my workshop in Qatar.",
+        "I made you. You are Samer, my Super AI robot assistant",
         "",
-        "Finally, evene though i am Qatari i am unable to speak arabic,",
+        "Finally, even though I am Qatari, I am unable to speak Arabic,",
         "I can only speak English and I am ashamed of that."
       ]
     ],
@@ -170,20 +197,20 @@
       "salem",
       [
         "But I have a plan to fix this.",
-        "The plan is to go to the past and stop britain from invading qatar.",
-        "Although, in this age their still isn't any way to achieve that.",
-        "My newest invention, the time space machine i just finished fixing,",
-        "Can only go to the futur.",
+        "The plan is to travel to the past and stop Britain from invading Qatar.",
+        "However, there is currently no way to achieve that.",
+        "My newest invention, the time space machine I just finished fixing,",
+        "Can only help us travel to the future.",
         "So how do you think this can help us?"
       ]
     ],
     "9": [
       "salem",
       [
-        "Exactly, go to the futur and hope to find a new time space machine",
-        "that uses more advanced technologie and allow us to go to the past.",
+        "Exactly, go to the future and hope to find a new time space machine",
+        "that uses more advanced technologies and allows us to go to the past.",
         "",
-        "But there is one key question to when exactly should we go",
+        "But there is one key question: To when exactly should we go?",
         "",
         ""
       ]
@@ -192,10 +219,10 @@
       "salem",
       [
         "Sounds good to me!",
-        "",
-        "A final note, time traveling isn't instantenous, but I have planned ahead",
-        "and installed tetris in my time-space machine entertainement system!",
-        "(once you are done to continue press space or enter on pc and A on arcade)",
+        "A final note, time traveling isn't instantaneous, but I have planned ahead",
+        "and installed tetris in my time-space machine entertainment system!",
+        "And of course, my time-space machine has autopilot, so we will be sitting in passenger seats!",
+        "(once you are done, to continue press enter on pc and A on arcade)",
         "Alright what are we waiting for now, THE ADVENTURE AWAITS US!!"
       ]
     ]

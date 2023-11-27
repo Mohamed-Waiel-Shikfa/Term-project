@@ -1,8 +1,35 @@
 {
   "static": {
     "bg": {
-      "url": ["./Final Images/scene 2 background garaje door/"],
-      "images": [["background garaje door v2.png"]],
+      "url": ["./Final Images/scene 10 bg/green space bg/"],
+      "images": [
+        [
+          "00.png",
+          "01.png",
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
+          "16.png",
+          "17.png",
+          "18.png",
+          "19.png",
+          "20.png",
+          "21.png",
+          "22.png",
+          "23.png"
+        ]
+      ],
       "toDraw": [0, 0],
       "x": 0,
       "y": 0,
@@ -11,31 +38,71 @@
       "color": "grey"
     },
     "car": {
-      "url": ["./Final Images/scene 6 car/"],
-      "images": [["Time travelling car 1.png"]],
+      "url": [
+        "./Final Images/scene 10 and 11 car/car portal animation green/",
+        "./Final Images/scene 10 and 11 car/"
+      ],
+      "images": [
+        [
+          "00.png",
+          "01.png",
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
+          "16.png",
+          "17.png",
+          "18.png",
+          "19.png",
+          "20.png",
+          "21.png",
+          "22.png",
+          "23.png",
+          "24.png",
+          "25.png",
+          "26.png",
+          "27.png",
+          "28.png",
+          "29.png"
+        ],
+        ["29.png"]
+      ],
       "toDraw": [0, 0],
-      "x": 600,
-      "y": 450,
-      "width": 280,
-      "height": 200,
+      "x": 450,
+      "y": 150,
+      "width": 224,
+      "height": 240,
       "color": "red"
     }
   },
   "texts": {
     "1": ["salem", ["", "", "...", "", "", ""]],
     "2": ["samer", ["", "", "", "...!!!!!", "", "", ""]],
-    "3": ["salem", ["", "", "It looks like we are in empty space", "", "", ""]],
+    "3": [
+      "salem",
+      ["", "", "It looks like we are in an empty space", "", "", ""]
+    ],
     "4": [
       "samer",
-      ["", "", "My sensors are telling me there are no more earth.", "", "", ""]
+      ["", "", "My sensors are telling me there is no more earth.", "", "", ""]
     ],
     "5": [
       "salem",
       [
         "",
         "",
-        "Damn, looks like we went so much into the futur",
-        "that humanity was destroyed in the mean time.",
+        "Damn, looks like we went so far into the future",
+        "that humanity  is no longer a thing.",
         "",
         ""
       ]

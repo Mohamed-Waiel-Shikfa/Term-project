@@ -1,8 +1,41 @@
 {
   "static": {
     "bg": {
-      "url": ["./Final Images/scene 6 background/"],
-      "images": [["futuristic city.png"]],
+      "url": ["./Final Images/scene 6 background/2/"],
+      "images": [
+        [
+          "00.png",
+          "01.png",
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
+          "16.png",
+          "17.png",
+          "18.png",
+          "19.png",
+          "20.png",
+          "21.png",
+          "22.png",
+          "23.png",
+          "24.png",
+          "25.png",
+          "26.png",
+          "27.png",
+          "28.png",
+          "29.png"
+        ]
+      ],
       "toDraw": [0, 0],
       "x": 0,
       "y": 0,
@@ -11,35 +44,72 @@
       "color": "grey"
     },
     "car": {
-      "url": ["./Final Images/scene 6 car/"],
-      "images": [["Time travelling car 1.png"]],
+      "url": [
+        "./Final Images/scene 6 car/car 1/",
+        "./Final Images/scene 6 car/"
+      ],
+      "images": [
+        [
+          "00.png",
+          "01.png",
+          "02.png",
+          "03.png",
+          "04.png",
+          "05.png",
+          "06.png",
+          "07.png",
+          "08.png",
+          "09.png",
+          "10.png",
+          "11.png",
+          "12.png",
+          "13.png",
+          "14.png",
+          "15.png",
+          "16.png",
+          "17.png",
+          "18.png",
+          "19.png",
+          "20.png",
+          "21.png",
+          "22.png",
+          "23.png",
+          "24.png",
+          "25.png",
+          "26.png",
+          "27.png",
+          "28.png",
+          "29.png"
+        ],
+        ["Time travelling car 1.png"]
+      ],
       "toDraw": [0, 0],
-      "x": 600,
-      "y": 450,
+      "x": 100,
+      "y": 400,
       "width": 280,
-      "height": 200,
+      "height": 300,
       "color": "red"
     }
   },
-  "texts": {
+  "texts":{
     "1": [
       "salem",
       [
         "",
         "",
-        "Alright, we have arrived to the futur!!!!!",
+        "Alright, we have arrived to the future!!!!!",
         "YOOOOOHOOOOOOOO!!!!!!",
         "",
         ""
       ]
     ],
-    "2": ["samer", ["", "", "", "We did indeed", "", "", ""]],
+    "2": ["samer", ["", "", "", "We have indeed", "", "", ""]],
     "3": [
       "salem",
       [
         "",
         "",
-        "Samer I have equipped you with time space anomalies scanner.",
+        "Samer, I have equipped you with a time space anomalies scanner.",
         "Use this to scan the area and tell me what you find.",
         "",
         ""
@@ -54,8 +124,8 @@
       [
         "",
         "",
-        "My sensors picked up a signaled that is most likely",
-        "comming from a time space machine that can go to the past",
+        "My sensors picked up a signal that is most likely",
+        "coming from a time space machine that can go to the past",
         "",
         ""
       ]
@@ -64,10 +134,10 @@
       "salem",
       [
         "",
-        "Lets GOOOOO, thats soo nice",
-        "Alright then, you are also equipped with teleportation technologie.",
-        "So go and teleport to where you are detecting the signal from ",
-        "and bring the machine and come back.",
+        "Let’s GOOOOO, that’s soo nice",
+        "Alright then, you are also equipped with teleportation technology.",
+        "So go and teleport to where you are detecting the signal",
+        "and bring the machine with you.",
         ""
       ]
     ],

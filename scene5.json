@@ -21,11 +21,11 @@
       "color": "white"
     },
     "car": {
-      "url": ["./Final Images/scene 2 time traveling car/"],
-      "images": [["Time travelling car 1.png"]],
+      "url": ["./Final Images/scene 5 car/"],
+      "images": [["Time travelling car 1 green.png"]],
       "toDraw": [0, 0],
       "x": 970,
-      "y": 405,
+      "y": 470,
       "width": 280,
       "height": 200,
       "color": "red"
@@ -95,7 +95,7 @@
     "height": 80,
     "color": "blue"
   },
-  "texts": {
+  "texts":{
     "1": [
       "salem",
       [
@@ -153,7 +153,7 @@
         "",
         "",
         "(Translation) Well I guess our adventure ends here.",
-        "(but who knows maybe we will have to go for another one)",
+        "(but who knows maybe we will have to go on another one)",
         "",
         ""
       ]

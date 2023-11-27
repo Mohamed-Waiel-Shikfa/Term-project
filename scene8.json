@@ -262,10 +262,10 @@
     }
   },
   "player": {
-    "url": ["./Final Images/scene 8 player/"],
+    "url": ["./Final Images/scene 7 player/"],
     "images": [["robot 1.png"]],
     "toDraw": [0, 0],
-    "x": 50,
+    "x": -20,
     "y": 360,
     "width": 30,
     "height": 30,
@@ -279,7 +279,7 @@
         "",
         "",
         "",
-        "These walls look dangerous. I better avoid them.",
+        "These walls look dangerous. I should better avoid them.",
         "",
         "",
         ""

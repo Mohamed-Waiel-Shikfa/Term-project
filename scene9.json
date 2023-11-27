@@ -11,24 +11,24 @@
       "color": "grey"
     },
     "car": {
-      "url": ["./Final Images/scene 6 car/"],
-      "images": [["Time travelling car 1.png"]],
+      "url": ["./Final Images/scene 9 car/"],
+      "images": [["Time travelling car 1 green.png"]],
       "toDraw": [0, 0],
-      "x": 600,
-      "y": 450,
+      "x": 730,
+      "y": 290,
       "width": 280,
       "height": 200,
       "color": "red"
     }
   },
   "player": {
-    "url": ["./Final Images/scene 9 player/"],
+    "url": ["./Final Images/scene 7 player/"],
     "images": [["robot 1.png"]],
     "toDraw": [0, 0],
-    "x": 50,
-    "y": 360,
-    "width": 40,
-    "height": 40,
+    "x": -43,
+    "y": 400,
+    "width": 80,
+    "height": 80,
     "color": "blue"
   },
   "texts": {
@@ -40,7 +40,7 @@
         "",
         "Alright time to go back! =P",
         "But before that I am going to decide to what time in the past we should go to.",
-        "Quick before the police force arrive.",
+        "Quick before the police forces arrive.",
         "",
         ""
       ]
@@ -52,7 +52,7 @@
         "",
         "Alright time to go back! =P",
         "But before that I am going to decide to what time in the past we should go to.",
-        "Quick before the police force arrive.",
+        "Quick before the police forces arrive.",
         "",
         ""
       ]

@@ -161,13 +161,13 @@ class dialogue(unplayableSpriteClass):
         super().drawSelf()
         if self.todraw[0] > 0:
             # draws text if it has finish animation
-            textYPos = 430
+            textYPos = 440
             for i in range(6):
                 # max line len == 79 characters
                 drawLabel(get_display(arabic_reshaper.reshape(text[1][i])), 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
-            drawLabel("SPACE or ENTER to continue for PC, A to continue for Arcade ...", 600*self.scale+self.offsetx, (textYPos-10)*self.scale+self.offsety, size=25*self.scale*2/3,
+            drawLabel("SPACE or ENTER to continue for PC, A to continue for Arcade ...", 600*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=25*self.scale*2/3,
                       font="monospace", bold=True, align="left-top")
 
     # updates todraw for animation
@@ -400,15 +400,20 @@ def scene2Step(app):
         # calls the onStep of every object
         for iSprite in app.unplayableSprites:
             iSprite.stepSelf()
+        if randint(0,30)==6:
+            app.unplayableSprites[2].todraw[0]=1
+        elif randint(0,30)==3:
+            app.unplayableSprites[2].todraw[0]=0
+            app.unplayableSprites[2].todraw[1]=0
         app.player.stepSelf()
     elif app.sceneState == 4:
-        app.unplayableSprites[7].stepSelf(sceneState=app.sceneState)
+        app.unplayableSprites[6].stepSelf(sceneState=app.sceneState)
         app.Task[0] = True
     elif app.sceneState == 5:
-        app.unplayableSprites[8].stepSelf(sceneState=app.sceneState)
+        app.unplayableSprites[7].stepSelf(sceneState=app.sceneState)
         app.Task[1] = True
     elif app.sceneState == 6:
-        app.unplayableSprites[9].stepSelf(sceneState=app.sceneState)
+        app.unplayableSprites[8].stepSelf(sceneState=app.sceneState)
         if app.Task[0] and app.Task[1]:
             app.Task[2] = True
     else:
@@ -496,11 +501,11 @@ def scene2Draw(app):
             iSprite.drawSelf()
         app.player.drawSelf()
     elif app.sceneState == 4:
-        app.unplayableSprites[7].drawSelf()
+        app.unplayableSprites[6].drawSelf()
     elif app.sceneState == 5:
-        app.unplayableSprites[8].drawSelf()
+        app.unplayableSprites[7].drawSelf()
     elif app.sceneState == 6:
-        app.unplayableSprites[9].drawSelf()
+        app.unplayableSprites[8].drawSelf()
     if app.sceneState == 2:
         app.dialogueBox.drawSelf(app.text["1"])
     if app.sceneState==15:
@@ -540,6 +545,7 @@ def gameDimensions(app):
 
 def loadScene3(app):
     appendToUnplayable(app, scene3,"static")
+    appendToUnplayable(app, scene3,"rotating", rotatingSpriteClass)
     loadTetris(app)
 
 
@@ -640,7 +646,7 @@ def scene3OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if (event == "space" or event == "enter") and  20-app.sceneTicks//30<=0:
+    if  event == "enter" and  20-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
 
@@ -788,11 +794,13 @@ def scene4Step(app):
         loadScene4(app)
         app.sceneState += 1
     if app.sceneState == 1:
+        app.unplayableSprites[0].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 2
     elif 7 > app.sceneState > 1:
         app.dialogueBox.stepSelf()
+        app.unplayableSprites[0].stepSelf()
     elif app.sceneState == 7:
         app.dialogueBox.todraw = [0, 0]
         app.player.stepSelf(app.unplayableSprites)
@@ -817,6 +825,7 @@ def scene4Step(app):
                 app.unplayableSprites.remove(iSprite)
                 app.ennemie -= 1
     else:
+        app.unplayableSprites[0].stepSelf()
         app.dialogueBox.stepSelf()
 
 
@@ -940,15 +949,22 @@ def scene6Step(app):
         loadScene6(app)
         app.sceneState += 1
     if app.sceneState == 1:
+        for isprite in app.unplayableSprites[:-1]:
+            isprite.stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        for isprite in app.unplayableSprites:
+            isprite.stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
+            app.unplayableSprites[1].todraw=[1,0]
     if app.sceneState >= 3:
+        for isprite in app.unplayableSprites:
+            isprite.stepSelf()
         app.dialogueBox.stepSelf()
 
 
@@ -990,7 +1006,7 @@ def scene6Draw(app):
 class playerScene7(player):
     def stepSelf(self):
         super().stepSelf()
-        if not (self.allowedMovement(0, -self.movingSpeed)[1] and self.allowedMovement(0, self.movingSpeed)[1] and self.allowedMovement(-self.movingSpeed, 0)[1] and self.allowedMovement(self.movingSpeed, 0)[1]):
+        if not self.allowedMovement(self.movingSpeed, 0)[1]:
             return True
         return False
 #################################################
@@ -1015,9 +1031,15 @@ def scene7Step(app):
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        app.player.stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
+            app.player.width=80
+            app.player.height=80
+            app.player.x+=15
+            app.player.y+=10
+            app.player.todraw=[1,0]
     if app.sceneState >= 3:
         app.dialogueBox.stepSelf()
     if app.sceneState == 7:
@@ -1127,8 +1149,9 @@ def scene8Step(app):
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        app.player.x+=8
         app.sceneTicks += 1
-        if app.sceneTicks == 30:
+        if app.sceneTicks == 12:
             app.sceneState = 3
     if 5 > app.sceneState > 2 or 7 > app.sceneState > 5:
         app.dialogueBox.stepSelf()
@@ -1211,6 +1234,7 @@ def scene9Step(app):
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        app.player.x+=6
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
@@ -1300,15 +1324,20 @@ def scene10Step(app):
         loadScene10(app)
         app.sceneState += 1
     if app.sceneState == 1:
+        app.unplayableSprites[0].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        app.unplayableSprites[0].stepSelf()
+        app.unplayableSprites[1].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
+            app.unplayableSprites[1].todraw=[1,0]
     elif app.sceneState >= 3:
+        app.unplayableSprites[0].stepSelf()
         app.dialogueBox.stepSelf()
 
 
@@ -1359,15 +1388,20 @@ def scene11Step(app):
         loadScene11(app)
         app.sceneState += 1
     if app.sceneState == 1:
+        app.unplayableSprites[0].stepSelf()
         app.sceneTicks += 1
-        if app.sceneTicks == 30:
+        if app.sceneTicks == 60:
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
+        app.unplayableSprites[0].stepSelf()
+        app.unplayableSprites[1].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
             app.sceneState = 3
+            app.unplayableSprites[1].todraw=[1,0]
     elif app.sceneState >= 3:
+        app.unplayableSprites[0].stepSelf()
         app.dialogueBox.stepSelf()
 
 
@@ -1409,6 +1443,7 @@ def scene11Draw(app):
 #################################################
 def loadScene12(app):
     appendToUnplayable(app, scene12,"static")
+    appendToUnplayable(app, scene12,"rotating", rotatingSpriteClass)
     loadTetris(app)
 
 
@@ -1453,7 +1488,7 @@ def scene12OnKeyPress(app, event):
     # restarts game
     elif event == 'r':
         loadTetris(app)
-    if (event == "space" or event == "enter") and  20-app.sceneTicks//30<=0:
+    if event == "enter" and  20-app.sceneTicks//30<=0:
         nextScene(app)
         cleanAppVariables(app)
 

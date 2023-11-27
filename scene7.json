@@ -24,21 +24,118 @@
       "url": ["./Final Images/scene 7 door/"],
       "images": [["door.png"]],
       "toDraw": [0, 0],
-      "x": 800,
+      "x": 250,
       "y": 0,
       "width": 40,
       "height": 700,
       "color": "red"
+    },
+    "asset1": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["big cube.png"]],
+      "toDraw": [0, 0],
+      "x": 880,
+      "y": 385,
+      "width": 310,
+      "height": 360,
+      "color": "red"
+    },
+    "asset2": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["small cube.png"]],
+      "toDraw": [0, 0],
+      "x": 750,
+      "y": 650,
+      "width": 62,
+      "height": 72,
+      "color": "red"
+    },
+    "asset3": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["small cube.png"]],
+      "toDraw": [0, 0],
+      "x": 850,
+      "y": 518,
+      "width": 62,
+      "height": 72,
+      "color": "red"
+    },
+    "asset4": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["radioactive barrelle.png"]],
+      "toDraw": [0, 0],
+      "x": 250,
+      "y": 435,
+      "width": 310,
+      "height": 360,
+      "color": "red"
+    },
+    "asset5": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["radioactive barrelle.png"]],
+      "toDraw": [0, 0],
+      "x": 400,
+      "y": 435,
+      "width": 310,
+      "height": 360,
+      "color": "red"
+    },
+    "asset6": {
+      "url": ["./Final Images/lab assets/"],
+      "images": [["radioactive barrelle.png"]],
+      "toDraw": [0, 0],
+      "x": 325,
+      "y": 260,
+      "width": 310,
+      "height": 360,
+      "color": "red"
     }
   },
   "player": {
-    "url": ["./Final Images/scene 7 player/"],
-    "images": [["robot 1.png"]],
+    "url": [
+      "./Final Images/scene 7 player/player portal animation/",
+      "./Final Images/scene 7 player/"
+    ],
+    "images": [
+      [
+        "00.png",
+        "01.png",
+        "02.png",
+        "03.png",
+        "04.png",
+        "05.png",
+        "06.png",
+        "07.png",
+        "08.png",
+        "09.png",
+        "10.png",
+        "11.png",
+        "12.png",
+        "13.png",
+        "14.png",
+        "15.png",
+        "16.png",
+        "17.png",
+        "18.png",
+        "19.png",
+        "20.png",
+        "21.png",
+        "22.png",
+        "23.png",
+        "24.png",
+        "25.png",
+        "26.png",
+        "27.png",
+        "28.png",
+        "29.png"
+      ],
+      ["robot 1.png"]
+    ],
     "toDraw": [0, 0],
     "x": 100,
-    "y": 360,
-    "width": 80,
-    "height": 80,
+    "y": 300,
+    "width": 100,
+    "height": 107,
     "color": "blue"
   },
   "texts": {
@@ -57,9 +154,9 @@
     "3": [
       "samer",
       [
-        "Oh, apperently this area has anti-teleportation technologie.",
-        "But my sensor also still pick up the time space machine signal.",
-        "this indicates that the time space machine has better teleportation technologie",
+        "Oh, apparently this area has anti-teleportation technology.",
+        "But my sensor also still picks up the time space machine signal.",
+        "This indicates that the time space machine has better teleportation technology",
         "than I do, which will make my escape easier.",
         "Well then, I am going to have to go through anyways",
         ""
@@ -69,7 +166,7 @@
       "samer",
       [
         "",
-        "First,I need to go past this door.",
+        "First, I need to go past this door.",
         "It looks like it has a password that we can deduce ",
         "from a riddle written on top of it.",
         "",
@@ -78,7 +175,7 @@
     ],
     "5": [
       "samer",
-      ["", "Yey, I unloked it", "Ok, on to the next room.", "", "", ""]
+      ["", "Yey, I unlocked it", "Ok, on to the next room.", "", "", ""]
     ]
   }
 }

@@ -65,9 +65,9 @@
       "color": "grey"
     },
     "bg2": {
-      "url": ["./Final Images/scene 3 background/"],
+      "url": ["./Final Images/scene 12 background/"],
       "images": [
-        ["car inside outline with full shadow color black retouched.png"]
+        ["car inside retouched 2.png"]
       ],
       "toDraw": [0, 0],
       "x": 0,
@@ -75,6 +75,21 @@
       "width": 1305,
       "height": 720,
       "color": "grey"
+    }
+  },
+  "rotating":{
+    "bg3": {
+      "url": ["./Final Images/scene 12 background/"],
+      "images": [
+        ["car inside steering wheel.png"]
+      ],
+      "toDraw": [0, 0],
+      "x": 380,
+      "y": 215,
+      "width": 142,
+      "height": 144,
+      "color": "grey",
+      "align":"center"
     }
   }
 }
