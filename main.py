@@ -508,6 +508,8 @@ def scene2Draw(app):
         app.unplayableSprites[7].drawSelf()
     elif app.sceneState == 6:
         app.unplayableSprites[8].drawSelf()
+    if 7>app.sceneState >3:
+        drawRect(app.offsetx,app.offsety,1305*app.scale, 720*app.scale, fill="cyan", opacity=30)
     if app.sceneState == 2:
         app.dialogueBox.drawSelf(app.text["1"])
     if app.sceneState==15:
@@ -1008,7 +1010,7 @@ def scene6Draw(app):
 class playerScene7(player):
     def stepSelf(self):
         super().stepSelf()
-        if not self.allowedMovement(self.movingSpeed, 0)[1]:
+        if self.allowedMovement(self.movingSpeed, 0)[0]=="door" and not self.allowedMovement(self.movingSpeed, 0)[1]:
             return True
         return False
 #################################################
@@ -1057,10 +1059,9 @@ def scene7OnKeyPress(app, event):
         if app.digitBox.getCrntNumberLen()==4:
             if app.digitBox.getNumber()==1729:
                 app.sceneState+=1
-            else:
-                for i in range(4):
-                    app.digitBox.labelText[i]=""
-                    app.digitBox.filled=0
+            for i in range(4):
+                app.digitBox.labelText[i]=""
+                app.digitBox.filled=0
     elif app.sceneState==8 and event.isdigit():
         if app.digitBox.getCrntNumberLen()!=4:
             app.digitBox.newDigit(event)
