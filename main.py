@@ -7,6 +7,7 @@
 from cmu_graphics import *
 import json
 import joystick
+import sys
 from global_classes import *
 from global_helper_functions import *
 from scn0 import *

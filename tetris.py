@@ -2,6 +2,7 @@
 from cmu_graphics import *
 from global_classes import *
 from global_helper_functions import *
+import copy
 
 #################################################
 # Main Tetris functions
