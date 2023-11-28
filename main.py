@@ -32,9 +32,6 @@ from scn12 import *
 from scn100 import *
 
 
-# import pathlib
-# cntPath = pathlib.Path(__file__).parent.resolve()
-# music = Sound(f'file://{cntPath}/sounds/Hotel lobby music.mp3')
 
 #################################################
 # MVC CS3 mode functionS
