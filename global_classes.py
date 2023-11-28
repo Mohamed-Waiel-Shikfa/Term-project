@@ -158,10 +158,10 @@ class dialogue(unplayableSpriteClass):
             for i in range(6):
                 # max line len == 79 characters
                 drawLabel(get_display(arabic_reshaper.reshape(text[1][i])), 55*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=37.5*self.scale*2/3,
-                          font="monospace", bold=True, align="left-top")
+                          font="DejaVu Sans Mono", bold=True, align="left-top")
                 textYPos += 35
             drawLabel("SPACE or ENTER to continue for PC, A to continue for Arcade ...", 600*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=25*self.scale*2/3,
-                      font="DejaVu Sans Mono", bold=True, align="left-top")
+                      font="Monospace", bold=True, align="left-top")
 
     # updates todraw for animation
     def stepSelf(self):
