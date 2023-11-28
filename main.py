@@ -12,11 +12,12 @@ import os
 import copy
 import joystick
 import sys
-# install: pip install --upgrade arabic-reshaper
 import arabic_reshaper
-# install: pip install python-bidi
 from bidi.algorithm import get_display
 
+# import pathlib
+# cntPath = pathlib.Path(__file__).parent.resolve()
+# music = Sound(f'file://{cntPath}/sounds/Hotel lobby music.mp3')
 
 #################################################
 # global classes
@@ -284,7 +285,6 @@ def scene0Draw(app):
         iSprite.drawSelf()
     for iSprite in app.buttons:
         iSprite.drawSelf()
-    drawLabel("Press k at any time to save. (not supported on arcade machine). On arcade A is to continue and B is to restart", 660*app.scale+app.offsetx, 650*app.scale+app.offsety, size=25*app.scale*2/3, fill="blue")
 
 
 #################################################
@@ -548,6 +548,7 @@ def gameDimensions(app):
 
 
 def loadScene3(app):
+    # music.play()
     appendToUnplayable(app, scene3,"static")
     appendToUnplayable(app, scene3,"rotating", rotatingSpriteClass)
     loadTetris(app)
@@ -666,6 +667,8 @@ def scene3OnJoyPress(app, button, joystick):
         elif button == '0':
             loadTetris(app)
         if button == "1" and  20-app.sceneTicks//30<=0:
+            # music.play()
+            # music.pause()
             nextScene(app)
             cleanAppVariables(app)
 

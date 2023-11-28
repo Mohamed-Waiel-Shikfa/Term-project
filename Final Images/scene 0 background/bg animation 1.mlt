@@ -1,0 +1,220 @@
+<?xml version="1.0" standalone="no"?>
+<mlt LC_NUMERIC="C" version="7.19.0" title="Shotcut version 23.07.29" producer="main_bin">
+  <profile description="automatic" width="800" height="600" progressive="1" sample_aspect_num="1" sample_aspect_den="1" display_aspect_num="4" display_aspect_den="3" frame_rate_num="71" frame_rate_den="12" colorspace="601"/>
+  <playlist id="main_bin">
+    <property name="xml_retain">1</property>
+  </playlist>
+  <producer id="black" in="00:00:00.000" out="00:00:02.366">
+    <property name="length">00:00:02.535</property>
+    <property name="eof">pause</property>
+    <property name="resource">0</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="mlt_image_format">rgba</property>
+    <property name="set.test_audio">0</property>
+  </producer>
+  <playlist id="background">
+    <entry producer="black" in="00:00:00.000" out="00:00:02.366"/>
+  </playlist>
+  <chain id="chain0" out="00:00:00.676">
+    <property name="length">00:00:00.845</property>
+    <property name="eof">pause</property>
+    <property name="resource">main menu-.gif</property>
+    <property name="mlt_service">avformat-novalidate</property>
+    <property name="seekable">1</property>
+    <property name="audio_index">-1</property>
+    <property name="video_index">0</property>
+    <property name="creation_time">2023-11-28T05:06:50</property>
+    <property name="shotcut:caption">main menu-.gif</property>
+    <property name="shotcut:hash">ea4de17231ba4f2af0fe35a02b373ba3</property>
+    <property name="ignore_points">0</property>
+    <property name="xml">was here</property>
+    <filter id="filter1" out="00:00:00.676">
+      <property name="argument">Salem's 
+Adventure</property>
+      <property name="geometry">00:00:00.000=-800 0 800 120 1;00:00:00.845=0 0 800 120 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">300</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#97ffb1</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+    <filter id="filter0" out="00:00:00.676">
+      <property name="argument">(A game by: Mohamed Waiel Shikfa)</property>
+      <property name="geometry">00:00:00.000=-800 60 800 143 1;00:00:00.845=0 60 800 143 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">600</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#4c815a</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+  </chain>
+  <chain id="chain1" out="00:00:00.676">
+    <property name="length">00:00:00.845</property>
+    <property name="eof">pause</property>
+    <property name="resource">main menu-.gif</property>
+    <property name="mlt_service">avformat-novalidate</property>
+    <property name="seekable">1</property>
+    <property name="audio_index">-1</property>
+    <property name="video_index">0</property>
+    <property name="creation_time">2023-11-28T05:06:50</property>
+    <property name="shotcut:caption">main menu-.gif</property>
+    <property name="shotcut:hash">ea4de17231ba4f2af0fe35a02b373ba3</property>
+    <property name="ignore_points">0</property>
+    <property name="xml">was here</property>
+    <filter id="filter2" out="00:00:00.676">
+      <property name="argument">Salem's 
+Adventure</property>
+      <property name="geometry">0 0 800 120 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">300</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#97ffb1</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+    <filter id="filter3" out="00:00:00.676">
+      <property name="argument">(A game by: Mohamed Waiel Shikfa)</property>
+      <property name="geometry">0 60 800 143 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">600</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#4c815a</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+  </chain>
+  <chain id="chain2" out="00:00:00.676">
+    <property name="length">00:00:00.845</property>
+    <property name="eof">pause</property>
+    <property name="resource">main menu-.gif</property>
+    <property name="mlt_service">avformat-novalidate</property>
+    <property name="seekable">1</property>
+    <property name="audio_index">-1</property>
+    <property name="video_index">0</property>
+    <property name="creation_time">2023-11-28T05:06:50</property>
+    <property name="shotcut:caption">main menu-.gif</property>
+    <property name="shotcut:hash">ea4de17231ba4f2af0fe35a02b373ba3</property>
+    <property name="ignore_points">0</property>
+    <property name="xml">was here</property>
+    <filter id="filter4" out="00:00:00.676">
+      <property name="argument">Salem's 
+Adventure</property>
+      <property name="geometry">00:00:00.000=0 0 800 120 1;00:00:00.845=800 0 800 120 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">300</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#97ffb1</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+    <filter id="filter5" out="00:00:00.676">
+      <property name="argument">(A game by: Mohamed Waiel Shikfa)</property>
+      <property name="geometry">00:00:00.000=0 60 800 143 1;00:00:00.845=1000 60 800 143 1</property>
+      <property name="family">Erbos Draco 1st Open NBP</property>
+      <property name="size">600</property>
+      <property name="weight">400</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#4c815a</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">middle</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">0</property>
+      <property name="shotcut:animIn">00:00:00.000</property>
+      <property name="shotcut:animOut">00:00:00.000</property>
+      <property name="shotcut:pointSize">48</property>
+    </filter>
+  </chain>
+  <playlist id="playlist0">
+    <property name="shotcut:video">1</property>
+    <property name="shotcut:name">V1</property>
+    <entry producer="chain0" in="00:00:00.000" out="00:00:00.676"/>
+    <entry producer="chain1" in="00:00:00.000" out="00:00:00.676"/>
+    <entry producer="chain2" in="00:00:00.000" out="00:00:00.676"/>
+  </playlist>
+  <tractor id="tractor0" title="Shotcut version 23.07.29" in="00:00:00.000" out="00:00:02.366">
+    <property name="shotcut">1</property>
+    <property name="shotcut:projectAudioChannels">2</property>
+    <property name="shotcut:projectFolder">0</property>
+    <property name="shotcut:scaleFactor">13.4913</property>
+    <track producer="background"/>
+    <track producer="playlist0"/>
+    <transition id="transition0">
+      <property name="a_track">0</property>
+      <property name="b_track">1</property>
+      <property name="mlt_service">mix</property>
+      <property name="always_active">1</property>
+      <property name="sum">1</property>
+    </transition>
+    <transition id="transition1">
+      <property name="a_track">1</property>
+      <property name="b_track">1</property>
+      <property name="version">0.1</property>
+      <property name="mlt_service">frei0r.cairoblend</property>
+      <property name="threads">0</property>
+      <property name="disable">1</property>
+    </transition>
+  </tractor>
+</mlt>
