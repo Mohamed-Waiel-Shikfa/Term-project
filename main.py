@@ -237,16 +237,8 @@ def redrawAll(app):
     elif app.gameState == 100:
         scene100Draw(app)
     else:
-        # to do : modify end screen 
         app.endScreen.drawSelf()
-    # drawLine(app.width/2,0, app.width/2, app.height, fill='green')
-    # drawLine(0, app.height/2, app.width,app.height/2, fill='green')
-
-    # shader feature to develop after mvp
     app.shader.drawSelf()
-    # draw the number of frame since the beginining of the game for debugging
-    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
-
 
 # load the json dictionnary in the game variable
 with open('./gameGlobal.json', 'r') as file:
