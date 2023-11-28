@@ -1902,6 +1902,12 @@ def onAppStart(app):
                                           path["x"], path["y"], path["width"], path["height"], path["color"], opacity=path["opacity"])
     cleanAppVariables(app)
     loadScene0(app)
+    print("""
+#################################################
+###     Running Salem's Adventure....         ###
+###            Have Fun!!!                    ###
+#################################################
+""")
 
 
 def onStep(app):
