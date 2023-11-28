@@ -1,14 +1,6 @@
 # import the library
 from cmu_graphics import *
 import json
-from random import randint
-from cmu_graphics.shape_logic import loadImageFromStringReference
-import os
-import copy
-import joystick
-import sys
-import arabic_reshaper
-from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
@@ -121,5 +113,5 @@ def scene9Draw(app):
     if 7 > app.sceneState > 2:
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-2)])
     if app.sceneState==5:
-        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year before 1950", "(remeinder to read the dialogue please)")
+        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year before 1950", "(reminder to read the dialogue please)")
 

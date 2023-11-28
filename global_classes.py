@@ -1,11 +1,6 @@
 from cmu_graphics import *
-import json
 from random import randint
 from cmu_graphics.shape_logic import loadImageFromStringReference
-import os
-import copy
-import joystick
-import sys
 import arabic_reshaper
 from bidi.algorithm import get_display
 

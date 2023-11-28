@@ -2,13 +2,6 @@
 from cmu_graphics import *
 import json
 from random import randint
-from cmu_graphics.shape_logic import loadImageFromStringReference
-import os
-import copy
-import joystick
-import sys
-import arabic_reshaper
-from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
@@ -225,7 +218,7 @@ def scene2Draw(app):
             iSprite.drawSelf()
         app.player.drawSelf()
         app.dialogueBox.drawSelf(app.text[str(app.sceneState-6)])
-        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year in the futur", "(duh I just said that, pls read the dialogue).")
+        app.digitBox.drawSelf("To when do you think Salem and Samer should time travel?","Has to be a year in the futur", "(reminder to please read the dialogue).")
     elif app.sceneState > 15:
         for iSprite in app.unplayableSprites:
             iSprite.drawSelf()

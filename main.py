@@ -6,14 +6,7 @@
 # import the library
 from cmu_graphics import *
 import json
-from random import randint
-from cmu_graphics.shape_logic import loadImageFromStringReference
-import os
-import copy
 import joystick
-import sys
-import arabic_reshaper
-from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 from scn0 import *
@@ -30,7 +23,6 @@ from scn10 import *
 from scn11 import *
 from scn12 import *
 from scn100 import *
-
 
 
 #################################################
@@ -254,10 +246,11 @@ def onDigitalJoyAxis(app, results, joystick):
     elif app.gameState == 12:
         scene12OnDigitalJoyAxis(app, results, joystick)
 
+
+
+
 # load the json dictionnary in the game variable
 with open('./gameGlobal.json', 'r') as file:
     game = json.load(file)
-
-
 # run app
 runApp(game["global"]["width"], game["global"]["height"])
