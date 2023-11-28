@@ -13,6 +13,11 @@ from global_classes import *
 from global_helper_functions import *
 from tetris import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+music = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
+
+
 with open(f'./scene12.json', 'r', encoding="utf8") as file:
     scene12 = json.load(file)
 
@@ -24,6 +29,7 @@ with open(f'./scene12.json', 'r', encoding="utf8") as file:
 #################################################
 
 def loadScene12(app):
+    music.play(restart=True)
     appendToUnplayable(app, scene12,"static")
     appendToUnplayable(app, scene12,"rotating", rotatingSpriteClass)
     loadTetris(app)
@@ -86,6 +92,7 @@ def scene12OnJoyPress(app, button, joystick):
         elif button == '0':
             loadTetris(app)
         if button == "1" and  20-app.sceneTicks//30<=0:
+            music.pause()
             nextScene(app)
             cleanAppVariables(app)
 

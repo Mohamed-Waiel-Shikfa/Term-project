@@ -14,7 +14,7 @@ from global_helper_functions import *
 
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
-dialogueSound = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
+dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
 
 with open(f'./scene9.json', 'r', encoding="utf8") as file:
     scene9 = json.load(file)
