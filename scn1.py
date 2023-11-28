@@ -14,7 +14,7 @@ from global_helper_functions import *
 
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
-loading = Sound(f'file:///{cntPath}/sounds/loading.mp3')
+loading = Sound(f'file:///{cntPath}/sounds/loading1.opus')
 
 with open(f'./scene1.json', 'r', encoding="utf8") as file:
     scene1 = json.load(file)

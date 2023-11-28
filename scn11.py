@@ -15,6 +15,7 @@ from global_helper_functions import *
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
+portalSound = Sound(f'file:///{cntPath}/sounds/portal.mp3')
 
 with open(f'./scene11.json', 'r', encoding="utf8") as file:
     scene11 = json.load(file)
@@ -40,6 +41,7 @@ def scene11Step(app):
         app.unplayableSprites[0].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 60:
+            portalSound.play()
             app.sceneState = 2
             app.sceneTicks=0
     if app.sceneState == 2:
@@ -47,6 +49,7 @@ def scene11Step(app):
         app.unplayableSprites[1].stepSelf()
         app.sceneTicks += 1
         if app.sceneTicks == 30:
+            portalSound.pause()
             app.sceneState = 3
             app.unplayableSprites[1].todraw=[1,0]
     elif app.sceneState >= 3:
