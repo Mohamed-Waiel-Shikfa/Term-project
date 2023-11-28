@@ -40,8 +40,6 @@ class unplayableSpriteClass():
             for image in self.images[i]:
                 temp.append(loadImageFromStringReference(url + image))
             self.view.append(temp)
-        print(self.view[0][0])
-        print(type(self.view[0][0]))
 
 
     # used to debugg, get info for player and make the class feel more complete
@@ -1902,8 +1900,6 @@ def onAppStart(app):
     path = game["endScreen"]
     app.endScreen = unplayableSpriteClass("endScreen", path["url"], path["images"], path["toDraw"],
                                           path["x"], path["y"], path["width"], path["height"], path["color"], opacity=path["opacity"])
-    # print to confirm initiation
-    # if everything runned properly this print all the loaded data of the scene
     cleanAppVariables(app)
     loadScene0(app)
 
