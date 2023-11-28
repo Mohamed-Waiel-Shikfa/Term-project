@@ -43,6 +43,7 @@ def scene100OnKeyPress(app, event):
             app.crntGameIndex[0]=0
             app.crntGameIndex[1]=11
         app.gameState = app.storyFlow[app.crntGameIndex[0]][app.crntGameIndex[1]]
+        gameover.play()
         gameover.pause()
         cleanAppVariables(app)
 
