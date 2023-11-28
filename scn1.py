@@ -21,6 +21,8 @@ with open(f'./scene1.json', 'r', encoding="utf8") as file:
 #################################################
 # Scene 1 function
 #################################################
+
+
 def loadScene1(app):
     appendToUnplayable(app, scene1, "loading")
 

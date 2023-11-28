@@ -16,10 +16,7 @@ from tetris import *
 
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
-# if sys.platform == "win32":
 music = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
-# else:
-#     music = Sound(f'file://{cntPath}/sounds/Hotel lobby music.mp3')
 
 with open(f'./scene3.json', 'r', encoding="utf8") as file:
     scene3 = json.load(file)

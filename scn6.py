@@ -12,6 +12,9 @@ from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+dialogueSound = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
 
 with open(f'./scene6.json', 'r', encoding="utf8") as file:
     scene6 = json.load(file)
@@ -20,9 +23,12 @@ with open(f'./scene6.json', 'r', encoding="utf8") as file:
 #################################################
 # scene 6 classes
 #################################################
+
 #################################################
 # Scene 6 function
 #################################################
+
+
 def loadScene6(app):
     app.text = scene6["texts"]
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
@@ -56,6 +62,7 @@ def scene6Step(app):
 def scene6OnKeyPress(app, event):
     if app.sceneState > 2 and app.sceneState < 10:
         if "enter" == event or "space" == event:
+            dialogueSound.play(restart=True)
             app.sceneState += 1
     if app.sceneState == 10:
         nextScene(app)
@@ -66,6 +73,7 @@ def scene6OnJoyPress(app, button, joystick):
     if joystick == 0:
         if app.sceneState > 2 and app.sceneState < 10:
             if button == "1":
+                dialogueSound.play(restart=True)
                 app.sceneState += 1
         if app.sceneState == 10:
             nextScene(app)

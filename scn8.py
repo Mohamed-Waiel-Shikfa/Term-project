@@ -12,6 +12,9 @@ from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+dialogueSound = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
 
 with open(f'./scene8.json', 'r', encoding="utf8") as file:
     scene8 = json.load(file)
@@ -72,6 +75,7 @@ def scene8OnKeyHold(app, events):
 def scene8OnKeyPress(app, event):
     if  5> app.sceneState > 2 or 7 > app.sceneState > 5:
         if "enter" == event or "space" == event:
+            dialogueSound.play(restart=True)
             app.sceneState += 1
     if app.sceneState == 7:
         nextScene(app)
@@ -82,6 +86,7 @@ def scene8OnJoyPress(app, button, joystick):
     if joystick == 0:
         if  5> app.sceneState > 2 or 7 > app.sceneState > 5:
             if button == "1":
+                dialogueSound.play(restart=True)
                 app.sceneState += 1
         if app.sceneState == 7:
             nextScene(app)

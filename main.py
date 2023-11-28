@@ -199,8 +199,8 @@ def redrawAll(app):
 
     # shader feature to develop after mvp
     app.shader.drawSelf()
-    # draw the number of frame since the beginining of the game
-    drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
+    # draw the number of frame since the beginining of the game for debugging
+    # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
 
 
 def onJoyPress(app, button, joystick):
