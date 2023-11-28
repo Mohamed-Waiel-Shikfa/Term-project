@@ -4,13 +4,14 @@ import json
 from global_classes import *
 from global_helper_functions import *
 
+# import sound
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
 
+# import json data
 with open(f'./scene5.json', 'r', encoding="utf8") as file:
     scene5 = json.load(file)
-
 
 #################################################
 # scene 5 classes

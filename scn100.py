@@ -5,17 +5,16 @@ from global_classes import *
 from global_helper_functions import *
 from tetris import *
 
+# import sounds
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 gameover = Sound(f'file:///{cntPath}/sounds/game over.mp3')
 
+# import json data
 with open(f'./scene100.json', 'r', encoding="utf8") as file:
     scene100 = json.load(file)
 
 
-#################################################
-# Scene 100 classes
-#################################################
 #################################################
 # Scene 100 function
 #################################################

@@ -5,10 +5,12 @@ import os
 from global_classes import *
 from global_helper_functions import *
 
+# import sound
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 music = Sound(f'file:///{cntPath}/sounds/main menu2.mp3')
 
+#import json data
 with open(f'./scene0.json', 'r', encoding="utf8") as file:
     scene0 = json.load(file)
 

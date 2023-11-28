@@ -1,12 +1,11 @@
 # import the library
 from cmu_graphics import *
-from random import randint
 from cmu_graphics.shape_logic import loadImageFromStringReference
 from global_classes import *
 
 
 #################################################
-# helper function
+# helper function to reduce code lenght
 #################################################
 def appendToUnplayable(app, scene, key, toClass=unplayableSpriteClass):
     for key, value in scene[key].items():

@@ -5,21 +5,18 @@ from global_classes import *
 from global_helper_functions import *
 from tetris import *
 
+# import sounds
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 music = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
 
-
+# import json data
 with open(f'./scene12.json', 'r', encoding="utf8") as file:
     scene12 = json.load(file)
 
 #################################################
-# scene 12 classes
-#################################################
-#################################################
 # Scene 12 function
 #################################################
-
 def loadScene12(app):
     music.play(restart=True)
     appendToUnplayable(app, scene12,"static")

@@ -4,24 +4,19 @@ import json
 from global_classes import *
 from global_helper_functions import *
 
+# import sounds
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
 portalSound = Sound(f'file:///{cntPath}/sounds/portal.mp3')
 
+# import json data
 with open(f'./scene6.json', 'r', encoding="utf8") as file:
     scene6 = json.load(file)
-
-
-#################################################
-# scene 6 classes
-#################################################
 
 #################################################
 # Scene 6 function
 #################################################
-
-
 def loadScene6(app):
     app.text = scene6["texts"]
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites

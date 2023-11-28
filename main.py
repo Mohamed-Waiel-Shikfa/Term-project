@@ -27,6 +27,7 @@ from scn100 import *
 
 #################################################
 # MVC CS3 mode functionS
+# Mainly just calls the MVC functions of all scene depending on game state
 #################################################
 def onAppStart(app):
     # runs at the start of the game
@@ -113,6 +114,21 @@ def onKeyHold(app, events):
         scene8OnKeyHold(app, events)
 
 
+def onDigitalJoyAxis(app, results, joystick):
+    if app.gameState == 2:
+        scene2OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 3:
+        scene3OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 4:
+        scene4OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 7:
+        scene7OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 8:
+        scene8OnDigitalJoyAxis(app, results, joystick)
+    elif app.gameState == 12:
+        scene12OnDigitalJoyAxis(app, results, joystick)
+
+
 def onKeyPress(app, event):
     if app.gameState == 2:
         scene2OnKeyPress(app, event)
@@ -147,6 +163,43 @@ def onKeyPress(app, event):
         response = app.getTextInput("What would you like to name this save")
         with open("./saved games/" + response + ".txt", "w") as file:
             file.write(str(app.crntGameIndex[0])+";"+str(app.crntGameIndex[1]))
+
+
+def onJoyPress(app, button, joystick):
+    if app.gameState == 0:
+        scene0OnJoyPress(app, button, joystick)
+    elif app.gameState == 2:
+        scene2OnJoyPress(app, button, joystick)
+    elif app.gameState == 3:
+        scene3OnJoyPress(app, button, joystick)
+    elif app.gameState == 4:
+        scene4OnJoyPress(app, button, joystick)
+    elif app.gameState == 5:
+        scene5OnJoyPress(app, button, joystick)
+    elif app.gameState == 6:
+        scene6OnJoyPress(app, button, joystick)
+    elif app.gameState == 7:
+        scene7OnJoyPress(app, button, joystick)
+    elif app.gameState == 8:
+        scene8OnJoyPress(app, button, joystick)
+    elif app.gameState == 9:
+        scene9OnJoyPress(app, button, joystick)
+    elif app.gameState == 10:
+        scene10OnJoyPress(app, button, joystick)
+    elif app.gameState == 11:
+        scene11OnJoyPress(app, button, joystick)
+    elif app.gameState == 12:
+        scene12OnJoyPress(app, button, joystick)
+    elif app.gameState == 100:
+        scene100OnJoyPress(app, button, joystick)
+    elif app.gameState == 20 and button == "0":
+        app.crntGameIndex = [0,-1]
+        nextScene(app)
+        cleanAppVariables(app)
+        loadScene0(app)
+     # Make sure we can exit by pressing the "P1" button
+    if button == '5':
+        sys.exit(0)
 
 
 def onMousePress(app, x, y):
@@ -193,60 +246,6 @@ def redrawAll(app):
     app.shader.drawSelf()
     # draw the number of frame since the beginining of the game for debugging
     # drawLabel(str(app.debuggingTicks), 650, 360, fill='red', size=24)
-
-
-def onJoyPress(app, button, joystick):
-    if app.gameState == 0:
-        scene0OnJoyPress(app, button, joystick)
-    elif app.gameState == 2:
-        scene2OnJoyPress(app, button, joystick)
-    elif app.gameState == 3:
-        scene3OnJoyPress(app, button, joystick)
-    elif app.gameState == 4:
-        scene4OnJoyPress(app, button, joystick)
-    elif app.gameState == 5:
-        scene5OnJoyPress(app, button, joystick)
-    elif app.gameState == 6:
-        scene6OnJoyPress(app, button, joystick)
-    elif app.gameState == 7:
-        scene7OnJoyPress(app, button, joystick)
-    elif app.gameState == 8:
-        scene8OnJoyPress(app, button, joystick)
-    elif app.gameState == 9:
-        scene9OnJoyPress(app, button, joystick)
-    elif app.gameState == 10:
-        scene10OnJoyPress(app, button, joystick)
-    elif app.gameState == 11:
-        scene11OnJoyPress(app, button, joystick)
-    elif app.gameState == 12:
-        scene12OnJoyPress(app, button, joystick)
-    elif app.gameState == 100:
-        scene100OnJoyPress(app, button, joystick)
-    elif app.gameState == 20 and button == "0":
-        app.crntGameIndex = [0,-1]
-        nextScene(app)
-        cleanAppVariables(app)
-        loadScene0(app)
-     # Make sure we can exit by pressing the "P1" button
-    if button == '5':
-        sys.exit(0)
-
-
-def onDigitalJoyAxis(app, results, joystick):
-    if app.gameState == 2:
-        scene2OnDigitalJoyAxis(app, results, joystick)
-    elif app.gameState == 3:
-        scene3OnDigitalJoyAxis(app, results, joystick)
-    elif app.gameState == 4:
-        scene4OnDigitalJoyAxis(app, results, joystick)
-    elif app.gameState == 7:
-        scene7OnDigitalJoyAxis(app, results, joystick)
-    elif app.gameState == 8:
-        scene8OnDigitalJoyAxis(app, results, joystick)
-    elif app.gameState == 12:
-        scene12OnDigitalJoyAxis(app, results, joystick)
-
-
 
 
 # load the json dictionnary in the game variable

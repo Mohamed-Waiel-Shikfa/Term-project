@@ -1,12 +1,9 @@
+# import library
 from cmu_graphics import *
 from random import randint
 from cmu_graphics.shape_logic import loadImageFromStringReference
 import arabic_reshaper
 from bidi.algorithm import get_display
-
-import pathlib
-cntPath = pathlib.Path(__file__).parent.resolve()
-dialogueSound = Sound(f'file:///{cntPath}/sounds/Hotel lobby music.mp3')
 
 
 #################################################

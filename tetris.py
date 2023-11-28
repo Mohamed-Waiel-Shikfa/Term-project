@@ -1,18 +1,11 @@
 # import the library
 from cmu_graphics import *
-import json
-from random import randint
-from cmu_graphics.shape_logic import loadImageFromStringReference
-import os
-import copy
-import joystick
-import sys
-import arabic_reshaper
-from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
-
+#################################################
+# Main Tetris functions
+#################################################
 def gameDimensions(app):
     # These values are set to the writeup defaults
     rows = 17
