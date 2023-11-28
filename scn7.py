@@ -15,6 +15,7 @@ from global_helper_functions import *
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
+succes=Sound(f'file:///{cntPath}/sounds/succes.mp3')
 
 with open(f'./scene7.json', 'r', encoding="utf8") as file:
     scene7 = json.load(file)
@@ -74,6 +75,7 @@ def scene7OnKeyPress(app, event):
     if app.sceneState==8 and "enter" == event or "space" == event:
         if app.digitBox.getCrntNumberLen()==4:
             if app.digitBox.getNumber()==1729:
+                succes.play(restart=True)
                 app.sceneState+=1
             for i in range(4):
                 app.digitBox.labelText[i]=""

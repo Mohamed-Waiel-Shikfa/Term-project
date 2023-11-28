@@ -15,6 +15,7 @@ from global_helper_functions import *
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
+succes=Sound(f'file:///{cntPath}/sounds/succes.mp3')
 
 with open(f'./scene4.json', 'r', encoding="utf8") as file:
     scene4 = json.load(file)
@@ -96,6 +97,7 @@ def scene4Step(app):
                 appendToUnplayable(app, scene4, "ennemie", ennemie)
                 app.unplayableSprites[-1].x = randint(50,1255)
         elif len(app.unplayableSprites) == 1 and app.ennemie <= 0:
+            succes.play(restart=True)
             app.sceneState += 1
         # calls the onStep of every object
         unplayableSpritesCopy = app.unplayableSprites[:]

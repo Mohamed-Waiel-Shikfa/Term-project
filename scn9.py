@@ -15,6 +15,7 @@ from global_helper_functions import *
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
+succes=Sound(f'file:///{cntPath}/sounds/succes.mp3')
 
 with open(f'./scene9.json', 'r', encoding="utf8") as file:
     scene9 = json.load(file)
@@ -29,6 +30,7 @@ class playerScene9(player):
 # Scene 9 function
 #################################################
 def loadScene9(app):
+    succes.play(restart=True)
     app.text = scene9["texts"]
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene9, "static")

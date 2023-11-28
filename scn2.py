@@ -15,6 +15,7 @@ from global_helper_functions import *
 import pathlib
 cntPath = pathlib.Path(__file__).parent.resolve()
 dialogueSound = Sound(f'file:///{cntPath}/sounds/dialogue3.mp3')
+succes=Sound(f'file:///{cntPath}/sounds/succes.mp3')
 
 with open(f'./scene2.json', 'r', encoding="utf8") as file:
     scene2 = json.load(file)
@@ -121,6 +122,7 @@ def scene2Step(app):
     elif app.sceneState == 6:
         app.unplayableSprites[8].stepSelf(sceneState=app.sceneState)
         if app.Task[0] and app.Task[1]:
+            succes.play(restart=True)
             app.Task[2] = True
     else:
         app.dialogueBox.stepSelf()
