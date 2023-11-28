@@ -12,6 +12,10 @@ from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+music = Sound(f'file:///{cntPath}/sounds/main menu2.mp3')
+
 with open(f'./scene0.json', 'r', encoding="utf8") as file:
     scene0 = json.load(file)
 
@@ -27,6 +31,8 @@ class buttonScene0(button):
     
     def answer(self, app):
         if self.name == "1":
+            music.play()
+            music.pause()
             nextScene(app)
             cleanAppVariables(app)
         else:
@@ -38,6 +44,8 @@ class buttonScene0(button):
                 app.crntGameIndex = data.split(";")
                 app.crntGameIndex[0]=int(app.crntGameIndex[0])
                 app.crntGameIndex[1]=int(app.crntGameIndex[1])-1
+                music.play()
+                music.pause()
                 nextScene(app)
                 cleanAppVariables(app)
             else:
@@ -46,6 +54,7 @@ class buttonScene0(button):
 # Scene 0 function
 #################################################
 def loadScene0(app):
+    music.play(restart=True, loop=True)
     cleanAppVariables(app)
     # appends object of unplayableSpriteClass class and rotatingSpriteClass class to the list app.unplayableSprites
     appendToUnplayable(app, scene0, "bg")
