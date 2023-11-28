@@ -13,6 +13,10 @@ from global_classes import *
 from global_helper_functions import *
 from tetris import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+gameover = Sound(f'file:///{cntPath}/sounds/game over.mp3')
+
 with open(f'./scene100.json', 'r', encoding="utf8") as file:
     scene100 = json.load(file)
 
@@ -24,6 +28,7 @@ with open(f'./scene100.json', 'r', encoding="utf8") as file:
 # Scene 100 function
 #################################################
 def loadScene100(app):
+    gameover.play(restart=True)
     appendToUnplayable(app, scene100, "gameOver")
 
 
@@ -46,6 +51,7 @@ def scene100OnKeyPress(app, event):
             app.crntGameIndex[0]=0
             app.crntGameIndex[1]=11
         app.gameState = app.storyFlow[app.crntGameIndex[0]][app.crntGameIndex[1]]
+        gameover.pause()
         cleanAppVariables(app)
 
 

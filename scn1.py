@@ -12,6 +12,10 @@ from bidi.algorithm import get_display
 from global_classes import *
 from global_helper_functions import *
 
+import pathlib
+cntPath = pathlib.Path(__file__).parent.resolve()
+loading = Sound(f'file:///{cntPath}/sounds/loading.mp3')
+
 with open(f'./scene1.json', 'r', encoding="utf8") as file:
     scene1 = json.load(file)
 
@@ -24,6 +28,7 @@ with open(f'./scene1.json', 'r', encoding="utf8") as file:
 
 
 def loadScene1(app):
+    loading.play(restart=True)
     appendToUnplayable(app, scene1, "loading")
 
 
@@ -36,6 +41,7 @@ def scene1Step(app):
         for iSprite in app.unplayableSprites:
             iSprite.stepSelf()
         if app.sceneTicks == 60:
+            loading.pause()
             nextScene(app)
             cleanAppVariables(app)
 
