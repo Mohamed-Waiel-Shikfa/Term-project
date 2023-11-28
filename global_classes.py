@@ -161,7 +161,7 @@ class dialogue(unplayableSpriteClass):
                           font="monospace", bold=True, align="left-top")
                 textYPos += 35
             drawLabel("SPACE or ENTER to continue for PC, A to continue for Arcade ...", 600*self.scale+self.offsetx, textYPos*self.scale+self.offsety, size=25*self.scale*2/3,
-                      font="monospace", bold=True, align="left-top")
+                      font="DejaVu Sans Mono", bold=True, align="left-top")
 
     # updates todraw for animation
     def stepSelf(self):
