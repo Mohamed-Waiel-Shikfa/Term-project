@@ -66,6 +66,7 @@ def scene12OnKeyPress(app, event):
     elif event == 'r':
         loadTetris(app)
     if event == "enter" and  20-app.sceneTicks//30<=0:
+        music.pause()
         nextScene(app)
         cleanAppVariables(app)
 
